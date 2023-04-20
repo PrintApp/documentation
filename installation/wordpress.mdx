@@ -1,0 +1,45 @@
+---
+title: Wordpress
+description: "Print.App has a Wordpress plugin designed to allow your customers to personalize their print orders before purchase. This is a guide on how to install the Print.App plugin on WordPress"
+---
+
+<Frame>
+    <img alt="Print.App Wordpress image" src="/images/wp.png" />
+</Frame>
+[WordPress](https://wordpress.com) is naturally a blogging platform but with a very large community of developers and user-base, it has expanded beyond just blogging
+
+So natively, WordPress is does not have a cart system but there are plugins that makes this possible. One of them is [WooCommerce](https://woocommerce.com) upon which the Print.App plugin is based.
+The WordPress version of Print.App module is designed to function alongside the WooCommerce module. So it cannot work without the WooCommerce plugin. Follow these steps to install WordPress, then WooCommerce and finally Print.App
+
+1. Start by installing Wordpress using the [Official Download Link](https://wordpress.org/download/)
+
+2. After installing WordPress, log into your WordPress admin portal and install WooCommerce.
+    To do this, you can either install manually or install it directly from within the WordPress admin panel by searching for **WooCommerce** in the `Plugins` -> `Add New` -> and then `Search field`
+
+3. Once you have installed both WordPress and WooCommerce, you can then install Print.App following the same procedure as above: Search for Print.App in `Plugins` -> `Add New` -> and then type `Print.App` into the search field.
+Optionally, grab the code and install it manually from our [Github page](https://github.com/PrintApp/print-app-wordpress)
+
+4. Now activate both the WooCommerce and Print.App plugins under `Admin` -> `Plugins` -> `Installed Plugins`
+
+5. Next, navigate to your [Print.App Dashboard](https://admin.print.app) and grab your credentials by clicking the button on the left-top corner.
+    <Accordion title="View screenshots how to copy your credentials">
+        <img class="rounded-md" src="images/click-domain.png" />
+        <img class="rounded-md" src="images/copy-domain.png" />
+    </Accordion>
+    <Note>You can still use your credentials for localhost testing if you are not ready to go live just yet.</Note>
+
+6.  Back to your WordPress admin, you will find Print.App in the left menu.
+    Click the menu to enter the keys your copied above and save.
+    <Frame><img class="rounded-md" src="images/wp-credentials.png" /></Frame>
+
+7. Now you have the plugin linked to our platform. You can test this out by assigning a design to any of your products.
+
+    You can start by creating a new product in your store.
+    - Navigate to Products section in the admin and click the "Add Product" link.
+    - Provide an SKU, a price and then select the design you wish to assign to that product.
+    - The designs are fetched from your Print.App account using the Keys you provided earlier.
+    <Frame><img class="rounded-md" alt="Assign design in wordpress" src="images/wp-assign-design.png" /></Frame>
+
+8.  You're all set! To check everything, do navigate to your store front and check the product has the Customize button.
+    - Please ensure you have a price set for the product; if not, the customize button will not show.
+    - If still it doesn't show, please reach out to us on our [discord community](https://discord.gg/XNdtdFxNdE).

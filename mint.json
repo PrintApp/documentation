@@ -13,53 +13,40 @@
     },
     "topbarLinks": [
         {
-            "name": "Documentation",
-            "url": "https://docs.print.app"
+            "name": "Join our community",
+            "url": "https://discord.gg/XNdtdFxNdE"
         }
     ],
     "topbarCtaButton": {
-        "name": "Get Started",
-        "url": "https://github.com/mintlify/starter"
+        "name": "Dashboard",
+        "url": "https://admin.print.app"
     },
     "anchors": [
         {
-            "name": "API Reference",
-            "icon": "rectangle-terminal",
-            "url": "api-reference"
-        },
-        {
-            "name": "Changelog",
+            "name": "Roadmap",
             "icon": "list",
-            "url": "https://mintlify.com"
-        },
-        {
-            "name": "Community",
-            "icon": "discord",
-            "url": "https://mintlify.com/community"
+            "url": "https://printapp.canny.io"
         }
     ],
     "navigation": [
         {
             "group": "Home",
-            "pages": ["introduction", "features"]
+            "pages": ["introduction"]
         },
         {
-            "group": "API Documentation",
-            "pages": ["api-reference/authentication"]
-        },
-        {
-            "group": "Endpoint Examples",
+            "group": "Installation",
             "pages": [
-                "api-reference/endpoint/get",
-                "api-reference/endpoint/create",
-                "api-reference/endpoint/update",
-                "api-reference/endpoint/delete"
+                "installation/wordpress",
+                "installation/prestashop",
+                "installation/bigcommerce",
+                "installation/opencart"
             ]
         }
     ],
     "footerSocials": {
-        "twitter": "https://twitter.com/mintlify",
-        "github": "https://github.com/mintlify",
-        "linkedin": "https://www.linkedin.com/company/mintsearch"
+        "twitter": "https://twitter.com/print_dot_app",
+        "instagram": "https://github.com/print_dot_app",
+        "github": "https://github.com/printapp",
+        "discord": "https://discord.gg/XNdtdFxNdE"
     }
 }
