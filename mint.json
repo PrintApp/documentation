@@ -11,6 +11,9 @@
         "light": "#00CD17",
         "dark": "#008B10"
     },
+    "modeToggle": {
+        "default": "dark"
+    },
     "topbarLinks": [
         {
             "name": "Join our community",
@@ -31,7 +34,7 @@
     "navigation": [
         {
             "group": "Home",
-            "pages": ["introduction"]
+            "pages": ["introduction", "faqs"]
         },
         {
             "group": "Installation",
@@ -40,6 +43,48 @@
                 "installation/prestashop",
                 "installation/bigcommerce",
                 "installation/opencart"
+            ]
+        },
+        {
+            "group": "Guides",
+            "pages": [
+                "guides/editor/editor-features",
+                {
+                    "group": "Designs",
+                    "pages": [
+                        "guides/designs/create-a-design",
+                        "guides/designs/design-settings",
+                        "guides/designs/import-designs"
+                    ]
+                },
+                "guides/projects/download-order-files"
+            ]
+        },
+        {
+            "group": "Resources",
+            "pages": [
+                "resources/colors",
+                "resources/fonts",
+                "resources/graphics"
+            ]
+        },
+        {
+            "group": "Print Solutions",
+            "pages": [
+                "solutions/calendars",
+                "solutions/stationeries",
+                "solutions/garment-printing",
+                "solutions/photo-prints",
+                "solutions/banner-large-prints",
+                "solutions/promotional-items"
+            ]
+        },
+        {
+            "group": "Configuration",
+            "pages": [
+                "configuration/settings",
+                "configuration/webhooks",
+                "configuration/specifications"
             ]
         }
     ],
