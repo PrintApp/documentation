@@ -28,7 +28,7 @@
         {
             "name": "Roadmap",
             "icon": "list",
-            "url": "https://printapp.canny.io"
+            "url": "https://roadmap.print.app"
         }
     ],
     "navigation": [
@@ -37,12 +37,33 @@
             "pages": ["introduction", "faqs"]
         },
         {
-            "group": "Installation",
+            "group": "Platforms",
             "pages": [
-                "installation/wordpress",
-                "installation/prestashop",
-                "installation/bigcommerce",
-                "installation/opencart"
+                {
+                    "group": "Wordpress",
+                    "pages": [
+                        "platforms/wordpress/installation",
+                        "platforms/wordpress/demo-store",
+                        "platforms/wordpress/how-to-access-files"
+                    ]
+                },
+                {
+                    "group": "Prestashop",
+                    "pages": [
+                        "platforms/prestashop/installation",
+                        "platforms/prestashop/demo-store",
+                        "platforms/prestashop/how-to-access-files"
+                    ]
+                },
+                {
+                    "group": "OpenCart",
+                    "pages": [
+                        "platforms/opencart/installation",
+                        "platforms/opencart/demo-store",
+                        "platforms/opencart/how-to-access-files"
+                    ]
+                },
+                "platforms/platform-features"
             ]
         },
         {
