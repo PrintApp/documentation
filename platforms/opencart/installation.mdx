@@ -16,10 +16,29 @@ Follow these steps to do a fresh installation of OpenCart and then Print.App or 
 3.  Next, download the [Print.App OpenCart module from our Github repository](https://github.com/PrintApp/print-app-opencart/releases)
 
 4.  In your OpenCart admin portal, navigate to `Extensions` -> `Extension Installer` and click the Upload File button to upload the previously downloaded zip file.
+    <Frame><img src="/images/oc-mod.png" /></Frame>
     -   Once the upload completes, the module is installed.
 
-5.  We now need to connect the module to your Print.App account using your credentials.
+5.  Now navigate to `Extensions` -> `Modifications` and hit the refresh modifications button
+    <Frame><img src="/images/oc-refresh.png" /></Frame>
+
+6.  We now need to connect the module to your Print.App account using your credentials.
     <Snippet file="grab-keys.mdx" />
     <Note>You can still use your credentials for localhost testing if you are not ready to go live just yet.</Note>
 
-6.  Navigate to the 
+7.  To enter the keys in your OpenCart admin, navigate to Extensions and drop down the `Choose the extension type` and select Modules.
+    <Frame><img src="/images/oc-ext.png" /></Frame>
+    -   Scroll down the list and you should find Print.App there. Click on the blue edit button to configure it.
+
+8.  Enter the Domain / API Key and Secret keys you copied in step 6 above. And click the save button on the top right-hand corner.
+    <Frame><img src="/images/oc-conf.png" /></Frame>
+    -   And you're done with the installation 👏
+
+9.  Now you have the plugin linked to our platform. You can test this out by assigning a design to any of your products.
+    -   Navigate to `Catalog` -> `Products` section in the admin and click to edit any of the products.
+    -   Click the Options tab and type in `print`, it should show Print.App drop option for you to select.
+    <Frame><img src="/images/oc-assign.png" /></Frame>
+    -   Assign any of your Print.App designs to test with.
+
+10. You're all set! To check everything, do navigate to your store front and check the product has the Customize button.
+    - If still it doesn't show, please reach out to us on our [discord community](https://discord.gg/XNdtdFxNdE).
