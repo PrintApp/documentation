@@ -73,6 +73,7 @@
                 {
                     "group": "Designs",
                     "pages": [
+                        "guides/designs/about-designs",
                         "guides/designs/create-a-design",
                         "guides/designs/design-settings",
                         "guides/designs/import-designs"
