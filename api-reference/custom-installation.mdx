@@ -1,0 +1,158 @@
+---
+title: "Custom Installation"
+description: "How to install Print.App on a custom store using HTML and JavaScript"
+---
+
+<Warning>
+Custom installation is for web stores that we have **NOT** developed plugins for.
+
+We have plugings for the following cart frameworks and it's easier installing those plugins than doing custom a installation:
+
+-   [Wordpress](/platforms/wordpress/installation/)
+-   [OpenCart](/platforms/opencart/installation/)
+-   [Prestashop](/platforms/prestashop/installation/)
+
+</Warning>
+
+To start a custom installation, you need at least one **HTML page** loaded from your site where you will load the editor unto.
+This can also be a local html page for testing.
+If you already have a website in place, this will naturally be your products page template.
+
+### Integration Steps
+
+1.  Load `editor.js` script.
+    This script is loaded via a CDN, so it's blazingly fast to load to your customers anywhere across the world.
+    ```html
+    <script src="https://editor.print.app/js/client.js"></script>
+    ```
+
+2.  Initialize `PrintAppClient`:
+    ```javascript
+    const printAppInstance = new PrintAppClient({
+        domainKey: '',		//Kinldy provide your APIKey
+        designId: '',	    //Change this to your designId
+        custom: true,
+        mode: 'new-project',
+    });
+    ```
+
+3.  Create a button to launch the designer:
+    ```html
+    <button id="launch-button">Launch Designer</button>
+    ```
+
+4.  Attach an event listener to launch the editor once the button is clicked:
+    ```javascript
+    const launchButton = document.getElementById('launch-button');
+    launchButton.onclick = () => printAppInstance.showApp();
+    ```
+
+5.  Load the page and check that the editor launches when you click the Launch Designer button.
+    If the editor does not load, please check your browser console if there are any errors and do
+    reach out to our [Discord community](https://discord.gg/XNdtdFxNdE) for assistance anytime.
+
+    A complete sample code is posted at the end of this page.
+
+This is the most basic installation step.
+You should event listeners to know when the app is ready.
+For a full API specs please read our client API section and get more detailed api parameter and event lists.
+
+<Tip>
+-   **APIKey:** Fetch your APIKey from [Domains section in Print.App Admin](https://admin.print.app/domains)
+
+-   **designId:** To get a designId, simply click the more button against a [Print.App Design](https://admin.print.app/designs) and click the Copy link.
+    This action copies the designId to your clipboard as plain text.
+    <img class="w-48" alt="How to copy designId" src="/images/design-copy.png" />
+</Tip>
+
+### Complete Sample Code
+Here's the complete sample code. Insert your APIKey, designId and run in a local server.
+
+```html
+
+<html>
+	<title>Print.App Custom integration sample</title>
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+		<style>
+			#launch-button {
+				background-color: #4CAF50;
+				border: none;
+				color: white;
+				padding: 15px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+				cursor: pointer;
+			}
+			#previews-div {
+				margin-top: 20px;
+			}
+			#previews-div img {
+				width: 100%;
+				max-width: 400px;
+				margin-bottom: 20px;
+			}
+		</style>
+        <script src="https://editor.print.app/js/client.js"></script>
+    </head>
+    <body>
+		<button id="launch-button" class="launch-button">Launch Designer</button>
+		<div id="previews-div"></div>
+	</body>
+	<script>
+		(function() {
+
+			//Get handles to the UI elements we'll be using
+			const	launchButton = document.getElementById('launch-button'),
+					previewDiv = document.getElementById('previews-div');
+				
+			//Disable the Launch button until Print.App is ready for use
+			launchButton.setAttribute('disabled', 'disabled');
+				
+				
+			//	Initialize Print.App
+			//	Kindly read more here on the options.. https://docs.print.app
+			var printAppInstance = new PrintAppClient({
+					domainKey: '',		//Kinldy provide your own APIKey
+					designId: '',	//Change this to your designId
+					custom: true,
+					mode: 'new-project',
+				});
+				
+			//Function to run once the app is validated (ready to be used)
+			var appReady = () => {
+				console.log('editor is ready');
+
+				//	Enable the Launch button
+				launchButton.removeAttribute('disabled');
+				
+				//	Attach event listener to the button when clicked to show the app
+				launchButton.onclick = () => printAppInstance.showApp();
+			};
+			
+			//	Function to run once the user has saved their project
+			var projectSaved = (value) => {
+				// You can console.log the data varaible to see all that's passed down
+				let { data } = value;
+				
+				if (data && data.previews && data.previews.length) {
+					// Show the preview images
+					let html = '';
+					for (let i = 0; i < data.previews.length; i++) {
+						html += `<img src="${data.previews[i]}">`;
+					}
+					previewDiv.innerHTML = html;
+				}
+			};
+			
+			//	Attach events to the app.
+			//	You can see a list of all the events here: https://docs.print.app
+			printAppInstance.on('app:ready', appReady);
+			printAppInstance.on('app:saved', projectSaved);
+			
+		})();
+	</script>
+</html>
+```

@@ -11,30 +11,44 @@
         "light": "#00CD17",
         "dark": "#008B10"
     },
-    "modeToggle": {
-        
-    },
+    "modeToggle": { },
     "topbarLinks": [
         {
-            "name": "Join our community",
+            "name": "Community",
             "url": "https://discord.gg/XNdtdFxNdE"
+        },
+        {
+            "name": "Roadmap",
+            "url": "https://roadmap.print.app/tabs/2-planned"
         }
     ],
     "topbarCtaButton": {
         "name": "Dashboard",
         "url": "https://admin.print.app"
     },
-    "anchors": [
+    "tabs": [
         {
-            "name": "Roadmap",
-            "icon": "list",
-            "url": "https://roadmap.print.app"
+          "name": "Design Guides",
+          "url": "guides"
+        },
+        {
+          "name": "API References",
+          "url": "api-reference"
         }
     ],
     "navigation": [
         {
-            "group": "Home",
-            "pages": ["introduction", "faqs"]
+            "group": "Getting Started",
+            "pages": ["introduction", "faqs", "installation"]
+        },
+        {
+            "group": "Configuration",
+            "pages": [
+                "configuration/editor/editor",
+                "configuration/settings",
+                "configuration/webhooks",
+                "configuration/specifications"
+            ]
         },
         {
             "group": "Platforms",
@@ -66,10 +80,10 @@
                 "platforms/platform-features"
             ]
         },
+
         {
-            "group": "Guides",
+            "group": "Design Guides",
             "pages": [
-                "guides/editor/editor-features",
                 {
                     "group": "Designs",
                     "pages": [
@@ -85,28 +99,26 @@
         {
             "group": "Resources",
             "pages": [
-                "resources/colors",
-                "resources/fonts",
-                "resources/graphics"
+                "guides/resources/colors",
+                "guides/resources/fonts",
+                "guides/resources/graphics"
             ]
         },
         {
             "group": "Print Solutions",
             "pages": [
-                "solutions/calendars",
-                "solutions/stationeries",
-                "solutions/garment-printing",
-                "solutions/photo-prints",
-                "solutions/banner-large-prints",
-                "solutions/promotional-items"
+                "guides/solutions/calendars",
+                "guides/solutions/stationeries",
+                "guides/solutions/garment-printing",
+                "guides/solutions/photo-prints",
+                "guides/solutions/banner-large-prints",
+                "guides/solutions/promotional-items"
             ]
         },
         {
-            "group": "Configuration",
+            "group": "API References",
             "pages": [
-                "configuration/settings",
-                "configuration/webhooks",
-                "configuration/specifications"
+                "api-reference/custom-installation"
             ]
         }
     ],
