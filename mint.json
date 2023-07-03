@@ -47,7 +47,12 @@
                 "configuration/editor/editor",
                 "configuration/settings",
                 "configuration/webhooks",
-                "configuration/specifications"
+                {
+                    "group": "Specifications",
+                    "pages": [
+                        "configuration/specifications/language"
+                    ]
+                }
             ]
         },
         {
@@ -118,7 +123,13 @@
         {
             "group": "API References",
             "pages": [
-                "api-reference/custom-installation"
+                {
+                    "group": "Editor",
+                    "pages": [
+                        "api-reference/editor/installation",
+                        "api-reference/editor/configuration"
+                    ]
+                }
             ]
         }
     ],

@@ -1,6 +1,6 @@
 ---
-title: "Custom Installation"
-description: "How to install Print.App on a custom store using HTML and JavaScript"
+title: "Basic Installation"
+description: "How to install Print.App Editor on a custom store using HTML and JavaScript"
 ---
 
 <Warning>
@@ -29,8 +29,8 @@ If you already have a website in place, this will naturally be your products pag
 2.  Initialize `PrintAppClient`:
     ```javascript
     const printAppInstance = new PrintAppClient({
-        domainKey: '',		//Kinldy provide your APIKey
-        designId: '',	    //Change this to your designId
+        domainKey: '',		//	Kinldy provide your APIKey
+        designId: '',	    //	Change this to your designId
         custom: true,
         mode: 'new-project',
     });
@@ -55,7 +55,7 @@ If you already have a website in place, this will naturally be your products pag
 
 This is the most basic installation step.
 You should event listeners to know when the app is ready.
-For a full API specs please read our client API section and get more detailed api parameter and event lists.
+For a full API specs please read our [Editor Configuration section](/api-reference/editor/configuration) to get more detailed api parameter and event lists.
 
 <Tip>
 -   **APIKey:** Fetch your APIKey from [Domains section in Print.App Admin](https://admin.print.app/domains)
@@ -149,8 +149,8 @@ Here's the complete sample code. Insert your APIKey, designId and run in a local
 			
 			//	Attach events to the app.
 			//	You can see a list of all the events here: https://docs.print.app
-			printAppInstance.on('app:ready', appReady);
-			printAppInstance.on('app:saved', projectSaved);
+			printAppInstance.addEventListener('app:ready', appReady);
+			printAppInstance.addEventListener('app:saved', projectSaved);
 			
 		})();
 	</script>

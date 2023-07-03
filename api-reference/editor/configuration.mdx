@@ -1,0 +1,61 @@
+---
+title: "Configuration"
+description: "Full Print.App Editor Configuration"
+---
+
+Here, you will find all the parameters, events and methods on the `PrintAppClient` class.
+You can find a basic [installation guide here](/api-reference/editor/installation).
+
+This is how to initialize a `PrintAppClient`:
+```javascript
+const printAppInstance = new PrintAppClient({
+    ...parameters
+});
+```
+
+### Parameters
+
+| Property          | Type              |  | Description                           |
+| --------          | ----              | ---- | ------------------------------------- |
+| `domainKey`       | String            | - | Your store domainKey. You can fetch this from your [Print.App Admin](https://admin.print.app/domains) |
+| `designId`        | String            | - | The id of the design you want your customer to edit.<br/>You can fetch this from the [Designs page](https://admin.print.app/designs). Click the more icon and copy the design. That should also copy the designId into your clipboard. |
+| `designList`      | Array of strings  | - | A list of designId. This is only valid if you want your customers to pick from a list of designs you specify here. The first design is always loaded as default. If this is provided, you can omit the designId parameter |
+| `projectId`       | String            | - | This is required if you want to load the editor to edit an existing project. Remember to also set the `mode` to `edit-project`  |
+| `mode`            | String            | - | The editor mode. Valid values are:<br/>`new-project`: The editor should create a new project using the designId as a template.<br/>`edit-project`: You want to edit an existing project. This requires a projectId to be provided  |
+| `custom`          | Boolean           | - | Set this to `true` to let the editor know it's a custom installation |
+| `autoShow`        | Boolean           | - | This is used to automatically launch the editor after it initializes, without the customer clicking a customize button.  |
+| `customValues`    | Object           | - | Pass additional value-pair data into the editor  |
+| `langCode`    | String           | - | Default: `en`<br/>The language to load the editor in. This should be a two letter language code following the [ISO 639-1](https://www.loc.gov/standards/iso639-2/php/code_list.php) two-digit language codes.<br/>You will find a list of valid [language codes supported by Print.App here](/configuration/specifications/language) |
+
+
+### Methods
+
+| Name              |     | Description                           |
+| --------          | ----         | ------------------------------------- |
+| `showApp()`       | -            | Show the Print.App Editor |
+| `closeApp()`      | -            | Close and hide the Print.App Editor |
+| `addEventListener(eventType, function)`      | -            | Attaches an event listener to the Print.App Editor |
+| `removeEventListener(eventType, function)`      | -            | Removes an eventListener from the Editor |
+
+
+### Event types
+
+Events are attached to the `PrintAppClient` after initialization using the `addEventListener` method.
+```javascript
+const printAppInstance = new PrintAppClient({
+    ...parameters
+});
+
+function readyFunction() {
+    printAppInstance.showApp();
+}
+printAppInstance.addEventListener('app:ready', readyFunction);
+```
+
+| EventType         |       | Description                           |
+| --------          | ----  | ------------------------------------- |
+| `app:validation:success`       | -     | Dispatched when the editor has completed its authentication process.<br/>This is the first action the editor makes before being ready to show any design or project.<br/>The store configuration is passed down to your event|
+| `app:validation:failed`       | -     | Dispatched when the editor cannot validate the domainKey or the parameters passed are invalid |
+| `app:ready`       | -     | Dispatched when the Editor has initialized and is ready to be shown |
+| `app:saved`       | -     | Dispatched when the customer has clicked the submit button and a project is completely saved.<br/>A data object is passed to your function that contains the details of the project and includes the complete project source, projectId and preview images. |
+| `app:closed`       | -     | The editor is closed |
