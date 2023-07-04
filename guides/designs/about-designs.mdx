@@ -12,8 +12,8 @@ For example, a simple Business Card Design can have a page with a background, Te
 <Tip>When a Design has been customized by a customer, the end result is a [Project](https://admin.print.app/projects), which you can render into a PDF, Print and deliver to said customer.</Tip>
 
 -   [Anatomy of a Design](#anatomy-of-a-design)
--   [Design Variations](#design-variations)
 -   [Objects in a Design](#objects-in-a-design)
+-   [Design Variations](#design-variations)
 
 ### Anatomy of a Design
 
@@ -55,7 +55,7 @@ Overlays are useful for creating products like Mouse-pad, Phone covers, Laptop c
 Below are sample products that can be created  with a combination of the different layers.
 
 <Tabs>
-    <Tab title="Tshirts">
+    <Tab title="TShirts">
         We use the Underlay to display the Tshirt image and the Canvas as the design area with a Graphics object
         <Frame>
             <img src="/images/layers-underlay.png" />
@@ -76,11 +76,32 @@ Below are sample products that can be created  with a combination of the differe
 </Tabs>
 
 
+### Objects in a Design
+A Design can contain any combinations of `Texts` and `Graphics`.
+
+-   **Texts** - A Text is created with the Text tool and can accept several styles as well as control flows.
+    Print.App supports all standard fonts and of weights from 100 up to 900, as well as Italic variants.
+    <br/>Users can paint Text objects with colors or gradients and the system supports Spot, CMYK and RGB colors.
+
+
+-   **Graphics** - Graphics can be a simple Shape, SVG object or an Image with or without transparency. Store owners can [upload their own Graphics](https://admin.print.app/graphics) or use the default ones we have created or download from our stores.
+    <br/>Vector Graphics are rendered as crisps and clean scalable objects and are great for large prints.
+
 
 ### Design Variations
 
-You can create several variations of a design
+You can variations of a single design using any of the following properties:
+1.  **Underlay Colors** - 
+    This is useful for products like TShirts where you need to create any variation of the same Design but with different TShirt colors.
+    <br/>It can also be used for any other apparel or products that requires changing the underlay image color.
+    [Read more here](/guides/designs/variations/variation-underlay)
 
+2.  **Canvas Size** -
+    You can create a single Design with varying sizes and orientations.
+    This allows your customers to pick from a size of their choice or have the option to enter their own sizes. <br/>This is very useful for products such as Banners, Bill boards, Photo Prints etc.
+    [Read more here](/guides/designs/variations/variation-canvassize)
 
-### Objects in a Design
-
+3.  **CSV Datasource** -
+    This variation option allows you to create multiple Design variations using a datasource to drive the design values.
+    <br/>Take for instance a company business card with different addresses or location details. Upload a simple CVS or Excel sheet and generate different variations of the same design with data from the sheet records.
+    [Read more here](/guides/designs/variations/variation-datasource)
