@@ -1,0 +1,53 @@
+---
+title: Text & Graphics
+description: "Object Settings & Configurations"
+---
+
+Objects are elements you can place on a design like Text, Graphics, Shapes, Images etc.
+
+<img class="w-80 rounded" src="/images/design-object.png" />
+
+### Values
+
+<ResponseField name="Title" type="">
+    Object title text
+</ResponseField>
+
+<ResponseField name="Form Index" type="">
+    This is a number used to specify the hierarchy of Objects if you have Smart Objects in a form.
+    <br/>The higher the number, the higher it is in the form.
+</ResponseField>
+
+<ResponseField name="Size & Position" type="">
+    Adjusts the Object's size and position on the canvas.
+</ResponseField>
+
+<ResponseField name="Use as Clip" type="">
+    This option is only available for plain Shapes that can be used to clip images.
+    <br/>Enabling this option makes it possible for your customers to insert their photos into the shape and have the photo clipped inside the shape.
+</ResponseField>
+
+<ResponseField name="Lock Transform" type="">
+    Enabling this option prevents customers from moving or resizing the said Object
+</ResponseField>
+
+<ResponseField name="Lock Selection" type="">
+    When enabled, customers will not be able to select that Object.
+</ResponseField>
+
+<ResponseField name="Lock Delete" type="">
+    When enabled, customers will not be able to delete that Object.
+</ResponseField>
+
+<ResponseField name="Smart Object" type="">
+    This option is only shown for Text Objects. Smart Texts can have variables in them using curly braces, eg. `{Email}` that tells the Editor to treat it as form value.
+    [Read more about Smart Objects here](/guides/designs/design-smart)
+</ResponseField>
+
+<ResponseField name="Reference" type="">
+    This is used to set an Object as a placeholder or dummy item, so that it doesn't appear in the final PDF or the preview.
+</ResponseField>
+
+<ResponseField name="Hint" type="">
+    Here, you can provide a text message that is attached as a Note to the Object so that when your customer hovers over that Object, the Note / Tip is shown to customers.
+</ResponseField>

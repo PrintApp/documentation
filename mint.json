@@ -94,6 +94,10 @@
                     "pages": [
                         "guides/designs/about-designs",
                         "guides/designs/create-a-design",
+                        "guides/designs/design-settings",
+                        "guides/designs/design-pages",
+                        "guides/designs/design-objects",
+                        "guides/designs/design-smart",
                         {
                             "group": "Variations",
                             "pages": [
@@ -110,7 +114,6 @@
                                 "guides/designs/modules/calendar"
                             ]
                         },
-                        "guides/designs/design-settings",
                         "guides/designs/import-designs"
                     ]
                 },

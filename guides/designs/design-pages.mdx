@@ -1,0 +1,46 @@
+---
+title: Pages
+description: "Page Settings & Configurations"
+---
+
+A store owner can configure Pages while editing a Design using the Pages tab.
+
+<Tip>You can also sort pages by dragging any single Page in the Navigation panel at the bottom of the Editor</Tip>
+
+<img class="w-80 rounded" src="/images/design-page.png" />
+
+### Values
+
+<ResponseField name="Title" type="">
+    Page title text
+</ResponseField>
+
+<ResponseField name="Width & Height" type="">
+    This is the final Width and Height of the physical product in the Design Unit.
+    <br/>Even when the Page is offsetted, this value is the total physical bounds of the Underlay image.
+</ResponseField>
+
+<ResponseField name="Page Boundary" type="">
+    Sets the Page `Bleed Lines`, `Trim Box` and `Margin Lines`. This value is set in the Design Unit.
+    <br/>Values can be provided in either a single floating point number, two floating point number or four separated with a simple comma.
+    > If a single value is provided eg. `1.2`, that value is repeated for left, top, bottom and right sides.
+
+    > If two values are provided eg. `1.5, 2.0`, The first value affects the top and bottom while the second number affects the left and right bounds.
+
+    > If four values are provided eg. `1.2, 1.3, 1.4, 1.6`, the values are in the order: `top`, `bottom`, `left` and `right`
+</ResponseField>
+
+<ResponseField name="Fold Lines" type="">
+    Fold lines can be displayed for products like Books or foldable menus to show the demarcation center lines.
+    You can provide as many number values as your product requires separating each with a comma.
+</ResponseField>
+
+<ResponseField name="Image Layers" type="">
+    For designs that requires an Underlay or Overlay images, this is where you can assign those images.
+    An Underlay is the lowest layer and can be used to display products like TShirt while Overlay is the topmost layer.
+    To understand more about Underlay and Overlays, please read more [about Print.App Designs](/guides/designs/about-designs)
+</ResponseField>
+
+<ResponseField name="Tags" type="">
+    Tags can be used internally to enable search
+</ResponseField>

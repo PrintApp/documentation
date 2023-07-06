@@ -1,0 +1,62 @@
+---
+title: Design Settings
+description: "Design Settings & Configurations"
+---
+
+A Design can be configured in the Design Tab when editing a design.
+
+<img class="w-80 rounded" src="/images/design-settings.png" />
+
+### Values
+
+<ResponseField name="Title" type="">
+    Design title text
+</ResponseField>
+
+<ResponseField name="Unit" type="">
+    Design measurement units.
+    <br/>Values can be `Centimeters`, `Millimeters`, `Inches`, `Points`, `Pixels`, or `Feet`
+</ResponseField>
+
+<ResponseField name="Welcome Message" type="">
+    This is used to display a welcome message in a modal window.
+    <br/>You can use this medium to give your customer an instruction before they start to edit a Design.
+</ResponseField>
+
+<ResponseField name="Default Tab" type="">
+    Here, you can select the default tab that will be shown when the Editor is launched by your customer.
+    <br/>This will be the first Tab Panel they will see when they enter the Editor.
+</ResponseField>
+
+<ResponseField name="Lock Background" type="">
+    This option hides the Background tab and prevents customers from changing the Design's background color or graphics
+</ResponseField>
+
+<ResponseField name="PDF Download" type="">
+    This option allows your customers to download the PDF file within the Editor.
+</ResponseField>
+
+<ResponseField name="DPI Check" type="">
+    This option shows a warning message to customers if they add an image into the Editor that is below the Design's set DPI threshold.
+</ResponseField>
+
+<ResponseField name="Chain Color" type="">
+    This option makes it possible to chain colors across a design. It means when customers change the color of an item, similar items with the same color gets updated with the new color as well.
+</ResponseField>
+
+<ResponseField name="PDF Version" type="">
+    Version in which the final PDF should be rendered in.
+</ResponseField>
+
+<ResponseField name="PDF Color Profile" type="">
+    Color Profile to use in Rendering the final PDF. This allows you to select an ICC color profile through which all colors are mapped during PDF rendering.
+    <br/>You can select from several standard CMYK color print profiles
+</ResponseField>
+
+<ResponseField name="Render Crop Marks" type="">
+    Enabling this option instructs the PDF renderer to Print the Crop marks on the final PDF file as well as raster downloads.
+</ResponseField>
+
+<ResponseField name="Tags" type="">
+    Tags can be used internally to categorize your designs for search
+</ResponseField>
