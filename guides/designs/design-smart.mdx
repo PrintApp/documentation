@@ -52,3 +52,14 @@ Let us dissect the values by following each sets of curly braces *(opening and c
     -   The double colon `::` implies that the first colon is a separator while the second one should be included in the final text value. So you have `Phone: 081444 2822 Ext: 02` as the final text; replacing the numbers with whatever your customer provides.
 
 -   The Address line spans 3 rows and should be treated as a single Title, Value pair. With this, a multi line textbox is provided for the user to type into. If they omit line 2 of the address, the text shifts up.
+
+
+### Smart Text Summary
+
+|   |   |  |
+| --- | --- | --- |
+| `{title}` | - | Opening and closing braces is used to create a smart text title |
+| `{title:Default}` | - | A default text value can be provided with a separation colon after the title |
+| `!` | - | Exclamation means this line is requried |
+| `*` | - | Asteriks means the title following should be included in the final text as well |
+| `::` | - | Double colon means a colon should be added to the final text |
