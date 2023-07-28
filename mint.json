@@ -50,6 +50,7 @@
                 {
                     "group": "Specifications",
                     "pages": [
+                        "configuration/specifications/files",
                         "configuration/specifications/language"
                     ]
                 }
@@ -114,6 +115,7 @@
                                 "guides/designs/modules/calendar"
                             ]
                         },
+                        "guides/designs/pdf-layers",
                         "guides/designs/import-designs"
                     ]
                 },
