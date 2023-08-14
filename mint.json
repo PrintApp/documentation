@@ -99,6 +99,7 @@
                         "guides/designs/design-pages",
                         "guides/designs/design-objects",
                         "guides/designs/design-smart",
+                        "guides/designs/design-qrcode",
                         {
                             "group": "Variations",
                             "pages": [

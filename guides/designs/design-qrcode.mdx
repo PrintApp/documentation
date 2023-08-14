@@ -1,0 +1,32 @@
+---
+title: QRCode
+description: "How to create and configure a QRCode Object"
+---
+
+A QR code (quick-response code) is a type of two-dimensional matrix barcode that can be scanned to display text information. Most smart phones today can scan QRCodes and reveal the information contained therein.
+
+<Tip title="Editor showing a QRCode">
+    <Frame>
+        <img src="/images/object-qrcode.png" />
+    </Frame>
+</Tip>
+
+### How to create a QRCode
+
+-   To get started, load a Design or open one for edit from your [Admin Designs page](https://admin.print.app/designs)
+
+-   In your design, you should find the QRCode icon on the top menu bar as shown below:
+    <img width="320" src="/images/qrcode.png" />
+    Click to create a new QRCode Object.
+
+-   Once the Object has been created, you can edit its content by either clicking the spanner tool or the Object tab. On the Object tab, you should find the QRCode segment where you can type in any value to update the QRCode image.
+
+### How to bind your QRCode value to a text field
+
+-   In addition to static text, you can also bind your QRCode Object's value to any text element on the cavas. To do that, first create a Text Object. Then give your Text Object a title, for example `address`
+    <img width="320" src="/images/object-title.png" />
+
+-   Next, you need to enter that title in opening and closing braces `{title}` in the QRCode's text input. You can include as many titles as you want and also mix it with static Texts
+    <img width="320" src="/images/edit-qrcode.png" />
+
+-   Save your design and test. The QRCode will update once the value of the text changes when your customers edit the text either through a form or on canvas.
