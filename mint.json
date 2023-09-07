@@ -100,6 +100,7 @@
                         "guides/designs/design-objects",
                         "guides/designs/design-smart",
                         "guides/designs/design-qrcode",
+                        "guides/designs/design-patterns",
                         {
                             "group": "Variations",
                             "pages": [
