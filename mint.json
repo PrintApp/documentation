@@ -60,6 +60,12 @@
             "group": "Platforms",
             "pages": [
                 {
+                    "group": "Shopify",
+                    "pages": [
+                        "platforms/shopify/installation"
+                    ]
+                },
+                {
                     "group": "Wordpress",
                     "pages": [
                         "platforms/wordpress/installation",
@@ -81,6 +87,12 @@
                         "platforms/opencart/installation",
                         "platforms/opencart/demo-store",
                         "platforms/opencart/how-to-access-files"
+                    ]
+                },
+                {
+                    "group": "BigCommerce",
+                    "pages": [
+                        "platforms/bigcommerce/installation"
                     ]
                 },
                 "platforms/platform-features"
