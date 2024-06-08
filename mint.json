@@ -133,14 +133,23 @@
                         "guides/designs/import-designs"
                     ]
                 },
-                "guides/projects/download-order-files"
+                "guides/projects/download-order-files",
+                "guides/designs/assign-resources"
             ]
         },
         {
             "group": "Resources",
             "pages": [
-                "guides/resources/colors",
-                "guides/resources/fonts",
+                {
+                    "group": "Colors",
+                    "pages": [
+                        "guides/resources/colors/all-about-colors",
+                        "guides/resources/colors/ICC-Profiles",
+                        "guides/resources/colors/import-colors-Pantone-HKS",
+                        "guides/resources/colors/create-Cut-Contour-lines"
+                    ]
+                },
+                "guides/resources/text-and-fonts",
                 "guides/resources/graphics"
             ]
         },
