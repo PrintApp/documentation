@@ -126,7 +126,8 @@
                             "pages": [
                                 "guides/designs/modules/page-selector",
                                 "guides/designs/modules/mail-merge",
-                                "guides/designs/modules/calendar"
+                                "guides/designs/modules/calendar",
+                                "guides/designs/modules/photos-module"
                             ]
                         },
                         "guides/designs/pdf-layers",
