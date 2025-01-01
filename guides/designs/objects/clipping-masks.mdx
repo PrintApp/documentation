@@ -1,0 +1,44 @@
+---
+title: Clipping Masks
+description: "How to create and configure a Clipping Mask"
+---
+
+A clipping mask is a Shape that is used to clip an image. When you enable the Clipping Mask option, the image will be clipped inside the shape like a circle, square, or any other shape.
+
+<Tip>
+    Sample video showing a Clipping Mask
+    <Frame>
+        <video controls className="w-full aspect-video" src="https://d3f4dd8gq49w54.cloudfront.net/docs/clipping-mask.mp4"></video>
+    </Frame>
+</Tip>
+
+
+### How to create a Clipping Mask
+
+<Steps>
+    <Step title="Add a Shape">
+        First, add a shape to the canvas. You can add a circle, square, or any other shape from our Simple Shapes library.
+
+        <img width="320" src="/images/add-shapes.png" alt="Add a Shape" />
+
+        Alternatively, you can upload you own unique shape by clicking on the Upload button in Graphics tab.
+        <br/>_It has to be to be a simple shape with single continous path._
+        
+    </Step>
+    <Step title="Select your Shape and Enable Clipping Mask">
+        Click on the shape to select it, then enable the `Set as Clipping Mask` option from the Object tab on the left side of the Editor.
+        <br/>If you don't see this option, it's most likely your Shape is not a simple shape or it has multiple paths.
+
+        <img width="320" src="/images/enable-clipping-mask.png" alt="Enable Clipping Mask" />
+    </Step>
+    <Step title="Upload an Image">
+        Now, click on either the button or the thumbnail image on the Shape to upload an image into the Clipping Shape.
+        <img width="320" src="/images/thumb-clipping-mask.png" alt="Upload an Image" />
+        The image will be clipped and positioned inside the shape.
+        Once you have the image inside the shape, you can use the context Button labelled **Select Group** to toggle between selecting the whole group and selecting the image only. And you can drag to position or scale them.
+    </Step>
+    <Step title="Fit Photo inside Frame">
+        If you want the image to be resized to fit inside the Clipping Mask, enable the `Fit Photo inside Frame` option from the Object tab.
+        <br/>This will resize the image to fit inside the shape.
+    </Step>
+</Steps>

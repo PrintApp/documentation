@@ -109,10 +109,17 @@
                         "guides/designs/create-a-design",
                         "guides/designs/design-settings",
                         "guides/designs/design-pages",
-                        "guides/designs/design-objects",
-                        "guides/designs/design-smart",
-                        "guides/designs/design-qrcode",
-                        "guides/designs/design-patterns",
+                        {
+                            "group": "Canvas Objects",
+                            "pages": [
+                                "guides/designs/objects/settings",
+                                "guides/designs/objects/presets",
+                                "guides/designs/objects/clipping-masks",
+                                "guides/designs/objects/smart",
+                                "guides/designs/objects/qrcode",
+                                "guides/designs/objects/patterns"
+                            ]
+                        },
                         {
                             "group": "Variations",
                             "pages": [
