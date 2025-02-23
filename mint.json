@@ -179,7 +179,8 @@
                     "group": "Editor",
                     "pages": [
                         "api-reference/editor/installation",
-                        "api-reference/editor/configuration"
+                        "api-reference/editor/configuration",
+                        "api-reference/editor/embed"
                     ]
                 }
             ]
