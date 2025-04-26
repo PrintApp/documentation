@@ -16,10 +16,6 @@
         {
             "name": "Community",
             "url": "https://discord.gg/XNdtdFxNdE"
-        },
-        {
-            "name": "Roadmap",
-            "url": "https://roadmap.print.app/tabs/2-planned"
         }
     ],
     "topbarCtaButton": {
@@ -47,6 +43,7 @@
                 "configuration/editor/editor",
                 "configuration/settings",
                 "configuration/webhooks",
+                "configuration/connectors",
                 {
                     "group": "Specifications",
                     "pages": [
