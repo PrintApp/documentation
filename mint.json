@@ -128,6 +128,7 @@
                         {
                             "group": "Modules",
                             "pages": [
+                                "guides/designs/modules/stickers",
                                 "guides/designs/modules/page-selector",
                                 "guides/designs/modules/mail-merge",
                                 "guides/designs/modules/calendar",
