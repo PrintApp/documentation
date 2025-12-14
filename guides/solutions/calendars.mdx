@@ -1,0 +1,115 @@
+---
+title: Printable Calendars
+description: "End‑to‑end guide to build calendar products with the Calendar module—cover, months, images, and print‑ready output."
+---
+
+Create wall, desk, or poster calendars your customers can personalize and submit as print‑ready PDFs. This guide shows the end‑to‑end flow using the built‑in Calendar module.
+
+<Tip>
+If you're new to the Calendar feature, start with the module basics here: <a href="/guides/designs/modules/calendar">Calendar Module</a>
+</Tip>
+
+## When to use this
+
+- 12‑month wall calendars (cover + monthly pages)
+- Year‑at‑a‑glance poster calendars (all months on one page)
+- Photo calendars (monthly grid + user photo area)
+- Desk tent calendars or mini calendars (compact layouts)
+
+## Prerequisites
+
+- A Print.App account with access to your <a href="https://admin.print.app/designs">Admin Designs</a>
+- At least one store installation set up (see <a href="/installation">Installation</a>)
+- Basic familiarity with adding text/images to a Design
+
+## 1) Create a Calendar Design
+
+1. In your <a href="https://admin.print.app/designs">Admin Designs</a>, create a new Design for your product size (e.g., A3, Letter, 12×12 in).
+2. Add a Cover page (optional) and a Month page template you’ll duplicate.
+3. Set bleed/margins as needed. You can also review global Designer lines and snapping under <a href="/configuration/settings">Settings</a> → Designer Settings.
+
+## 2) Enable the Calendar module
+
+1. Open the Design in the editor.
+2. In the left Design panel, click <strong>Add Module</strong> → <strong>Calendar</strong>.
+	 <img width="320" src="/images/add-calendar.png" />
+3. Configure defaults such as Year, Week/Day labels, Cell gap and typography.
+	 <img width="320" src="/images/calendar-form.png" />
+
+<Note>
+The Calendar module generates Month objects you can style like other elements. You can create one or many month grids and position them anywhere on your page(s).
+</Note>
+
+## 3) Add and lay out months
+
+Once the module is enabled, a Calendar button appears in the top menubar.
+
+- Click the button to insert a Month onto the canvas.
+	<Frame>
+		<img src="/images/calendar-window.png" />
+	</Frame>
+
+- For monthly pages: add one Month per page and position it under your artwork/photo area.
+- For a yearly poster: add twelve Months to a single page and arrange them in a 3×4 grid (or your preferred layout).
+
+To change a month, select the Month object and update its date from the context menu.
+
+<Frame>
+	<img src="/images/calendar-month.png" />
+</Frame>
+
+### Styling tips
+
+- Use your brand fonts/colors for month names and day labels.
+- Adjust cell gap and line weights for print clarity at your chosen size.
+- Add holidays or special dates as separate small text objects or icons overlaying specific cells.
+
+## 4) Add personalization areas
+
+- Add an Image placeholder or a framed area above/beside the month grid for customer photos.
+- Include optional caption Texts (e.g., “January Caption”), which customers can edit.
+- Consider a cover page with a large photo area and a title Smart Text.
+
+<Tip>
+For large photo‑driven calendars, you can also explore the <a href="/guides/designs/modules/photos-module">Photo Print Module</a> to pre‑define photo sets your customers can drop images into. Keep the Calendar grid on each page and reserve a region for the photo set.
+</Tip>
+
+## 5) Prepare sizes, variants and finishing
+
+- Create separate Designs for each size/aspect ratio you’ll sell (e.g., A3 vs Letter). Keep the month grid readable at print DPI.
+- Add drill/punch marks, wire‑bind margins or clear safe areas in your template as needed.
+- If you offer different start months (e.g., academic calendars), duplicate the Design and change the arranged sequence of months accordingly.
+
+## 6) Assign to a product and test
+
+1. Save your Design.
+2. Assign it to a product on your platform (via your platform plugin) or integrate via <a href="/api-reference/editor/installation">Custom Installation</a>.
+3. Open the product on your storefront and launch the Designer as a customer.
+4. Personalize: upload images, edit captions, review each month page.
+5. Save/Submit and verify the generated previews.
+
+<Note>
+PDF output contains your final page sequence (cover + months). Ensure every page includes the correct month grid and any bleed/trim marks you require.
+</Note>
+
+## Quality checklist
+
+- Month grids display the correct year and month names across all pages
+- Day labels and week starts match your locale/style
+- Photo/caption areas don’t overlap the grid at small screens
+- Lines, cell gaps and type sizes remain legible at print size
+- Bleed/margins are set, and punch/bind areas are clear of critical content
+
+## Troubleshooting
+
+- Can’t see the Calendar button? Confirm the Calendar module is added to the Design.
+- Month shows wrong year? Select the Month object and update the date in its context menu; also review the module’s Year default.
+- Customize button missing on your product page? See <a href="/installation">Installation</a> and the troubleshooting note in that guide.
+
+## Related
+
+- <a href="/guides/designs/modules/calendar">Calendar Module</a>
+- <a href="/guides/designs/modules/photos-module">Photo Print Module</a>
+- <a href="/guides/designs/modules/page-selector">Page Selector</a>
+- <a href="/configuration/editor/editor">Design Editor</a>
+
