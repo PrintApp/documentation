@@ -1,0 +1,74 @@
+---
+title: Logo Pattern Builder
+description: "How to create a Logo Pattern Design Template"
+---
+
+The Logo Pattern Builder is a module that allows customers to upload their logo and create a repeating pattern on a defined canvas area. This can be used for Wrapping Paper, Greaseproof Paper, or any design that requires a repeating pattern.
+
+<Frame>
+    <img src="/images/logo-pattern.png" />
+</Frame>
+
+<Tip>
+**You can try out a demo [Sample Here](https://create.print.app/cid_5YFG6v/demo)**
+</Tip>
+
+Uses can customize the spacing, rotation, and scale of the pattern to create a unique design..
+
+It can automatically remove backgrounds from uploaded logos, and also supports tolor tinting to generate a pattern in a single color.
+
+To get started, load a Design or open one for edit from your [Admin Designs page](https://admin.print.app/designs)
+
+
+<Steps>
+    <Step title="Create a new Design Template">
+        You can create a new design template by clicking the `Create New Design` button on the top right of the Designs page.
+
+        Add a blank page to your design and set the desired Canvas size for your pattern canvas. You can also set a background or underlay if you want to show customers a preview of the final product.
+    </Step>
+    <Step title="Add Pattern Module to Design">
+        You need to enable the Logo Pattern Module so we can set the desired DPI, Color requirements and other configurations.
+        Click the Design tab on the left panel and then click the `Add Module` button and click Logo Pattern from the list.
+        <img 
+            src="/images/add-logo-pattern.png" 
+            alt="Add Logo Pattern Module"
+            style={{width: "250px"}}
+            className="rounded-lg"
+        />
+    </Step>
+    <Step title="Configure Module">
+        You should see the Logo Pattern configuration form as shown in this picture:
+        <img 
+            src="/images/logo-pattern-form.png" 
+            alt="Logo Pattern Module Configuration Form"
+            style={{width: "400px"}}
+            className="rounded-lg"
+        />
+    </Step>
+    <Step title="Configure Settings">
+        -   **DPI** - Set the minimum DPI for the pattern. If your customers upload a logo with a lower DPI, they will be prompted to upload a higher resolution logo or reduce the size value of the impression. This only applies to Raster images such as PNG or JPEG, Vector files or PDFs are not affected by this setting.
+
+        -   **Remove Background** - Enabling this will automatically remove the background from uploaded logos, this is useful for customers who do not have the technical knowledge to remove the background from their logos before uploading.
+
+        -   **Color Requirements** - You can retain the original color in the uploaded files or tint them to generate a pattern in a single color. Here, you can select the color category where to source the colors from in your store. Colors are defined in your [Admin Colors page](https://admin.print.app/colors)
+
+        -   **Show Presets** - This will show a list of preset patterns that customers can choose from to apply to their design.
+
+        -  **Show Settings** - This option will display the pattern settings to customers, allowing them to customize the spacing, rotation, and scale of the pattern to create a unique design.
+
+        -  **Upload Prompt** - This is the message that will be shown to customers when they are prompted to upload their logo. You can use this field to provide instructions on the required logo specifications such as file type, DPI, and color requirements.
+    </Step>
+    <Step title="Save and Publish Design">
+        Once you are done configuring the module, click the `Preview` button to preview and save your design.
+        You can then assign it to a product and publish it to your storefront for customers to start creating their own logo pattern designs.
+
+        Alternatively, you can create a Project URL from this design template to see how it looks to the customers without having to assign it to a product. You can do this by clicking the `Create Project URL` button on the more menu against the design.
+
+        <img 
+            src="/images/preview-url.png" 
+            alt="How to generate a Project URL to preview your design"
+            style={{width: "400px"}}
+            className="rounded-lg"
+        />
+    </Step>
+</Steps>
