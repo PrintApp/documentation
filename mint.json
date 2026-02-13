@@ -11,6 +11,11 @@
         "light": "#00CD17",
         "dark": "#008B10"
     },
+    "seo": {
+        "metatags": {
+            "canonical": "https://print.app/docs"
+        }
+    },
     "modeToggle": { },
     "topbarLinks": [
         {
