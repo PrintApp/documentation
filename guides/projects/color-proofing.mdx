@@ -1,0 +1,54 @@
+---
+title: Soft Color Proofing
+description: "Color proofing lets your customers preview their design colors as they will appear in print before they place an order."
+---
+
+Color proofing is a powerful feature in Print.App that allows your customers to see a preview of how their design colors will look when printed. This is especially important for ensuring that the colors in the design match the expected output, as colors can sometimes appear differently on screen compared to print.
+
+<Tip>
+It's similar to Photoshop's soft proofing feature, where you can simulate how colors will look on different devices or under different lighting conditions.
+</Tip>
+
+This helps to set accurate expectations for your customers and reduce the likelihood of returns or dissatisfaction due to color discrepancies.
+<Frame caption="Screenshot of color proofing in the Print App editor preview window">
+    <img src="/images/proofing.png" />
+</Frame>
+
+
+### How to enable color proofing
+
+<Steps>
+    <Step title="Create a new Design Template">
+        To get started, create a new Design in your [Admin Designs page](https://admin.print.app/designs) or go to any of your existing Designs.
+    </Step>
+
+    <Step title="Assign an ICC Profile to the Design">
+        Click the Design tab on the left panel and scroll down to where you see **PDF Rendering**. For Proofing to work, you need to assign an ICC Profile to your design. Pull down the Color Profile dropdown and select the ICC profile that matches your product's printing process. Ensure it's a CMYK profile, as you will not see any difference if an RGB profile is selected, being the same profile as your screen.
+
+        <img 
+            src="/images/proofing-editor.png" 
+            alt="Enabling Proofing in the Editor"
+            style={{width: "250px"}}
+            className="rounded-lg"
+        />
+    </Step>
+    <Step title="Enable Color Proofing">
+        Once you select the ICC profile, scroll down and toggle ON the **"Enable Color Proofing"** switch.
+    </Step>
+    <Step title="Preview Color Proofing">
+        You can see it applied in the preview mode. Simply click the Preview button on the top right of the editor and you will see the colors in the preview change to reflect the color proofing simulation based on the ICC profile you selected.
+    </Step>
+    <Step title="Save and Assign Design">
+        Save your Design and assign it to a product.
+    </Step>
+    <Step title="Additional Options">
+        Optionally, you can also enable the Proofing across your entire store by enabling it in your [Admin Settings Page](https://admin.print.app/setting). This option will override the individual design settings.
+        <Frame>
+            <img src="/images/proofing-settings.png" />
+        </Frame>
+    </Step>
+</Steps>
+
+<Tip>
+You can also apply ICC profiles to your PDF by using the **PDF Output Profiles** feature, which is more robust, and in addition, passes along a Rendering Intent for the proof simulation.<br/><br/>You can read more about it here: [PDF Output Profiles guide](/guides/projects/pdf-output-profiles).
+</Tip>

@@ -146,6 +146,7 @@
                     ]
                 },
                 "guides/projects/pdf-output-profiles",
+                "guides/projects/color-proofing",
                 "guides/designs/assign-resources"
             ]
         },
@@ -156,9 +157,9 @@
                     "group": "Colors",
                     "pages": [
                         "guides/resources/colors/all-about-colors",
-                        "guides/resources/colors/ICC-Profiles",
-                        "guides/resources/colors/import-colors-Pantone-HKS",
-                        "guides/resources/colors/create-Cut-Contour-lines"
+                        "guides/resources/colors/icc-profiles",
+                        "guides/resources/colors/import-colors-pantone-hks",
+                        "guides/resources/colors/create-cut-contour-lines"
                     ]
                 },
                 "guides/resources/text-and-fonts",
