@@ -44,13 +44,13 @@ Think of an Address or user details. It has the a name, email, phone number with
 Address Line 2,
 City, Zip Code}
 ```
-Consider the above as the full text you typed into a mutlti line textbox.
+Consider the above as the full text you typed into a multi line textbox.
 <br/>This is how it will appear in the form:
 <img width="340" src="/images/smart-text-multi.png" />
 
 Let us dissect the values by following each sets of curly braces *(opening and closing)*.
 
--   `{Name:Jane Doe}`: The first item before a colon `:` is teated as the title while the text that follows is treated as the default value. Here, the title is Name, and the default value is Jane Doe.
+-   `{Name:Jane Doe}`: The first item before a colon `:` is treated as the title while the text that follows is treated as the default value. Here, the title is Name, and the default value is Jane Doe.
 
 -   `{Email}`: This is treated as the Title with no default text value.
 
@@ -68,6 +68,42 @@ Let us dissect the values by following each sets of curly braces *(opening and c
 | --- | --- | --- |
 | `{title}` | - | Opening and closing braces is used to create a smart text title |
 | `{title:Default}` | - | A default text value can be provided with a separation colon after the title |
-| `!` | - | Exclamation means this line is requried |
-| `*` | - | Asteriks means the title following should be included in the final text as well |
+| `!` | - | Exclamation means this line is required |
+| `*` | - | Asterisk means the title following should be included in the final text as well |
 | `::` | - | Double colon means a colon should be added to the final text |
+
+<Tip>
+    Only the **first** colon separates the title from the default — a default may itself contain colons: `{Time:: 9:00}` shows a field titled Time with the default `9:00`, printed as `Time: 9:00`.
+</Tip>
+
+### Typed fields
+
+For real form controls — email or phone inputs, dropdowns, length limits — add a pipe `|` after the title, followed by comma-separated attributes:
+
+```Text
+{!Email | type: email}
+{Phone | type: tel, showtitle, colon}
+{Size | type: select, options: S; M; L; XL, default: M}
+{Qty | type: number, default: 1}
+{Notes | multiline, lines: 4, max: 200}
+```
+
+A token whose `|` section names one of the attributes below is a typed field — a `|` used as plain text (with no attribute after it) keeps its normal meaning. The form renders a matching input: `select` becomes a dropdown of the `options` (separated by `;`), `email` / `tel` / `number` set the input type (with the right on-screen keyboard on mobile), `max` caps the text length, and `multiline` / `lines` render a sized textarea.
+
+| Attribute |  |
+| --- | --- |
+| `type: text\|email\|tel\|url\|number\|select` | The form input type. `select` renders a dropdown of `options`. |
+| `options: A; B; C` | Dropdown choices, separated by `;` (used with `type: select`). |
+| `default: value` | Initial value, like the legacy `{Title:Default}`. |
+| `required` | The customer must fill this field (same as the `!` prefix). |
+| `showtitle` | Print the title with the value (same as the `*` prefix). |
+| `colon` | Render a colon after the printed title (same as `::`). |
+| `multiline` | Multi-line input. |
+| `lines: n` | Number of textarea rows (implies `multiline`). |
+| `max: n` | Maximum text length. |
+
+The legacy `!` and `*` prefixes remain valid on a typed title — `{!Email | type: email}` is both required and an email input. Legacy and typed tokens can be mixed freely in one text object.
+
+<Tip>
+    In the new (printfx) editor, form values are additionally keyed by the field **title** rather than the raw token — so editing a default or an attribute later no longer disconnects values customers already saved.
+</Tip>
