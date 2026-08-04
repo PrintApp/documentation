@@ -1,0 +1,70 @@
+---
+title: Fields & choices
+description: "The question types Print Options offers, how each one can be displayed, and how to show or hide fields based on earlier answers."
+---
+
+An option set is made of **sections**, and each section holds **fields** — the
+individual questions your customer answers.
+
+## Field types
+
+| Type | Use it for |
+| --- | --- |
+| **Single choice** | Pick exactly one — paper, finish, binding. |
+| **Multiple choice** | Pick any number — extra finishes, add-ons. |
+| **Quantity** | Copies or print run. Drives all per-unit pricing. |
+| **Number** | Any free numeric value, like page count. |
+| **Text** | Customer-entered text, such as a job reference. |
+| **Dimensions** | Width × height, for area pricing. |
+| **File upload** | Artwork or documents — see [Artwork uploads](/print-options/guides/uploads). |
+| **Info / summary** | Not a question: a static note, or a live recap of everything chosen. |
+
+<Note>
+    An option set has at most one Quantity field. It is what "per unit" pricing
+    multiplies by, so the stepper, the summary and the price can never
+    disagree.
+</Note>
+
+## Choosing how a field looks
+
+The **Display** setting changes the control without changing the data:
+
+- **Single / multiple choice** — Pills, Image cards, Image grid, Colour
+  swatches, Dropdown, or List.
+- **Quantity** — Stepper, preset Pills, preset Dropdown, or a plain input.
+  Presets are ideal for print runs: 100 / 250 / 500 / 1000.
+- **Dimensions** — width and height inputs with a unit selector.
+
+<Tip>
+    Image cards and grids show a picture per choice. Upload it on the choice —
+    it is downscaled and embedded automatically, so there is nothing to host.
+</Tip>
+
+## Making a field required
+
+Turn on **Required** in the field's Basics tab. If a customer tries to add to
+cart without answering, the configurator marks the field and scrolls to it —
+so the button never simply refuses without explanation.
+
+## Showing fields only when they apply
+
+Every field can carry visibility rules under the **Logic** tab: show this field
+only when an earlier answer matches. A "Hardcover binding colour" field, for
+instance, appears only when the binding choice is *hardcover*.
+
+Hidden fields are also excluded from pricing — a customer never pays for an
+option they were never shown.
+
+## Roles
+
+Fields can carry an optional **Role** (Size, Pages, Material, Orientation).
+Roles let connected tools find the right field no matter what you named it —
+for example, a design tool reading your four size options instead of asking
+you to define them twice. Leave it as *None* unless you use such an
+integration; see the [Page API](/print-options/developers/page-api).
+
+## SKUs
+
+Each choice can carry a SKU fragment. When the customer configures a job, the
+fragments combine into a resolved SKU that travels with the order — so your
+production system sees `BC-350-MATTE-500`, not a paragraph of prose.

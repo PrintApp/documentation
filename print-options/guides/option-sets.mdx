@@ -1,0 +1,80 @@
+---
+title: Option sets & templates
+description: "Option sets are named groups of choices and pricing rules. Create them from print templates, share one set across many products, and update them all at once."
+---
+
+An **option set** is everything a customer answers about a print job — sizes,
+materials, finishes, quantities, artwork — together with the pricing rules that
+turn those answers into a price.
+
+Sets are independent of products. One set can serve a single product or fifty,
+and editing it updates every product that uses it.
+
+## Starting from a template
+
+Templates are complete, working option sets for common print products:
+
+| Template | What it demonstrates |
+| --- | --- |
+| **Business Cards** | Stock, finish and corners with quantity price breaks |
+| **Flyers** | Size and sides with tiered per-unit pricing |
+| **Postcards** | A wizard-style flow across several steps |
+| **Booklets** | Cover and inner pages, per-page pricing, artwork upload |
+| **Stickers** | Die-cut shapes with area-based pricing |
+| **Posters** | Customer-entered dimensions, per-square-metre pricing |
+| **T-Shirts** | Size × colour variant matrix with print locations |
+| **Thesis Binding** | PDF upload driving per-page pricing |
+| **Blank** | An empty product to build from scratch |
+
+Every template is a starting point: rename anything, delete what you don't
+sell, and set your own prices.
+
+<Frame><img class="rounded-md" alt="Choosing a print template" src="/images/po-templates.png" /></Frame>
+
+## The builder
+
+The builder has three panes:
+
+- **Outline** (left) — the structure of your set: sections, and the fields
+  inside them. Drag to reorder, and use the `+` buttons to add.
+- **Editor** (middle) — the settings for whatever you selected: a field's
+  label, type, choices and price changes, or the product's own settings.
+- **Preview** (right) — the real configurator, updating as you edit. What you
+  see here is what your customer sees.
+
+<Frame><img class="rounded-md" alt="The Print Options builder" src="/images/po-builder.png" /></Frame>
+
+<Tip>
+    Your work saves as you type. The **Product** settings — reached by
+    clicking the product name at the top of the outline — hold the title,
+    layout (all sections at once, or a step-by-step wizard) and currency.
+</Tip>
+
+## Sharing a set across products
+
+Shopify and WordPress reach the same behaviour by different routes:
+
+<CodeGroup>
+
+```text Shopify
+Products page → find a product that has the options →
+"Apply to more…" → tick the other products → Apply
+```
+
+```text Wordpress
+Open each product → Print Options tab →
+choose the same set from the dropdown → Update
+```
+
+</CodeGroup>
+
+Once several products share a set, editing it once republishes to all of them.
+The builder tells you how many: the publish button reads **Update 4 products**
+rather than just Publish.
+
+## Removing options from a product
+
+Choose **Remove** on the Shopify Products page, or select **None** in the
+WordPress product tab. The product immediately reverts to your store's normal
+add-to-cart, and nothing about the option set itself changes — other products
+using it are unaffected.

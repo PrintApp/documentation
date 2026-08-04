@@ -1,0 +1,113 @@
+---
+title: Page API
+description: "The on-page JavaScript contract of the Print Options configurator: read state, write selections and file facts, subscribe to changes, and gate add-to-cart."
+---
+
+Scripts running on the product page — a design tool, an upload service, your
+own code — can talk to the configurator directly. Read what the customer has
+chosen, write into it, react to changes, and block add-to-cart until your own
+step is complete.
+
+Everything here is **draft state**. The price that gets charged is always
+recomputed and signed on our servers at add-to-cart, so this API is open by
+design: a script can only produce a correctly priced cart line, or a refusal.
+
+## Getting the element
+
+```js
+const po = document.querySelector("print-configurator");
+
+po.addEventListener("ready", (event) => {
+    console.log("options loaded", event.detail);
+});
+```
+
+Wait for `ready` (or check that `po.state` is not `null`) before reading — the
+option set may still be loading when your script runs.
+
+## Reading
+
+| Property | Returns |
+| --- | --- |
+| `po.state` | Current selections, quantity, price, file, holds, and whether the configuration is valid. |
+| `po.schema` | The merchant's full option set: sections, fields, choices, pricing rules. |
+| `po.field(idOrRole)` | One field definition, found by id or by [role](/print-options/guides/fields). |
+
+```js
+// The four sizes this merchant sells, whatever they named the field
+const sizes = po.field("size").options;
+```
+
+Both `state` and `schema` hand back copies, so mutating what you read never
+affects the configurator.
+
+## Writing
+
+```js
+// Set one answer, as if the customer chose it
+po.setSelection("paper", "matte", { source: "my-app" });
+
+// Several at once — one recalculation, one change event
+po.setSelections({ size: "a4", qty: 250 }, { source: "my-app" });
+
+// Attach file facts — this is how an upload service drives per-page pricing
+po.setFile({ fileId: "job-77", source: "my-app", pages: 12 }, { source: "my-app" });
+```
+
+Writes go through exactly the same validation and pricing path as a customer's
+click. Unknown fields or invalid values are ignored with a console warning —
+never an exception, so a partner script cannot break the product page.
+
+## Reacting to changes
+
+```js
+po.addEventListener("change", (event) => {
+    const { source, changed, price, selections } = event.detail;
+    if (source === "my-app") return;          // ignore your own writes
+    if (changed.includes("selections.pages")) {
+        updateMyPreview(selections.pages);
+    }
+});
+```
+
+Every event carries the `source` tag of the write that caused it and a
+`changed` list of what moved. Tag your writes and ignore your own echoes —
+that is all loop prevention takes. Writing a value that is already set emits
+nothing at all.
+
+## Gating add-to-cart
+
+Named **holds** let several integrations gate independently without fighting
+each other. The button re-enables only when every hold is released.
+
+```js
+po.addHold("my-app", { message: "Finish your design to continue" });
+// ...when your step completes:
+po.releaseHold("my-app");
+```
+
+While a hold is active the Add to cart button is disabled and your message
+shows beside it. Validation, by contrast, never disables the button — clicking
+an incomplete form scrolls to what is missing, which is how customers discover
+it.
+
+## Events
+
+| Event | Fires when | Detail |
+| --- | --- | --- |
+| `ready` | The option set is loaded and initial state computed | Full state |
+| `change` | Any state transition — selection, file, quantity, hold, validity | Full state, plus `source` and `changed` |
+| `submit` | The customer added a valid configuration to the cart | Selections, quantity, price, file, display pairs |
+| `invalid` | Add-to-cart was attempted while invalid or held | The issues, or the holds |
+
+<Note>
+    `ready` and `change` carry a plain object in `event.detail`. The older
+    `submit`, `invalid` and `unconfigured` events pre-date this API and carry
+    an array — read `event.detail[0]` for those.
+</Note>
+
+<Tip>
+    The [live demo](https://options.print.app/demo/) exposes the element as
+    `window.po`. Open your browser console there and try the calls above
+    against a real configurator.
+</Tip>

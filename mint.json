@@ -97,6 +97,37 @@
         },
 
         {
+            "group": "Print Options",
+            "pages": [
+                "print-options/introduction",
+                {
+                    "group": "Getting Started",
+                    "pages": [
+                        "print-options/shopify",
+                        "print-options/wordpress"
+                    ]
+                },
+                {
+                    "group": "Guides",
+                    "pages": [
+                        "print-options/guides/option-sets",
+                        "print-options/guides/pricing",
+                        "print-options/guides/fields",
+                        "print-options/guides/uploads",
+                        "print-options/guides/appearance"
+                    ]
+                },
+                {
+                    "group": "Developers",
+                    "pages": [
+                        "print-options/developers/page-api"
+                    ]
+                },
+                "print-options/faqs"
+            ]
+        },
+
+        {
             "group": "Design Guides",
             "pages": [
                 {
