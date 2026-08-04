@@ -1,0 +1,89 @@
+---
+title: Pricing
+description: "How Print Options prices a job: base price, price changes on choices, quantity breaks, per-page and per-area rates, setup fees and minimum orders."
+---
+
+Print Options prices the way print shops quote: a base, adjustments for the
+choices made, rates that scale with pages or area, then fees and floors.
+
+## The base price
+
+Every option set has a base price, set under **Product** settings:
+
+- **Once per order** — a flat starting amount for the job.
+- **Per unit × quantity** — multiplied by the quantity the customer picks.
+  This is the usual choice for cards, flyers and stickers.
+
+## Price changes on choices
+
+Each choice can carry one or more price changes. Select a choice in the
+builder, open its details, and add them under **Pricing**.
+
+| Type | What it does |
+| --- | --- |
+| **Fixed** | Added once, regardless of quantity. Good for a plate or die charge. |
+| **Per unit** | Multiplied by the quantity. |
+| **Per page** | Multiplied by the uploaded file's page count and the quantity. |
+| **Per colour page** / **Per mono page** | The same, split by colour and black-and-white pages. Needs a file source that reports them, such as [Filecheck](/print-options/guides/uploads). |
+| **Per area** | Multiplied by the job's area and quantity — for banners, posters and stickers. |
+| **Percent** | A percentage of the running total. Good for premium finishes. |
+| **Multiplier** | Multiplies the running total, e.g. `1.1` for double-sided. |
+| **Setup** | A flat fee added at the very end, after percentages and multipliers. |
+
+<Note>
+    Order matters, and it is fixed: amounts first, then percentages, then
+    multipliers, then setup fees, then the minimum price. That is why a paper
+    upgrade multiplier never inflates your plate fee.
+</Note>
+
+## Quantity breaks
+
+Any per-unit, per-page or per-area price — including the base price — can use a
+tier table instead of a single amount. Add tiers in the builder and give each
+row an upper bound, leaving the last row open-ended.
+
+Two modes:
+
+- **Flat** — the whole quantity is priced at the matched row's rate. 500 cards
+  at the "up to 999" rate means all 500 use that rate.
+- **Graduated** — each band is priced at its own rate and summed, like income
+  tax brackets.
+
+```text Example: flat tiers on a per-unit base price
+up to 249    $0.08 each
+up to 499    $0.06 each
+up to 999    $0.045 each
+thereafter   $0.035 each
+```
+
+## Area pricing
+
+For products sized by the customer, add a **Dimensions** field and give the
+relevant choice a **Per area** price change. Set the unit it is priced in —
+square metres, square feet or square inches — and the engine converts the
+customer's width × height for you.
+
+<Tip>
+    If your product's size comes from the uploaded artwork rather than a
+    dimensions field, leave the field reference empty: the area is then taken
+    from the file's own canvas size.
+</Tip>
+
+## Order rules
+
+Under **Product** settings you will find two whole-order rules:
+
+- **Setup fee** — added once to every order, after all percentages and
+  multipliers.
+- **Minimum price** — the total never drops below this, however the options
+  are configured.
+
+## Prices are verified, always
+
+The total in the configurator is a live preview. When the customer adds the job
+to the cart, the same pricing rules run again **on our servers** and the result
+is signed. Your store charges that verified price.
+
+This means a customer who edits prices in their browser achieves nothing — the
+add to cart is simply refused. You never have to reconcile a browser price with
+what you meant to charge.

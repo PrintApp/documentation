@@ -1,0 +1,71 @@
+---
+title: Artwork uploads
+description: "Let customers attach artwork to their print job, and optionally have it validated by Filecheck with page counts, colour detection and preflight."
+---
+
+Add a **File upload** field to any section and your customers can attach their
+artwork to the job. The file travels with the order, so your production team
+receives the specification and the artwork together.
+
+## Basic uploads
+
+Out of the box, a file field accepts the file types you list (PDF by default),
+uploads it securely, and records the filename against the order.
+
+Uploaded files are stored for **30 days** and then removed automatically. Print
+Options is a configurator, not a file archive — download what you need into your
+production workflow.
+
+## Filecheck-validated uploads
+
+[Filecheck](https://apps.shopify.com/filecheck) is our upload preflight
+service. Connected to a file field, it replaces the plain dropzone with an
+intake that actually inspects the file — and hands back facts your pricing can
+use:
+
+| Fact | What it unlocks |
+| --- | --- |
+| **Page count** | Per-page pricing for booklets, theses, documents. |
+| **Colour vs mono pages** | Charging colour and black-and-white pages differently. |
+| **Canvas size** | Area pricing taken from the artwork itself. |
+| **Preflight issues** | Catching bad files before they reach production. |
+
+The moment Filecheck reports on a file, the price updates: a 64-page thesis
+prices itself the instant the PDF lands.
+
+<Note>
+    Filecheck is optional and separate. Without it, uploads still work — you
+    just price by what the customer tells you rather than what the file
+    contains.
+</Note>
+
+### Connecting Filecheck
+
+1.  Set up your product in [Filecheck](https://filecheck.io) and copy your
+    **publishable key**.
+2.  Add it in Print Options:
+    - **Shopify** — theme editor, Print Configurator block, *Filecheck
+      publishable key*.
+    - **Wordpress** — `Print Options` → `Settings` → *Filecheck publishable
+      key*.
+3.  In the builder, select your file field and set its provider to Filecheck.
+
+The publishable key is designed to be public and browser-safe — it identifies
+your account, it does not grant access to it.
+
+## Pricing from file facts
+
+Once a file field reports page counts, use the matching price changes on your
+choices:
+
+- **Per page** — every page, times the quantity.
+- **Per colour page** / **Per mono page** — split rates, so colour costs what
+  colour costs.
+
+A typical thesis set: a base binding charge as a fixed amount, then per-page
+rates on the colour choice.
+
+<Tip>
+    Combine with [tiered pricing](/print-options/guides/pricing): per-page rates
+    can carry quantity breaks, so long documents get cheaper per page.
+</Tip>

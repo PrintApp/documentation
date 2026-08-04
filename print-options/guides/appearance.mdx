@@ -1,0 +1,78 @@
+---
+title: Appearance
+description: "Match the configurator to your store: accent colours, borders and corner radius from the block settings, or full control with CSS variables and part selectors."
+---
+
+The configurator ships deliberately neutral so it looks at home in most themes.
+When you want it to match your brand more closely, there are three levels.
+
+## 1. Block settings
+
+The quickest route, and enough for most stores. On Shopify, open the theme
+editor and select the **Print Configurator** block:
+
+| Setting | Affects |
+| --- | --- |
+| **Button and selected-option colour** | The Add to cart button and the outline on a selected option. |
+| **Button text colour** | Text on that button. |
+| **Border colour** | Field and card borders. |
+| **Corner radius** | Roundness of controls and cards. |
+
+Leave any of them empty to keep the widget's own neutral default.
+
+## 2. CSS variables
+
+For finer control, set `--pc-*` custom properties on the configurator element
+from your theme's CSS. The widget reads them live:
+
+```css
+print-configurator {
+    --pc-color-accent: #b4552d;
+    --pc-color-accent-contrast: #ffffff;
+    --pc-color-border: #e3ded7;
+    --pc-radius-card: 14px;
+    --pc-font-family: "Your Theme Font", sans-serif;
+}
+```
+
+The full set covers colours (`accent`, `accent-contrast`, `accent-soft`,
+`surface`, `surface-alt`, `border`, `text`, `text-muted`, `danger`, `focus`),
+typography (`font-family`, `font-size`, `label-weight`), shape
+(`radius-control`, `radius-card`, `space`, `shadow-card`), the call-to-action
+(`cta-bg`, `cta-color`) and sizing (`swatch-size`, `card-image-height`).
+
+## 3. Part selectors
+
+The configurator renders in a shadow root, which keeps your theme's CSS from
+leaking in and breaking it. To style specific pieces anyway, use `::part()`:
+
+```css
+print-configurator::part(cta) {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+print-configurator::part(summary) {
+    border-width: 2px;
+}
+```
+
+Available parts include `base`, `section`, `section-title`, `field`,
+`field-label`, `field-help`, `field-error`, `summary`, `summary-title`,
+`summary-line`, `summary-recap`, `price`, `cta`, `hold-message`, `dropdown`,
+`dimensions`, and the stepper group (`stepper`, `stepper-input`,
+`stepper-increment`, `stepper-decrement`).
+
+## Layout
+
+Under **Product** settings in the builder, choose how sections are presented:
+
+- **Stacked** — everything on one page. Best for most print products, because
+  the customer sees every choice and the price at once.
+- **Wizard** — one section per step, with next/back. Useful when a product has
+  many sections and the choices are genuinely sequential.
+
+<Tip>
+    On a product page, prefer **Stacked**. Customers comparing paper and
+    quantity want to see both, and the live total, without navigating.
+</Tip>

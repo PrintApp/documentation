@@ -1,0 +1,67 @@
+---
+title: Shopify
+description: "How to install Print Options on your Shopify store, publish your first option set, and show the configurator on your product pages."
+---
+
+<Frame>
+    <img alt="Print Options Shopify image" src="/images/sp.png" />
+</Frame>
+
+Follow these steps to add Print Options to your Shopify store. Setup runs
+automatically on install — there is nothing to copy, paste or configure.
+
+1.  Install **Print Options** from the Shopify App Store. Approve the app when
+    Shopify asks.
+
+2.  The app opens on its **Products** page: every product in your store, and
+    the options each one carries. Click **Add options** on the product you want
+    to configure.
+
+3.  Pick a template — Business Cards, Flyers, Stickers, Thesis Binding and more.
+    It opens in the builder, already priced in your store's currency.
+
+    <Note>
+        Templates are starting points, not fixed products. Rename choices,
+        change prices, add or remove options — see
+        [Option sets](/print-options/guides/option-sets).
+    </Note>
+
+4.  Adjust anything you like, then click **Publish**. Your product now has
+    options.
+
+5.  **One-time theme step.** The configurator renders through a theme block, so
+    add it once:
+
+    - Go to `Online Store` → `Themes` → `Customize`
+    - Open the **Default product** template
+    - `Add block` → `Apps` → **Print Configurator**, and place it above the buy
+      buttons
+    - **Save**
+
+    <Note>
+        The block only renders on products that have published options. Every
+        other product keeps its normal add-to-cart, untouched.
+    </Note>
+
+6.  Visit that product on your storefront. The configurator is there, pricing
+    live. Choose some options and add it to the cart — the price you see is
+    recalculated on our servers before the item is added.
+
+## Managing your options
+
+Back in the app, the **Products** page is where everything lives:
+
+| Action | What it does |
+| --- | --- |
+| **Edit options** | Opens the live copy in the builder. Publishing updates every product using it. |
+| **Apply to more…** | Shares this option set with other products. |
+| **Remove** | Takes the options off the product; it reverts to your theme's normal add-to-cart. |
+
+## Currency and markets
+
+Option prices are set in your store's **default** currency. If you sell in
+several currencies through Shopify Markets, the customer's presentment price is
+converted with Shopify's own exchange rate at cart time — you only ever price
+the job once.
+
+<Snippet file="print-options-troubles.mdx" />
