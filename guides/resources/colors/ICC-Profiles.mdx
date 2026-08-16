@@ -1,42 +1,79 @@
 ---
 title: ICC Color Profiles
-description: ""
+description: "The 27 ICC color profiles built into Print.App, their identifiers, and which printing condition each one describes. Assign one per design template to control RGB to CMYK conversion in the final PDF."
 ---
 
+Print.App ships 27 ICC color profiles. Each one describes a specific combination of press,
+ink and paper, and the profile you assign to a design template is what governs how RGB
+artwork is converted to CMYK in the final PDF.
 
-The following ICC color profiles can be used to map your RGB to their corresponding CMYK values in the final PDF file.
-You can set the different profiles per Design template in the Print.App Designer.
+You set this **per design template**, not globally, in the Print.App Designer. That means a
+business card on premium coated stock and a banner on vinyl can convert through completely
+different profiles from the same store.
+
+<Tip>
+    Not sure which profile a job needs, or looking for the official download and full
+    specifications? See the
+    [CMYK ICC profile reference](https://print.app/resources/icc-profiles) on print.app,
+    which covers what each standard targets, ink limits, and where to get the files.
+    **This page is the configuration reference**: the identifiers below are what you select
+    in the Designer.
+</Tip>
+
+## Choosing one
+
+Two questions decide it, and neither is about software:
+
+1. **Where is the job printing?** Europe generally means the ECI and FOGRA profiles, North
+   America means GRACoL or SWOP, Japan means the Japan Color set.
+2. **On what paper?** Coated and uncoated stock behave very differently. Uncoated absorbs
+   ink, gains dot substantially and reaches a smaller gamut, so it needs its own profile
+   rather than a coated one with adjustments.
+
+If your print provider has named a profile, use the one they named. Their answer beats every
+general rule.
+
+## Available profiles
 
 | Profile | Description |
 |----------|--------------|
-| CMYK  | Generic cmyk conversion |
-| CMYK-coated-fogra27   | . |
-| CMYK-coated-fogra39   | . |
-| CMYK-coated-gracol2006    | . |
-| CMYK-eci-iso-coated-v2-300    | . |
-| CMYK-eci-iso-coated-v2-eci    | . |
-| CMYK-eci-iso-uncoated-yellowish   | . |
-| CMYK-eci-pso-coated-300-npscreen-iso12647 | . |
-| CMYK-eci-pso-coated-npscreen-iso12647 | . |
-| CMYK-eci-pso-lwc-improved | . |
-| CMYK-eci-pso-lwc-standard | . |
-| CMYK-eci-pso-mfc-paper    | . |
-| CMYK-eci-pso-snp-paper    | . |
-| CMYK-eci-pso-uncoated-iso12647    | . |
-| CMYK-eci-pso-uncoated-npscreen-iso12647   | . |
-| CMYK-eci-sc-paper | . |
-| CMYK-japan-200-newspaper  | . |
-| CMYK-japan-2001-coated    | . |
-| CMYK-japan-2001-uncoated  | . |
-| CMYK-japan-2003-web-coated    | . |
-| CMYK-japan-web-coated | . |
-| CMYK-uncoated-fogra29 | . |
-| CMYK-us-web-coated-swop   | . |
-| CMYK-us-web-uncoated  | . |
-| CMYK-web-coated-fogra28   | . |
-| CMYK-web-coated-swop-2006-g3  | . |
-| CMYK-web-coated-swop-2006-g5  | . |
+| CMYK | Generic CMYK conversion. A safe fallback when no printing condition is known, but prefer a specific profile whenever you have one. |
+| CMYK-coated-fogra27 | Coated stock, Europe. The older FOGRA27 characterisation, superseded by FOGRA39. Use only when a printer asks for it by name. |
+| CMYK-coated-fogra39 | Coated stock, Europe. [FOGRA39](https://print.app/resources/icc-profiles/coated-fogra39) characterisation, 330% ink limit. The most widely requested European coated condition. |
+| CMYK-coated-gracol2006 | Premium coated grade 1, North American sheetfed offset. [GRACoL 2006](https://print.app/resources/icc-profiles/gracol-2006-coated1v2), 340% ink limit. Wider gamut than SWOP for commercial sheetfed work. |
+| CMYK-eci-iso-coated-v2-300 | [ISO Coated v2](https://print.app/resources/icc-profiles/iso-coated-v2) limited to 300% total ink. For web offset, faster presses, or stock that will not take 330%. |
+| CMYK-eci-iso-coated-v2-eci | [ISO Coated v2](https://print.app/resources/icc-profiles/iso-coated-v2) at 330% total ink. The European default for coated sheetfed offset. |
+| CMYK-eci-iso-uncoated-yellowish | Uncoated offset on yellowish or natural-white stock, Europe. Use instead of the standard uncoated profile when the paper is visibly warm. |
+| CMYK-eci-pso-coated-300-npscreen-iso12647 | Coated stock with non-periodic (stochastic) screening, limited to 300% ink. For FM screening workflows. |
+| CMYK-eci-pso-coated-npscreen-iso12647 | Coated stock with non-periodic (stochastic) screening, standard ink limit. |
+| CMYK-eci-pso-lwc-improved | [Lightweight coated](https://print.app/resources/icc-profiles/pso-lwc-improved), improved grade, European web offset. Catalogues, magazines and inserts. |
+| CMYK-eci-pso-lwc-standard | Lightweight coated, standard grade. A lower specification than LWC Improved, with a correspondingly smaller gamut. |
+| CMYK-eci-pso-mfc-paper | Machine-finished coated publication stock, European web offset. |
+| CMYK-eci-pso-snp-paper | Standard newsprint, Europe. Very high dot gain and a small gamut. |
+| CMYK-eci-pso-uncoated-iso12647 | [Uncoated white offset](https://print.app/resources/icc-profiles/pso-uncoated-iso12647) stock, Europe. FOGRA47, 300% ink limit. The correct choice for letterheads and uncoated cards. |
+| CMYK-eci-pso-uncoated-npscreen-iso12647 | Uncoated stock with non-periodic (stochastic) screening. |
+| CMYK-eci-sc-paper | Supercalendered publication paper, European web offset. Smoother than newsprint, still uncoated. |
+| CMYK-japan-200-newspaper | Japanese newsprint. High dot gain, low ink limit. |
+| CMYK-japan-2001-coated | [Japan Color 2001 Coated](https://print.app/resources/icc-profiles/japan-color-2001-coated), sheetfed offset. 350% ink limit, notably higher than European or North American coated profiles. |
+| CMYK-japan-2001-uncoated | [Japan Color 2001 Uncoated](https://print.app/resources/icc-profiles/japan-color-2001-uncoated), for uncoated stock in Japan. |
+| CMYK-japan-2003-web-coated | Japan Color 2003 for coated web offset. |
+| CMYK-japan-web-coated | Japanese web offset on coated publication stock. |
+| CMYK-uncoated-fogra29 | Uncoated offset, Europe, FOGRA29 characterisation. |
+| CMYK-us-web-coated-swop | [U.S. Web Coated (SWOP) v2](https://print.app/resources/icc-profiles/us-web-coated-swop), publication web offset, 300% ink limit. Adobe's default CMYK space, which is why it is often selected by accident. |
+| CMYK-us-web-uncoated | Uncoated web offset, North America. |
+| CMYK-web-coated-fogra28 | Coated web offset, Europe, FOGRA28 characterisation. |
+| CMYK-web-coated-swop-2006-g3 | SWOP 2006 grade 3 publication stock, North American web offset. A better grade than grade 5. |
+| CMYK-web-coated-swop-2006-g5 | SWOP 2006 grade 5 publication stock, North American web offset. Lighter, more absorbent stock. |
+
+<Warning>
+    Ink limits vary from 300% to 350% across these profiles. Separating a file for one
+    condition and printing it on a press expecting another is a common cause of slow drying,
+    set-off and marking in finishing. Convert for the press that is actually running the job.
+</Warning>
 
 <Tip>
-We utilize [LittleCMS](https://littlecms.com) at runtime to effect the conversion from RGB to CMYK in the final PDF file by passing it the selected profile. This is also used in the browser for proofing
+    We use [LittleCMS](https://littlecms.com) at runtime to perform the RGB to CMYK conversion
+    in the final PDF file, passing it the profile you selected. The same profile drives soft
+    proofing in the browser, so customers see the converted result before they order. See
+    [Color Proofing](https://print.app/features/color-proofing) for how that appears to them.
 </Tip>
