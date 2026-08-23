@@ -9,16 +9,19 @@ description: "Print.App has a Shopware 6 app that lets your customers personaliz
 
 [Shopware](https://www.shopware.com) is a leading eCommerce platform, especially
 strong in the German-speaking market where much of the world's online printing
-happens. Print.App ships as a Shopware **app**: no PHP on your server, and it
-works on self-hosted Shopware, Shopware PaaS, and Shopware SaaS alike.
+happens. Print.App ships as a Shopware **app**: no PHP is added to your server, and
+installation is a single upload.
 
 <Note>
-    The app supports Shopware **6.6 and 6.7**.
+    The app supports Shopware **6.6 and 6.7** on **self-hosted Shopware and
+    Shopware PaaS**. Shopware Cloud (SaaS) only permits extensions installed
+    from the Shopware Store, so Cloud shops cannot install it yet.
 </Note>
 
-1.  Install the app. Two ways:
-    -   From the **Shopware Store**: find "Print.App Product Personalizer" and install it from your admin's Extensions area.
-    -   From [GitHub](https://github.com/PrintApp/print-app-shopware): download the app zip from the releases and upload it under `Extensions` -> `My Extensions` -> `Upload extension`.
+1.  Download the app zip from [GitHub](https://github.com/PrintApp/print-app-shopware)
+    and upload it in your Shopware admin under `Extensions` -> `My Extensions` ->
+    `Upload extension`. On your own server you can also place the folder in
+    `custom/apps/` and run `bin/console app:install PrintApp --activate`.
 
 2.  Activate the app. During installation it registers with Print.App
     automatically and a store connection is created for your shop, with your
