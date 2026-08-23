@@ -98,6 +98,14 @@
             "platforms/odoo/how-to-access-files"
           ]
         },
+        {
+          "group": "Shopware",
+          "pages": [
+            "platforms/shopware/installation",
+            "platforms/shopware/demo-store",
+            "platforms/shopware/how-to-access-files"
+          ]
+        },
         "platforms/platform-features"
       ]
     },

@@ -1,0 +1,53 @@
+---
+title: Installation
+description: "Print.App has a Shopware 6 app that lets your customers personalize their print orders before purchase. This is a guide on how to install the Print.App app on Shopware 6.6 and 6.7"
+---
+
+<Frame>
+    <img alt="Print.App Shopware image" src="/images/shopware.png" />
+</Frame>
+
+[Shopware](https://www.shopware.com) is a leading eCommerce platform, especially
+strong in the German-speaking market where much of the world's online printing
+happens. Print.App ships as a Shopware **app**: no PHP on your server, and it
+works on self-hosted Shopware, Shopware PaaS, and Shopware SaaS alike.
+
+<Note>
+    The app supports Shopware **6.6 and 6.7**.
+</Note>
+
+1.  Install the app. Two ways:
+    -   From the **Shopware Store**: find "Print.App Product Personalizer" and install it from your admin's Extensions area.
+    -   From [GitHub](https://github.com/PrintApp/print-app-shopware): download the app zip from the releases and upload it under `Extensions` -> `My Extensions` -> `Upload extension`.
+
+2.  Activate the app. During installation it registers with Print.App
+    automatically and a store connection is created for your shop, with your
+    Domain Key written into the app configuration for you. There are no keys to
+    copy.
+    <Tip>You can see (or override) the keys under `Extensions` -> `My Extensions` -> `Print.App` -> `Configure`.</Tip>
+
+3.  Claim your store in [Print.App Admin](https://admin.print.app/domains) so it
+    appears in your account, then add or copy the designs you want to sell into it.
+
+4.  Now link a design to a product. Open a product in your Shopware admin and use
+    the **Assign Print.App design** action (the "..." menu on the product detail
+    page). This opens the Print.App assignment dialog with the product
+    pre-selected. You can also map from the Product Mappings panel in your
+    Print.App admin, which lists your shop's products by name.
+
+5.  You're all set! Open the product on your store front and check that it shows
+    the **Personalise button**. After a customer saves a design, their previews
+    replace the product images, follow the item into the cart, and every
+    confirmed order is synced to Print.App with the buyer attached to their
+    project.
+
+6.  To download print-ready files for an order, open the order in your Shopware
+    admin and use the **Print.App files** action: it lists every customized line
+    with its previews and PDF, PNG, JPG and TIFF downloads.
+
+<Snippet file="installation-troubles.mdx" />
+
+<Note>
+    Want to see it working before installing anything? Try our live
+    [Shopware demo store](https://sw.demo.print.app).
+</Note>
