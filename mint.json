@@ -91,12 +91,6 @@
           ]
         },
         {
-          "group": "BigCommerce",
-          "pages": [
-            "platforms/bigcommerce/installation"
-          ]
-        },
-        {
           "group": "Odoo",
           "pages": [
             "platforms/odoo/installation",
