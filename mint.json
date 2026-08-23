@@ -1,226 +1,236 @@
 {
-    "$schema": "https://mintlify.com/schema.json",
-    "name": "Print.App Documentation",
-    "logo": {
-        "dark": "/logo/dark.svg",
-        "light": "/logo/light.svg"
-    },
-    "favicon": "/favicon.svg",
-    "colors": {
-        "primary": "#00AC13",
-        "light": "#00CD17",
-        "dark": "#008B10"
-    },
-    "modeToggle": { },
-    "topbarLinks": [
-        {
-            "name": "Community",
-            "url": "https://discord.gg/XNdtdFxNdE"
-        }
-    ],
-    "topbarCtaButton": {
-        "name": "Dashboard",
-        "url": "https://admin.print.app"
-    },
-    "tabs": [
-        {
-          "name": "Design Guides",
-          "url": "guides"
-        },
-        {
-          "name": "API References",
-          "url": "api-reference"
-        }
-    ],
-    "navigation": [
-        {
-            "group": "Getting Started",
-            "pages": ["introduction", "faqs", "installation"]
-        },
-        {
-            "group": "Configuration",
-            "pages": [
-                "configuration/editor/editor",
-                "configuration/settings",
-                "configuration/webhooks",
-                "configuration/connectors",
-                {
-                    "group": "Specifications",
-                    "pages": [
-                        "configuration/specifications/files",
-                        "configuration/specifications/language"
-                    ]
-                }
-            ]
-        },
-        {
-            "group": "Platforms",
-            "pages": [
-                {
-                    "group": "Shopify",
-                    "pages": [
-                        "platforms/shopify/installation"
-                    ]
-                },
-                {
-                    "group": "Wordpress",
-                    "pages": [
-                        "platforms/wordpress/installation",
-                        "platforms/wordpress/demo-store",
-                        "platforms/wordpress/how-to-access-files"
-                    ]
-                },
-                {
-                    "group": "Prestashop",
-                    "pages": [
-                        "platforms/prestashop/installation",
-                        "platforms/prestashop/demo-store",
-                        "platforms/prestashop/how-to-access-files"
-                    ]
-                },
-                {
-                    "group": "OpenCart",
-                    "pages": [
-                        "platforms/opencart/installation",
-                        "platforms/opencart/demo-store",
-                        "platforms/opencart/how-to-access-files"
-                    ]
-                },
-                {
-                    "group": "BigCommerce",
-                    "pages": [
-                        "platforms/bigcommerce/installation"
-                    ]
-                },
-                "platforms/platform-features"
-            ]
-        },
-
-        {
-            "group": "Print Options",
-            "pages": [
-                "print-options/introduction",
-                {
-                    "group": "Getting Started",
-                    "pages": [
-                        "print-options/shopify",
-                        "print-options/wordpress"
-                    ]
-                },
-                {
-                    "group": "Guides",
-                    "pages": [
-                        "print-options/guides/option-sets",
-                        "print-options/guides/pricing",
-                        "print-options/guides/fields",
-                        "print-options/guides/uploads",
-                        "print-options/guides/appearance"
-                    ]
-                },
-                {
-                    "group": "Developers",
-                    "pages": [
-                        "print-options/developers/page-api"
-                    ]
-                },
-                "print-options/faqs"
-            ]
-        },
-
-        {
-            "group": "Design Guides",
-            "pages": [
-                {
-                    "group": "Designs",
-                    "pages": [
-                        "guides/designs/about-designs",
-                        "guides/designs/create-a-design",
-                        "guides/designs/design-settings",
-                        "guides/designs/design-pages",
-                        {
-                            "group": "Canvas Objects",
-                            "pages": [
-                                "guides/designs/objects/settings",
-                                "guides/designs/objects/presets",
-                                "guides/designs/objects/clipping-masks",
-                                "guides/designs/objects/smart",
-                                "guides/designs/objects/qrcode",
-                                "guides/designs/objects/patterns"
-                            ]
-                        },
-                        {
-                            "group": "Variations",
-                            "pages": [
-                                "guides/designs/variations/variation-underlay",
-                                "guides/designs/variations/variation-canvassize",
-                                "guides/designs/variations/variation-datasource"
-                            ]
-                        },
-                        {
-                            "group": "Modules",
-                            "pages": [
-                                "guides/designs/modules/stickers",
-                                "guides/designs/modules/page-selector",
-                                "guides/designs/modules/pattern",
-                                "guides/designs/modules/calendar",
-                                "guides/designs/modules/mail-merge",
-                                "guides/designs/modules/photos-module"
-                            ]
-                        },
-                        "guides/designs/pdf-layers",
-                        "guides/designs/import-designs"
-                    ]
-                },
-                "guides/projects/pdf-output-profiles",
-                "guides/projects/color-proofing",
-                "guides/designs/assign-resources"
-            ]
-        },
-        {
-            "group": "Resources",
-            "pages": [
-                {
-                    "group": "Colors",
-                    "pages": [
-                        "guides/resources/colors/all-about-colors",
-                        "guides/resources/colors/ICC-Profiles",
-                        "guides/resources/colors/import-colors-Pantone-HKS",
-                        "guides/resources/colors/create-Cut-Contour-lines"
-                    ]
-                },
-                "guides/resources/text-and-fonts",
-                "guides/resources/graphics"
-            ]
-        },
-        {
-            "group": "Print Solutions",
-            "pages": [
-                "guides/solutions/calendars",
-                "guides/solutions/stationeries",
-                "guides/solutions/garment-printing",
-                "guides/solutions/photo-prints",
-                "guides/solutions/banner-large-prints",
-                "guides/solutions/promotional-items"
-            ]
-        },
-        {
-            "group": "API References",
-            "pages": [
-                {
-                    "group": "Editor",
-                    "pages": [
-                        "api-reference/editor/installation",
-                        "api-reference/editor/configuration",
-                        "api-reference/editor/embed"
-                    ]
-                }
-            ]
-        }
-    ],
-    "footerSocials": {
-        "twitter": "https://twitter.com/print_dot_app",
-        "instagram": "https://github.com/print_dot_app",
-        "github": "https://github.com/printapp",
-        "discord": "https://discord.gg/XNdtdFxNdE"
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Print.App Documentation",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#00AC13",
+    "light": "#00CD17",
+    "dark": "#008B10"
+  },
+  "modeToggle": {},
+  "topbarLinks": [
+    {
+      "name": "Community",
+      "url": "https://discord.gg/XNdtdFxNdE"
     }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://admin.print.app"
+  },
+  "tabs": [
+    {
+      "name": "Design Guides",
+      "url": "guides"
+    },
+    {
+      "name": "API References",
+      "url": "api-reference"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "faqs",
+        "installation"
+      ]
+    },
+    {
+      "group": "Configuration",
+      "pages": [
+        "configuration/editor/editor",
+        "configuration/settings",
+        "configuration/webhooks",
+        "configuration/connectors",
+        {
+          "group": "Specifications",
+          "pages": [
+            "configuration/specifications/files",
+            "configuration/specifications/language"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Platforms",
+      "pages": [
+        {
+          "group": "Shopify",
+          "pages": [
+            "platforms/shopify/installation"
+          ]
+        },
+        {
+          "group": "Wordpress",
+          "pages": [
+            "platforms/wordpress/installation",
+            "platforms/wordpress/demo-store",
+            "platforms/wordpress/how-to-access-files"
+          ]
+        },
+        {
+          "group": "Prestashop",
+          "pages": [
+            "platforms/prestashop/installation",
+            "platforms/prestashop/demo-store",
+            "platforms/prestashop/how-to-access-files"
+          ]
+        },
+        {
+          "group": "OpenCart",
+          "pages": [
+            "platforms/opencart/installation",
+            "platforms/opencart/demo-store",
+            "platforms/opencart/how-to-access-files"
+          ]
+        },
+        {
+          "group": "BigCommerce",
+          "pages": [
+            "platforms/bigcommerce/installation"
+          ]
+        },
+        {
+          "group": "Odoo",
+          "pages": [
+            "platforms/odoo/installation",
+            "platforms/odoo/demo-store",
+            "platforms/odoo/how-to-access-files"
+          ]
+        },
+        "platforms/platform-features"
+      ]
+    },
+    {
+      "group": "Print Options",
+      "pages": [
+        "print-options/introduction",
+        {
+          "group": "Getting Started",
+          "pages": [
+            "print-options/shopify",
+            "print-options/wordpress"
+          ]
+        },
+        {
+          "group": "Guides",
+          "pages": [
+            "print-options/guides/option-sets",
+            "print-options/guides/pricing",
+            "print-options/guides/fields",
+            "print-options/guides/uploads",
+            "print-options/guides/appearance"
+          ]
+        },
+        {
+          "group": "Developers",
+          "pages": [
+            "print-options/developers/page-api"
+          ]
+        },
+        "print-options/faqs"
+      ]
+    },
+    {
+      "group": "Design Guides",
+      "pages": [
+        {
+          "group": "Designs",
+          "pages": [
+            "guides/designs/about-designs",
+            "guides/designs/create-a-design",
+            "guides/designs/design-settings",
+            "guides/designs/design-pages",
+            {
+              "group": "Canvas Objects",
+              "pages": [
+                "guides/designs/objects/settings",
+                "guides/designs/objects/presets",
+                "guides/designs/objects/clipping-masks",
+                "guides/designs/objects/smart",
+                "guides/designs/objects/qrcode",
+                "guides/designs/objects/patterns"
+              ]
+            },
+            {
+              "group": "Variations",
+              "pages": [
+                "guides/designs/variations/variation-underlay",
+                "guides/designs/variations/variation-canvassize",
+                "guides/designs/variations/variation-datasource"
+              ]
+            },
+            {
+              "group": "Modules",
+              "pages": [
+                "guides/designs/modules/stickers",
+                "guides/designs/modules/page-selector",
+                "guides/designs/modules/pattern",
+                "guides/designs/modules/calendar",
+                "guides/designs/modules/mail-merge",
+                "guides/designs/modules/photos-module"
+              ]
+            },
+            "guides/designs/pdf-layers",
+            "guides/designs/import-designs"
+          ]
+        },
+        "guides/projects/pdf-output-profiles",
+        "guides/projects/color-proofing",
+        "guides/designs/assign-resources"
+      ]
+    },
+    {
+      "group": "Resources",
+      "pages": [
+        {
+          "group": "Colors",
+          "pages": [
+            "guides/resources/colors/all-about-colors",
+            "guides/resources/colors/ICC-Profiles",
+            "guides/resources/colors/import-colors-Pantone-HKS",
+            "guides/resources/colors/create-Cut-Contour-lines"
+          ]
+        },
+        "guides/resources/text-and-fonts",
+        "guides/resources/graphics"
+      ]
+    },
+    {
+      "group": "Print Solutions",
+      "pages": [
+        "guides/solutions/calendars",
+        "guides/solutions/stationeries",
+        "guides/solutions/garment-printing",
+        "guides/solutions/photo-prints",
+        "guides/solutions/banner-large-prints",
+        "guides/solutions/promotional-items"
+      ]
+    },
+    {
+      "group": "API References",
+      "pages": [
+        {
+          "group": "Editor",
+          "pages": [
+            "api-reference/editor/installation",
+            "api-reference/editor/configuration",
+            "api-reference/editor/embed"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/print_dot_app",
+    "instagram": "https://github.com/print_dot_app",
+    "github": "https://github.com/printapp",
+    "discord": "https://discord.gg/XNdtdFxNdE"
+  }
 }

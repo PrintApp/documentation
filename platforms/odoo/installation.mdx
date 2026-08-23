@@ -1,0 +1,51 @@
+---
+title: Installation
+description: "Print.App has an Odoo module that lets your customers personalize their print orders before purchase. This is a guide on how to install the Print.App module on Odoo 17 and 18"
+---
+
+[Odoo](https://www.odoo.com) is an open-source business suite whose **eCommerce**
+app (`website_sale`) powers a fast-growing share of online stores. The Print.App
+module plugs straight into it: your customers design on the product page, and
+every confirmed order carries its print-ready files.
+
+<Note>
+    The module supports **Odoo 17 and 18**, self-hosted and on Odoo.sh.
+    Third-party modules cannot be installed on Odoo Online (the SaaS at odoo.com) —
+    that edition only runs Odoo's own apps.
+</Note>
+
+1.  Install the module. Two ways:
+    -   From the [Odoo Apps Store](https://apps.odoo.com/apps/modules/browse?search=print.app): download the zip for your Odoo version and extract it into your addons directory.
+    -   From [GitHub](https://github.com/PrintApp/print-app-odoo): clone the repo and copy (or symlink) the `printapp` folder into your addons path — use the branch matching your Odoo version (`17.0` or `18.0`). On Odoo.sh, add it as a git submodule.
+
+2.  Restart Odoo, then in the **Apps** menu click *Update Apps List* and install
+    **Print.App Product Personalizer**. (If you don't see it, remove the default
+    "Apps" filter in the search bar.) Installing it pulls in Odoo's own
+    eCommerce app automatically if you don't have it yet.
+
+3.  <Snippet file="grab-keys.mdx" />
+    <Note>You can still use your credentials for localhost testing if you are not ready to go live just yet.</Note>
+
+4.  In Odoo, go to `Website` -> `Configuration` -> `Settings`, scroll to the
+    **Print.App** section, and paste your **Domain Key** and **Auth Key**, then Save.
+    <Tip>Running several websites from one database? Keys are stored per website —
+    switch websites with the selector at the top of the Settings page and give each
+    one its own Print.App domain.</Tip>
+
+5.  Now link a design to a product. Go to `Website` -> `eCommerce` -> `Products`
+    and open a product (or create one). At the end of the tab row you will find the
+    **Print.App Design** tab — it takes you to the
+    [Print.App Design Dashboard](https://admin.print.app/designs) with this
+    product pre-selected, where you map a design to it.
+
+6.  You're all set! Open the product on your store front and check that it shows
+    the **Customize button**. After a customer saves a design, their previews
+    replace the product images, follow the item into the cart, and the confirmed
+    order links the print-ready files in your backend.
+
+<Snippet file="installation-troubles.mdx" />
+
+<Note>
+    Want to see it working before installing anything? Try our live
+    [Odoo demo store](https://odoo.demo.print.app/shop).
+</Note>
