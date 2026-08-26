@@ -63,7 +63,8 @@
         {
           "group": "Shopify",
           "pages": [
-            "platforms/shopify/installation"
+            "platforms/shopify/installation",
+            "platforms/shopify/saved-designs"
           ]
         },
         {
