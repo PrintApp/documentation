@@ -1,9 +1,4 @@
 <svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', system-ui, sans-serif">
-  <defs>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.25"/>
-    </filter>
-  </defs>
 
   <!-- browser window -->
   <rect x="8" y="8" width="784" height="504" rx="10" fill="#ffffff" stroke="#dbe2ea"/>
@@ -34,10 +29,10 @@
   <!-- dim overlay -->
   <rect x="9" y="45" width="782" height="466" rx="9" fill="#0f172a" opacity="0.45"/>
 
-  <!-- editor: fills the whole window -->
-  <g filter="url(#shadow)">
-    <rect x="24" y="60" width="752" height="440" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
-  </g>
+  <!-- editor: fills the whole window (no SVG filters — the docs CDN
+       rasterizes these and drops filtered elements entirely) -->
+  <rect x="28" y="68" width="752" height="440" rx="10" fill="#0f172a" opacity="0.25"/>
+  <rect x="24" y="60" width="752" height="440" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
   <rect x="24" y="60" width="752" height="34" rx="8" fill="#f8fafc"/>
   <rect x="24" y="77" width="752" height="17" fill="#f8fafc"/>
   <line x1="24" y1="94" x2="776" y2="94" stroke="#e8edf3"/>
