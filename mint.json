@@ -46,6 +46,7 @@
       "pages": [
         "configuration/editor/editor",
         "configuration/settings",
+        "configuration/display-modes",
         "configuration/webhooks",
         "configuration/connectors",
         {

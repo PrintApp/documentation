@@ -1,0 +1,80 @@
+---
+title: Display Modes
+description: "How the Design Editor presents itself on your product pages"
+---
+
+A Display Mode controls where and how the Print.App Editor appears when your customer starts customizing a product.
+We currently have four modes: **Full Window**, **Dialog**, **Inline** and **Mini**.
+
+You can set a store-wide default from your [Dashboard](https://admin.print.app) under **Settings → Store Settings**,
+and you can also choose a Display Mode for a specific design from the **Design panel** inside the Designer.
+
+### Full Window
+
+The default mode. The editor opens over your entire browser window, giving the customer the maximum
+amount of space to design in. Page scrolling is locked while the editor is open, and the customer
+returns to your product page when they submit or close their design.
+
+<Frame caption="Full Window: the editor covers the whole window">
+    <img class="rounded-md" src="/images/display-modal.svg" />
+</Frame>
+
+### Dialog
+
+The editor opens as a centered dialog over your product page, with the page dimmed but still visible
+behind it. Your customer can expand the dialog to Full Window at any time — and shrink it back —
+using the control inside the editor.
+
+<Frame caption="Dialog: a centered editor the customer can expand to full window">
+    <img class="rounded-md" src="/images/display-dialog.svg" />
+</Frame>
+
+<Tip>
+    On mobile devices the Dialog automatically opens in Full Window, since a smaller
+    dialog would not leave enough room to design comfortably.
+</Tip>
+
+### Inline
+
+The editor renders directly inside your product page as part of the page layout — no overlay at all.
+The rest of your page remains visible and scrollable around it.
+
+<Frame caption="Inline: the editor is embedded within the page itself">
+    <img class="rounded-md" src="/images/display-inline.svg" />
+</Frame>
+
+<Tip>
+    The editor needs a place in your page to render into. If the editor does not appear on your store
+    in Inline mode, your theme is likely unique and we may need to set the container selector for
+    your store. Please do reach out.
+</Tip>
+
+### Mini
+
+The editor takes the place of your product image gallery, so customizing feels like part of the
+product page itself. The rest of the page — title, price and Add to Cart — stays exactly where it is.
+After the customer submits their design, the editor remains in place showing a preview of the
+finished piece.
+
+<Frame caption="Mini: the editor replaces the product image gallery">
+    <img class="rounded-md" src="/images/display-mini.svg" />
+</Frame>
+
+<Tip>
+    Mini mode finds your theme's product gallery automatically. If it picks the wrong spot on your
+    store, your theme is likely unique and we may need to set the gallery selector for your store.
+    Please do reach out.
+</Tip>
+
+### For developers
+
+On custom installations you can listen for the Dialog's expand and collapse:
+
+```javascript
+printAppInstance.addEventListener('app:display:changed', ({ data }) => {
+    console.log(data.expanded ? 'Editor expanded to full window' : 'Editor back to dialog size');
+});
+```
+
+You will find the full list of parameters, methods and events on the
+[Editor Configuration page](/api-reference/editor/configuration).

@@ -1,0 +1,71 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- browser window -->
+  <rect x="8" y="8" width="784" height="504" rx="10" fill="#ffffff" stroke="#dbe2ea"/>
+  <circle cx="32" cy="26" r="5" fill="#fca5a5"/>
+  <circle cx="50" cy="26" r="5" fill="#fcd34d"/>
+  <circle cx="68" cy="26" r="5" fill="#86efac"/>
+  <rect x="92" y="15" width="300" height="22" rx="11" fill="#f1f5f9"/>
+  <text x="106" y="30" font-size="12" fill="#94a3b8">yourstore.com/products/t-shirt</text>
+  <line x1="8" y1="44" x2="792" y2="44" stroke="#e8edf3"/>
+
+  <!-- product page (behind the editor) -->
+  <rect x="36" y="60" width="90" height="18" rx="4" fill="#00AC13"/>
+  <rect x="560" y="65" width="48" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="620" y="65" width="48" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="680" y="65" width="48" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="36" y="108" width="340" height="280" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <circle cx="150" cy="190" r="16" fill="#cbd5e1"/>
+  <path d="M80 330 L170 240 L240 310 L290 260 L340 330 Z" fill="#cbd5e1"/>
+  <rect x="408" y="116" width="300" height="18" rx="4" fill="#cbd5e1"/>
+  <rect x="408" y="144" width="230" height="10" rx="4" fill="#e2e8f0"/>
+  <rect x="408" y="160" width="190" height="10" rx="4" fill="#e2e8f0"/>
+  <rect x="408" y="186" width="84" height="14" rx="4" fill="#94a3b8"/>
+  <rect x="408" y="224" width="190" height="40" rx="8" fill="#00AC13"/>
+  <text x="503" y="249" font-size="13" fill="#ffffff" text-anchor="middle">Customize Design</text>
+  <rect x="408" y="274" width="190" height="40" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="503" y="299" font-size="13" fill="#64748b" text-anchor="middle">Add to Cart</text>
+
+  <!-- dim overlay -->
+  <rect x="9" y="45" width="782" height="466" rx="9" fill="#0f172a" opacity="0.45"/>
+
+  <!-- editor: fills the whole window -->
+  <g filter="url(#shadow)">
+    <rect x="24" y="60" width="752" height="440" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  </g>
+  <rect x="24" y="60" width="752" height="34" rx="8" fill="#f8fafc"/>
+  <rect x="24" y="77" width="752" height="17" fill="#f8fafc"/>
+  <line x1="24" y1="94" x2="776" y2="94" stroke="#e8edf3"/>
+  <rect x="36" y="70" width="14" height="14" rx="3" fill="#00AC13"/>
+  <text x="56" y="81" font-size="12" fill="#475569">Print.App Editor</text>
+  <text x="760" y="82" font-size="12" fill="#94a3b8" text-anchor="end">&#10005;</text>
+
+  <rect x="25" y="94" width="55" height="405" fill="#f1f5f9"/>
+  <rect x="42" y="110" width="20" height="20" rx="4" fill="#cbd5e1"/>
+  <rect x="42" y="146" width="20" height="20" rx="4" fill="#cbd5e1"/>
+  <rect x="42" y="182" width="20" height="20" rx="4" fill="#cbd5e1"/>
+  <rect x="42" y="218" width="20" height="20" rx="4" fill="#cbd5e1"/>
+
+  <rect x="300" y="150" width="260" height="280" fill="none" stroke="#94a3b8" stroke-dasharray="6 6"/>
+  <circle cx="430" cy="250" r="22" fill="#00AC13"/>
+  <g stroke="#334155" stroke-width="3" stroke-linecap="round">
+    <line x1="460" y1="250" x2="474" y2="250"/>
+    <line x1="451" y1="271" x2="461" y2="281"/>
+    <line x1="430" y1="280" x2="430" y2="294"/>
+    <line x1="409" y1="271" x2="399" y2="281"/>
+    <line x1="400" y1="250" x2="386" y2="250"/>
+    <line x1="409" y1="229" x2="399" y2="219"/>
+    <line x1="430" y1="220" x2="430" y2="206"/>
+    <line x1="451" y1="229" x2="461" y2="219"/>
+  </g>
+  <rect x="390" y="320" width="80" height="8" rx="4" fill="#cbd5e1"/>
+  <rect x="378" y="336" width="104" height="8" rx="4" fill="#cbd5e1"/>
+
+  <rect x="666" y="456" width="92" height="28" rx="6" fill="#00AC13"/>
+  <text x="712" y="474" font-size="12" fill="#ffffff" text-anchor="middle">Submit</text>
+</svg>

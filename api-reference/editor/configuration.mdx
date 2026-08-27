@@ -60,6 +60,7 @@ printAppInstance.addEventListener('app:ready', readyFunction);
 | `app:ready`       | -     | Dispatched when the Editor has initialized and is ready to be shown |
 | `app:saved`       | -     | Dispatched when the customer has clicked the submit button and a project is completely saved.<br/>A data object is passed to your function that contains the details of the project and includes the complete project source, projectId and preview images. |
 | `app:closed`       | -     | The editor is closed |
+| `app:display:changed`       | -     | Only in the Dialog [Display Mode](/configuration/display-modes): dispatched when the customer expands the editor to full window or shrinks it back.<br/>A data object of `{ expanded: Boolean }` is passed to your function. |
 
 
 ## Loading the editor without a designId
