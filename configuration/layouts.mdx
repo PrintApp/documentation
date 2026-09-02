@@ -1,0 +1,113 @@
+---
+title: Layouts
+description: "Choose how the Design Editor is arranged for your customers, store-wide or per design"
+---
+
+A Layout controls how the Design Editor is arranged for your customers: where the tools sit, how much of the
+editor they see, and, for some layouts, what they are allowed to do. Pick the one that matches the product and
+the kind of customer you have: a full design studio for the creative ones, a guided step-by-step flow for personalized
+gifts, or a simple view-and-approve screen when the artwork is already finished.
+
+You can set a store-wide Layout from your [Dashboard](https://admin.print.app) under **Settings → Designer Settings**,
+and override it for a specific design from the **Design panel** inside the Designer, exactly the way
+[Display Modes](/configuration/display-modes) work.
+
+<Tip>
+    Layouts apply to your customers only. When you open a design from your Dashboard you always get the full
+    Design Studio, whatever Layout the design or store is set to.
+</Tip>
+
+### Default
+
+The full Design Studio: the tool sidebar on the left, the page thumbnails and zoom at the bottom, and every
+panel your design allows: graphics, text, uploads, backgrounds, colors. This is what your customers get when no
+Layout is selected.
+
+<Frame caption="Default: the full Design Studio with the sidebar on the left">
+    <img class="rounded-md" src="/images/layouts/default.svg" />
+</Frame>
+
+### Sidebar right
+
+The same Design Studio, mirrored: the tool sidebar sits on the right of the canvas. Useful when your product page
+or your customers' reading direction favors tools on the right.
+
+<Frame caption="Sidebar right: the studio with the sidebar mirrored to the right">
+    <img class="rounded-md" src="/images/layouts/default-right.svg" />
+</Frame>
+
+### Product designer
+
+Made for products with a single print area: apparel, mugs, phone cases. The tool icons sit in a slim rail on the
+left, the options panel on the right, and the product fills the middle with nothing else in the way. There is no
+page strip, since these products have one surface to design.
+
+<Frame caption="Product designer: rail on the left, options on the right, the product in the middle">
+    <img class="rounded-md" src="/images/layouts/product.svg" />
+</Frame>
+
+### Steps
+
+A guided, step-by-step personalization flow. Every customizable object in your design becomes a numbered step
+across the top (Background, then each text, photo or artwork object in the order you set) and the panel on the
+left shows only the controls for the current step: a text field, the font, size, and the color swatches you
+assigned. Customers never see the full studio; they fill in the steps, preview and save.
+
+<Frame caption="Steps: one tab per customizable object, one simple panel per step">
+    <img class="rounded-md" src="/images/layouts/steps.svg" />
+</Frame>
+
+The steps come from your design, so you control them from the Designer:
+
+- The step's **name** is the object's **Title** and the order is its
+  [**Form Index**](/guides/designs/objects/settings#form-index), both set on the object in the Object panel.
+- The **color swatches** a customer can pick come from the
+  [**Preset Options**](/guides/designs/objects/presets) you assign to the object: create a color category on the
+  design, assign it to a text or shape, and only those colors apply to it.
+- Objects with a **graphics** preset let the customer swap the artwork from that category.
+- **Background** is offered as the first step when the design has background graphics available.
+
+<Tip>
+    Steps suits products with a handful of distinct choices: a name, a message, a photo. For dense forms with
+    many fields, the Default layout's Form panel is usually the better fit.
+</Tip>
+
+### View & approve
+
+For finished artwork that only needs the customer's approval: posters, pre-designed cards, proofs. The customer
+sees the artwork page by page and a single button to approve it. Nothing on the canvas can be selected, moved or
+edited, and there are no tools to find: the design is locked for every design this Layout is applied to.
+
+<Frame caption="View & approve: the artwork, page navigation and one Approve button">
+    <img class="rounded-md" src="/images/layouts/approve.svg" />
+</Frame>
+
+<Tip>
+    Uploaded a batch of ready-made designs your customers should only choose from and approve? Set **View & approve**
+    store-wide once; you do not need to lock each design individually.
+</Tip>
+
+### On mobile
+
+Every Layout adapts to phones on its own. The Default and Product designer layouts turn their sidebar into a bottom
+sheet the customer swipes up; Steps keeps its step tabs on top with the current step's controls in a sheet below
+the product; View & approve stays the artwork with the Approve button.
+
+<Frame caption="Steps on a phone: tabs on top, the current step's controls in a sheet">
+    <img class="rounded-md" src="/images/layouts/steps.mobile.svg" />
+</Frame>
+
+### How to apply a Layout
+
+**Store-wide**: In your [Dashboard](https://admin.print.app) open **Settings → Designer Settings** and pick a
+**Layout**. Every design on your store uses it from then on, including designs you add later.
+
+**Per design**: In the Designer open the **Design panel** and pick a **Layout** for that design. This overrides the
+store-wide setting for that design only; leave it on *Default* to follow the store-wide setting.
+
+<Tip>
+    The Layout setting is available for stores on the new Design Editor. Stores still on the classic editor keep the
+    **Sidebar Position** setting in the same place.
+</Tip>
+
+When both are set, the design's own Layout wins over the store-wide one.

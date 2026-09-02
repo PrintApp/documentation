@@ -47,6 +47,7 @@
         "configuration/editor/editor",
         "configuration/settings",
         "configuration/display-modes",
+        "configuration/layouts",
         "configuration/webhooks",
         "configuration/connectors",
         {
