@@ -1,6 +1,69 @@
 ---
-description: "List of features available in the various Print.App cart platforms"
+title: Platform Features
+description: "Feature parity across the Print.App cart integrations: Shopify, WordPress (WooCommerce), PrestaShop, OpenCart, Odoo and Shopware"
 ---
 
+Print.App ships the same editor to every platform, but each store integration is
+built on that platform's own extension system, so a few features differ. The tables
+below show where. Anything not listed works the same everywhere (see
+[Available everywhere](#available-everywhere)).
 
+**Legend:** ✅ available · ◐ partial · ❌ not available
 
+## Setup
+
+| | Shopify | WordPress | PrestaShop | OpenCart | Odoo | Shopware |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Install from** | Shopify App Store | wordpress.org plugin directory | GitHub zip (separate 1.7 and 8 builds) | GitHub OCMOD zip | Odoo Apps Store or GitHub | GitHub zip |
+| **Supported versions** | Online Store 2.0 themes | WordPress 3.8+, WooCommerce 4.0+ | 1.7.1+ and 8 | 3.x | 17 and 18, self-hosted and Odoo.sh | 6.6 and 6.7, self-hosted and PaaS |
+| **Hosted edition** | ✅ | n/a | n/a | n/a | ❌ Odoo Online | ❌ Shopware Cloud |
+| **Store connection** | ✅ Automatic at install, no keys | ◐ Paste Domain Key and Auth Key | ◐ Paste keys | ◐ Paste keys | ◐ Paste keys, per website | ✅ Automatic at install, no keys |
+| **Assign a design from the store admin** | ❌ From Product Mappings in [Print.App admin](https://admin.print.app) only | ✅ Product data tab | ✅ Product page tab | ✅ Product option | ✅ Product form tab | ✅ Product "..." action |
+| **Multiple stores from one install** | ✅ One Print.App domain per shop | ◐ Keys are per site | ✅ Multishop aware | ✅ | ✅ Keys are per website | ◐ One domain per installation, shared by all sales channels |
+
+## Storefront
+
+| | Shopify | WordPress | PrestaShop | OpenCart | Odoo | Shopware |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Design per product variant** | ✅ | ✅ | ❌ Combinations share the parent's design | ❌ | ❌ Variants share the template's design | ◐ Each variant page has its own product id |
+| **Design previews in the cart** | ✅ Cart page and ajax cart drawers | ✅ | ✅ | ✅ | ✅ Cart, order confirmation and portal | ✅ Cart, checkout and account orders |
+| **Print Options companion** (sizes, materials, quantity breaks, live pricing) | ✅ [Print Options for Shopify](/print-options/shopify) | ✅ [Print Options for WooCommerce](/print-options/wordpress) | ❌ | ❌ | ❌ | ❌ |
+
+## Orders
+
+| | Shopify | WordPress | PrestaShop | OpenCart | Odoo | Shopware |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Order synced to Print.App with the buyer attached** | ✅ When the order is created | ✅ When the order is created | ◐ When the order status changes to Processing or Complete | ❌ | ✅ When the order is confirmed, with automatic retries | ✅ When the order is placed |
+| **Print-ready files from the store's order page** | ◐ PDF link on the line item. PNG, JPG and TIFF from [Print.App admin](https://admin.print.app/projects) | ✅ PDF, PNG, JPG, TIFF | ✅ PDF, PNG, JPG, TIFF (no TIFF on 1.7) | ✅ PDF, PNG, JPG (TIFF from Print.App admin) | ✅ PDF, PNG, JPG, TIFF | ✅ PDF, PNG, JPG, TIFF |
+| **Previews in order emails** | ❌ | ✅ First three previews, optional PDF link for the customer | ❌ | ❌ | ❌ Optional PDF link on the customer's portal order instead | ❌ |
+
+## Customer accounts
+
+| | Shopify | WordPress | PrestaShop | OpenCart | Odoo | Shopware |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Save for Later, saved designs and one-click re-order** | ✅ Classic and new customer accounts, see [Saved Designs](/platforms/shopify/saved-designs) | ✅ My Account page | ❌ | ❌ | ✅ Portal "My Designs" page | ❌ |
+| **Guest checkout** | ✅ Guest designs attach to the customer when the order is placed | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+## Available everywhere
+
+These work the same on all six platforms and are configured in your
+[Print.App settings](https://admin.print.app/settings), not in the store:
+
+- The **Customize** button is added to the product page automatically, no theme edits.
+- The customer's **design previews replace the product images** once they save.
+- **Display modes**: modal, inline, mini and dialog. See the [Display Modes guide](/configuration/display-modes).
+- **Force customization**: hide the add-to-cart button until a design has been saved.
+- The **storefront language** is passed to the editor, with your translation overrides applied.
+- **Guest customers** can design and order without an account.
+
+## Not yet on any platform
+
+- Editing a design **from the cart page**. Customers return to the product page to
+  change a saved design.
+- **Order status** pushed back from Print.App to the store. Sync is one-way, store to Print.App.
+- **Multi-currency** pricing inside the editor. Prices stay the store's own.
+
+<Note>
+    Missing a feature on your platform? Tell us on our
+    [discord community](https://discord.gg/XNdtdFxNdE) and we will prioritise it.
+</Note>
