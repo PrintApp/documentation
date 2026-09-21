@@ -24,6 +24,12 @@ The Text Value connector captures text input from your product page and replaces
 The Page Count connector captures and sets the number of pages the editor will load with. This is useful for products that have multiple pages, like Booklets, Catalogs, and Magazines. The editor will load the number of pages set in your input field. If the user changes the number of pages in the editor, it will send the new value back to your input field.
 </Accordion>
 
+<Accordion title="Printed Sides">
+The Printed Sides connector reports how many pages, or sides, of the design actually carry a print. A side the customer leaves blank is not counted. This is useful for apparel and other multi-side products where the first print is included and each additional side costs extra: a T-shirt with front, back and two sleeves reports `1` while only the front is designed, and `2` the moment something is placed on the back. The value is sent to your input field as the customer works, so the price can update before they add to cart.<br/>
+Objects that belong to the design itself (locked template graphics and reference guides) do not count as a print, only what the customer places or edits.<br/>
+This connector only sends data from the editor to your page. The target must be a field that takes a number: a number input, or a dropdown or [Print Options](/print-options/introduction) choice field whose choices are named `1`, `2`, `3` and so on. A choice field with options like "Single-sided / Double-sided" will not be updated.
+</Accordion>
+
 <Accordion title="Page Index">
 The Page Index connector allows you to display specific pages to your customers when the editor loads. For instance, if a customer selects Single Sided Business Card, you can have the editor show only the front side for the customer to personalize and hide the back side.
 This can be used to show or hide any specific page in the editor.
