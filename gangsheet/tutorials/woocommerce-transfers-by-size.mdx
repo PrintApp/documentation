@@ -1,0 +1,73 @@
+---
+title: "Tutorial: transfers by size on WooCommerce"
+description: "Sell DTF transfers by print size and copy count on WordPress: a Gang Sheet design in Transfers-by-size mode, priced by area with copy breaks through Print Options."
+---
+
+Transfers by size is the product most DTF shops sell alongside gang
+sheets: the customer uploads designs, gives each a print size and a copy
+count, and pays by area with a better rate the more they order. The shop
+does the nesting. This tutorial sets it up on WooCommerce.
+
+**You need:** the Print.App plugin and Print Options installed
+([WordPress installation](/platforms/wordpress/installation),
+[Print Options on WordPress](/print-options/wordpress)), and **Switch to new
+Editor** on.
+
+<Steps>
+    <Step title="Create the design in Transfers-by-size mode">
+        **Designs → Create New Design → Gang Sheet.** Title it *DTF
+        Transfers by Size* and set **Builder mode** to *Transfers by size
+        (pay by print area)*. The billing increment and customer nesting
+        settings hide; keep the film width and lengths, they still shape
+        the sheet the shop prints.
+
+        Under **Pricing** set **Price target** to `po:quantity` and
+        **Price display source** to `po:price`. Save.
+    </Step>
+    <Step title="Create the product and assign the design">
+        Add a simple WooCommerce product, *DTF Transfers*, and assign the
+        design to it from the Print.App plugin's product settings.
+    </Step>
+    <Step title="Build the option set">
+        In Print Options start from the **DTF Transfers by Size** template:
+
+        - a **file** field with Print.App as the provider;
+        - a **Film type** choice with a **Per area** modifier in square
+          inches and **quantity** tiers — up to 14 copies $0.055, up to 49
+          $0.045, up to 99 $0.040, up to 249 $0.035, then $0.030;
+        - a **Total copies** quantity field with help text saying it is set
+          by the designs;
+        - a $2 setup fee and a $10 minimum.
+
+        Adjust the rates and **Publish**.
+    </Step>
+    <Step title="Show the widget">
+        On the product page the plugin renders the Print Options widget
+        with its own Add to cart. Hide WooCommerce's quantity and cart
+        button on this product so the widget's is the only path.
+    </Step>
+    <Step title="Test it">
+        Open the builder from the product page. Upload two designs; set
+        the first to 4" × 4" with 10 copies and the second to 2" × 6" with
+        5 copies. The summary shows 15 copies and 220 sq in. **Save &
+        continue** returns you to the product with *Total copies* at 15
+        and the price at $11.90 — 220 sq in at the 15-copy rate plus the
+        setup fee.
+
+        Change the first design to 14 copies and then 15 and watch the
+        price drop at the break: that is the incentive working.
+    </Step>
+    <Step title="Find the print file">
+        The order line lists the designs with their sizes and copies. The
+        project's print file already holds every copy packed onto the
+        film, ready for the press — no nesting to do.
+    </Step>
+</Steps>
+
+## Notes
+
+- One order line carries the whole session, whatever the number of
+  designs. The per-design breakdown is on the line for production.
+- The copy count is pushed into the quantity field automatically; if a
+  customer edits it by hand the price will be wrong for the designs
+  saved. The template's help text says so; keep it.

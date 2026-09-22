@@ -1,0 +1,65 @@
+---
+title: Developers
+description: "The builder's contract with the product page: the live pushes to Print Options or a theme input, the canvas facts on the saved design, and the price readback."
+---
+
+The Gang Sheet Builder speaks to the product page through the same
+channels every Print.App editor uses. Nothing here is required to use it;
+this page is for stores with their own pricing logic or integrations.
+
+## Live pushes while the customer works
+
+After every re-pack the builder sends the billable value to the **Price
+target** configured on the design:
+
+| Price target | What is sent |
+| --- | --- |
+| `po:dimensions` | Two values into the Print Options widget's dimensions field: `w` = film width, `h` = billed length, with the design's unit. The widget converts units and prices. |
+| any other `po:` field | One number into that widget field, in the billing unit. |
+| a CSS selector | One number written into the matching input, in the billing unit (inches, feet, centimeters) or the sheet count for fixed sheets, followed by `input` and `change` events. |
+
+In Transfers by size the value is the **total copy count**, sent to
+`po:quantity` or to the selector named.
+
+## The saved design
+
+When the customer saves, the `app:saved` message the Print.App client
+receives carries a `canvas` object beside the usual project fields:
+
+```json
+{
+  "projectId": "project_…",
+  "canvas": { "w": 22, "h": 13, "unit": "in", "sheets": [{ "usedLength": 13 }] }
+}
+```
+
+`h` is the billed length across all sheets. With Print Options the client
+hands this to the widget as the file's canvas, which is what a **Per
+length** modifier prices from and what is verified on our servers at
+add-to-cart.
+
+In Transfers by size the object also carries `mode`, `copies`,
+`totalArea` and an `items` array with each design's size and copy count;
+the client forwards the items on the file record for the production
+ticket.
+
+## Price readback
+
+With **Price display source** set, the builder registers for the page's
+price and shows it in its summary:
+
+- `po:price` — the Print Options widget sends its total, currency and
+  availability on load and on every change.
+- a CSS selector — the client watches the element's text and sends it on
+  every change. The element must show the **line total** for the number to
+  mean anything in the builder.
+
+The displayed price never feeds pricing; it is a mirror of the page.
+
+## Layout validation
+
+Before checkout the builder re-sends the sheet's placements to the packing
+service, which checks them with the same geometry it packs with: inside the
+film, clear of the edge padding, no two pieces closer than the gap. A
+customer's manual nudge that breaks a rule blocks Preview & Save with the
+reason listed, and Auto-nest clears it.

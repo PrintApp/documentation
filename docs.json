@@ -121,6 +121,28 @@
               },
               "print-options/faqs"
             ]
+          },
+          {
+            "group": "Gang Sheet Builder",
+            "pages": [
+              "gangsheet/introduction",
+              "gangsheet/getting-started",
+              "gangsheet/configuration",
+              "gangsheet/pricing",
+              "gangsheet/customer-flow",
+              "gangsheet/design-tools",
+              "gangsheet/output",
+              {
+                "group": "Tutorials",
+                "pages": [
+                  "gangsheet/tutorials/shopify-gang-sheet",
+                  "gangsheet/tutorials/woocommerce-transfers-by-size",
+                  "gangsheet/tutorials/theme-pricing"
+                ]
+              },
+              "gangsheet/developers",
+              "gangsheet/faqs"
+            ]
           }
         ]
       },

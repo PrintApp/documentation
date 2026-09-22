@@ -1,0 +1,82 @@
+---
+title: "Tutorial: a Shopify gang sheet with Print Options"
+description: "Set up a 22\" DTF gang sheet on Shopify, priced per foot with length tiers through Print Options, and place the first order — start to finish."
+---
+
+By the end you will have a product on which customers build a gang sheet,
+see a live price per foot of film, and check out with the sheet attached
+to the order. About twenty minutes.
+
+**You need:** Print.App and Print Options installed on the store
+([Shopify installation](/platforms/shopify/installation),
+[Print Options on Shopify](/print-options/shopify)), and **Switch to new
+Editor** on in the Print.App dashboard settings.
+
+<Steps>
+    <Step title="Create the design">
+        In the Print.App dashboard go to **Designs → Create New Design →
+        Gang Sheet**. Title it *22" DTF Gang Sheet*.
+
+        Under **Film and billing** leave the defaults: 22" wide, 120" max,
+        3" minimum, billed per inch. Under **Pricing** set **Price target**
+        to `po:dimensions` and **Price display source** to `po:price`.
+        Save.
+    </Step>
+    <Step title="Create the product">
+        In Shopify add a product, *22" DTF Gang Sheet*, with one variant and
+        a nominal price — Print Options will replace it. Keep inventory
+        tracking off; a gang sheet is made to order.
+    </Step>
+    <Step title="Assign the design">
+        In the Print.App app on Shopify, open the product and assign the
+        design you created. The product page now shows the Print.App
+        button.
+    </Step>
+    <Step title="Build the option set">
+        Open the Print Options builder for the product and start from the
+        **DTF Gang Sheet (22" film)** template. It has:
+
+        - a **file** field with Print.App as the provider, so the designer
+          is the way in;
+        - a **Film type** choice, matte and glossy, each with a **Per
+          length** modifier in feet and length tiers (up to 5 ft, up to
+          20 ft, beyond);
+        - a **quantity** stepper for repeat sheets;
+        - a $3 setup fee and a $10 minimum.
+
+        Change the rates to yours and **Publish**.
+    </Step>
+    <Step title="Place the theme block">
+        In the theme editor, add the **Print Configurator** app block to
+        the product template, inside the product information section
+        right after the price, and remove the theme's own quantity and buy
+        buttons — the widget's Add to cart is the only path. Set the file
+        field's display to *producer* if you want to hide the drop zone
+        and show only the designer button.
+    </Step>
+    <Step title="Test it">
+        Open the product, click the Print.App button, upload three or four
+        PNGs and set copies — 40, 30, 30, 25 makes a good test. Watch the
+        sheet pack and *Length used* settle, then **Preview & Save**. Back
+        on the product page the widget shows the film line, for example
+        *Matte DTF film 13" — $8.67*, plus the setup fee. Add to cart and
+        check out.
+    </Step>
+    <Step title="Find the print file">
+        Open the order in Shopify: the line carries the design link and the
+        film properties. In the Print.App app's orders page download the
+        project's PDF — one page, 22" × 13", transparent, every logo at
+        full resolution.
+    </Step>
+</Steps>
+
+## Variations
+
+- **Bill per foot** rounds the used length up to whole feet — set it under
+  Film and billing and the widget's tiers still apply.
+- **Fixed sheet sizes** (22" × 24", 22" × 48"…): set **Bill per** to *Fixed
+  sheet lengths*, list the sizes, and price the widget per sheet with a
+  quantity-based modifier instead of per length.
+- **Password-protected development store:** the storefront asks for the
+  password; the product's *Preview* button in Shopify admin bypasses it
+  for testing.

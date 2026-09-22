@@ -1,0 +1,48 @@
+---
+title: "Tutorial: pricing through the theme"
+description: "Run a gang sheet without Print Options: the builder writes the billed length into the theme's quantity field, and the product's unit price does the rest."
+---
+
+If your product is priced per inch or per foot with one flat rate, you do
+not need Print Options. The builder can write the billed length straight
+into the product page's quantity input, and the store prices it as
+*quantity × unit price*. This tutorial uses Shopify's Dawn theme; any theme
+with a quantity input works the same way.
+
+<Steps>
+    <Step title="Create the product priced per unit of length">
+        Add the product with a price equal to your rate **per billing
+        unit** — $0.75 per inch, say — and a single variant. The quantity
+        the customer buys will be the inches of film.
+    </Step>
+    <Step title="Find the quantity input">
+        On the product page, inspect the quantity field. In Dawn it is
+        `input[name="quantity"]`; other themes use ids such as
+        `#quantity` or `#Quantity-…`. Copy a selector that matches exactly
+        one input.
+    </Step>
+    <Step title="Create the design">
+        **Designs → Create New Design → Gang Sheet.** Set the film, set
+        **Bill per** to the unit your price is in (inch here), and under
+        **Pricing** paste the selector into **Price target**. Optionally
+        set **Price display source** to the selector of the element
+        showing the line total, if your theme has one; leave it empty
+        otherwise.
+    </Step>
+    <Step title="Assign and test">
+        Assign the design to the product and open the builder. As the
+        sheet packs, the theme's quantity field changes to the billed
+        length, and the theme's own price logic follows. Save, add to cart:
+        the cart shows 13 × $0.75 for a 13" sheet.
+    </Step>
+</Steps>
+
+## What this path cannot do
+
+- **Length tiers and setup fees.** The store multiplies; it does not
+  know about breaks or floors. Use [Print Options](/gangsheet/pricing#path-1--print-options-recommended)
+  for those.
+- **Server-side verification.** The price is whatever the store computes
+  from the quantity in the cart.
+- **Fixed sheet lengths** work: the builder sends the sheet count, and the
+  product is priced per sheet.

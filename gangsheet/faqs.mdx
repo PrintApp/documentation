@@ -1,0 +1,86 @@
+---
+title: FAQs and troubleshooting
+description: "Answers to the questions gang sheet customers and shops ask most: low resolution warnings, crops, transparent files, prices that do not move, sheets that do not pack."
+---
+
+## Customers' questions
+
+<AccordionGroup>
+    <Accordion title="Why is my design flagged as low resolution?">
+        A design's resolution is its pixels divided by its printed size. A
+        500 px wide logo printed 2" wide is 250 dpi. The builder flags any
+        design under the shop's floor (usually 300 dpi) and tells the
+        customer the largest size that passes — for that logo, 1.66". They
+        can shrink it in the list, or upload a larger file. Text and SVG
+        graphics are vectors and never trigger this.
+    </Accordion>
+    <Accordion title="My design got smaller after I cropped it">
+        That is intended. A crop keeps the artwork's print scale, so the
+        piece shrinks by what was cut away. Stretching the cropped pixels
+        back to the old size would drop the resolution under the floor and
+        block checkout. Set the size you want in the list after cropping;
+        the DPI verdict updates as you type.
+    </Accordion>
+    <Accordion title="The Remove background switch is greyed out">
+        The upload is already transparent, so there is no background to
+        remove. The switch is disabled to keep the artwork's own edges
+        untouched.
+    </Accordion>
+    <Accordion title="Why can't I add an outline and a halftone together?">
+        A screened keyline prints badly, so the two are exclusive: the
+        Halftone switch hides while a design has an outline, and Outline is
+        disabled while Halftone is on.
+    </Accordion>
+    <Accordion title="Why did my order split into two sheets?">
+        The pack was longer than the shop's maximum sheet length, so the
+        rest went onto *Sheet 2*. Both are in the order and both are billed.
+    </Accordion>
+    <Accordion title="Can I move the pieces myself?">
+        If the shop allows it, yes: select a piece on the sheet to move or
+        resize it. Resizing updates the design's size and its resolution
+        check. Auto-nest re-packs everything at any time.
+    </Accordion>
+</AccordionGroup>
+
+## Shops' questions
+
+<AccordionGroup>
+    <Accordion title="The price on the product page does not change while the customer builds">
+        Check **Price target** on the design. With Print Options it must be
+        `po:dimensions`; with a theme input it must be a selector that
+        matches an input on the page. If the widget's option set has no
+        dimensions field, the in-builder price only updates on save — the
+        final price is still right.
+    </Accordion>
+    <Accordion title="Customers see 'The nesting service is unreachable'">
+        The packer runs on our servers and the builder could not reach it,
+        usually a network blip. The customer can retry with Auto-nest. If
+        it persists on your store, contact support with the time and the
+        store domain.
+    </Accordion>
+    <Accordion title="Can I bill fixed sheet sizes instead of length?">
+        Yes. Set **Bill per** to *Fixed sheet lengths* and list the lengths
+        you sell. The builder rounds the used length up to the next listed
+        size and sends the sheet count as the billable value.
+    </Accordion>
+    <Accordion title="The Gallery button shows no graphics">
+        The gallery lists the graphics folders the design's **profiles**
+        allow. Assign a profile with graphics folders to the design, or add
+        folders to the profile it already has. See
+        [Assign resources](/guides/designs/assign-resources).
+    </Accordion>
+    <Accordion title="Where is the customer's original upload?">
+        The print file places the original at full resolution, so you do
+        not need it separately. It is still in the project's files if you
+        want it, alongside the print PDF.
+    </Accordion>
+    <Accordion title="I changed the film width, but an old project still shows the old width">
+        Projects snapshot the design's settings when they start. Customers
+        who resume an older project keep the film they designed on; new
+        projects use the new width.
+    </Accordion>
+    <Accordion title="The Gang Sheet option is missing when I create a design">
+        Gang sheets need the new editor. Turn on **Switch to new Editor** in
+        Settings, then create the design.
+    </Accordion>
+</AccordionGroup>

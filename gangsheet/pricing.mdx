@@ -1,0 +1,114 @@
+---
+title: Pricing
+description: "How a gang sheet is priced: the builder measures the film used, your store sets the rate. The three ways to connect them — Print Options, a theme input, or Transfers by size — with worked examples."
+---
+
+Gang sheets are billed the way the market bills them: by the **length of
+film** the order uses, on a roll of fixed width. The builder measures; your
+store prices. Nothing on the Print.App side holds a rate.
+
+While the customer works, the builder keeps sending the billable value to
+the product page, so the price they see moves as they add pieces. When they
+save, the same facts ride the order line.
+
+## What the builder measures
+
+- **Used length** — how much of the roll the packed sheet takes, from the
+  film's top edge to the bottom of the lowest piece. Gaps and edge padding
+  count; they are part of what the customer used.
+- **Billable length** — the used length rounded **up** to the billing
+  increment (inch, foot, centimeter) and never below the minimum billable
+  length. With fixed sheet lengths the value is the number of sheets.
+- **Sheets** — an order longer than the maximum sheet length overflows onto
+  a second sheet; the billable total is the sum across sheets.
+
+The summary's *Sheet space* figure shows the customer what they have used
+against the maximum, and how much of the length they are already paying
+for is still empty — pieces added there cost nothing extra.
+
+## Path 1 — Print Options (recommended)
+
+Set **Price target** to `po:dimensions` and add a
+[Print Options](/print-options/introduction) option set to the product with
+a **Per length** price modifier on the film choice. The builder streams the
+film width and used length into the widget, which prices live and verifies
+the total on our servers at add-to-cart.
+
+A typical film choice:
+
+| Film | Rate | Tiers (by length) |
+| --- | --- | --- |
+| Matte DTF | $8 / ft | up to 5 ft $8, up to 20 ft $6.50, beyond $5 |
+| Glossy DTF | $9 / ft | up to 5 ft $9, up to 20 ft $7.50, beyond $6 |
+
+with a $3 setup fee and a $10 minimum order.
+
+**Example.** Four logos at 40/30/30/25 copies pack into 13" of 22" film.
+Billed per inch that is 13" = 1.083 ft × $8 = $8.67, plus the $3 setup:
+**$11.67**. Add a fifth logo that fits in the free length and the price
+does not move.
+
+<Tip>
+    A ready-made blueprint, *DTF Gang Sheet (22" film)*, is in the Print
+    Options templates. Start from it and change the rates.
+</Tip>
+
+<Note>
+    The widget prices from the **saved** design's canvas once the customer
+    has saved. Until then it shows the live pushes only if the option set
+    has a dimensions field to receive them; without one the in-builder price
+    stays at the minimum until save. The final price is always right.
+</Note>
+
+## Path 2 — a theme input (no Print Options)
+
+Set **Price target** to the CSS selector of a quantity input on your
+product page, for example `#quantity` or `input[name="quantity"]`. The
+builder writes the billable value into it — inches, feet, centimeters or
+sheet count, matching **Bill per** — and fires the input's change event, so
+whatever your theme or pricing app does with quantity happens with the
+length.
+
+This suits a product priced per inch or per foot with a plain unit price.
+It cannot do length tiers, setup fees or server-side verification; the
+price is whatever the store computes from the quantity.
+
+## Path 3 — Transfers by size
+
+In this mode the customer never sees a sheet. Each design gets a print size
+and a copy count, and the order is priced by **print area** with cumulative
+copy breaks, which is how transfers are sold.
+
+Set **Price target** to `po:quantity` (or a theme quantity selector) and
+give the film choice a **Per area** modifier with **quantity** tiers:
+
+| Copies | Rate per sq in |
+| --- | --- |
+| up to 14 | $0.055 |
+| up to 49 | $0.045 |
+| up to 99 | $0.040 |
+| up to 249 | $0.035 |
+| 250 and more | $0.030 |
+
+The builder pushes the total copy count and hands the widget the total
+print area on save.
+
+**Example.** A 4" × 4" design × 10 copies plus a 2" × 6" design × 5 copies
+is 15 copies over 220 sq in. At the 15-copy rate: 220 × $0.045 = $9.90,
+plus a $2 setup: **$11.90**. Fourteen copies of a 4" × 5" design would cost
+$17.40, fifteen $15.50 — the copy break makes the larger order cheaper,
+which is exactly the incentive shops want.
+
+<Warning>
+    The copy count is pushed into the widget's quantity field. Tell your
+    customers in the field's help text that it is set by their designs, so
+    they do not change it by hand.
+</Warning>
+
+## Showing the price in the builder
+
+Set **Price display source** to `po:price` and the builder shows the Print
+Options total in its summary, updating as the customer works. On a theme
+without Print Options, point it at the element that shows the **line
+total** — many themes render only the unit price, which would be misleading
+in the builder. Leave it empty to hide the price.

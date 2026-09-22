@@ -1,0 +1,97 @@
+---
+title: Configuration
+description: "Every setting on a Gang Sheet design in the dashboard: film and billing, nesting, quality floor, uploads, design tools and the pricing selectors — what each does and its default."
+---
+
+A Gang Sheet design is configuration, not a canvas: it tells the builder
+what film the shop runs, how the sheet is billed, how pieces are packed
+and what customers may do to their artwork. Open the design in the
+dashboard to edit it; the panel is split into the sections below.
+
+<Note>
+    Projects take a **snapshot** of these settings when a customer starts
+    building. Changing a setting affects new projects only — a sheet a
+    customer saved on 22" film stays on 22" film when they resume it.
+</Note>
+
+## Builder mode
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Builder mode** | *Gang sheet* — the customer builds the sheet and pays for the film length used. *Transfers by size* — the customer sets a print size and copy count per design and pays by print area; the shop nests the transfers (the customer never sees a sheet). | Gang sheet |
+
+Most of the settings below apply to both modes. Transfers by size hides
+the ones that only make sense for a customer-built sheet (billing
+increment, customer nesting), and prices by area instead of length — see
+[Pricing](/gangsheet/pricing).
+
+## Film and billing
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Unit** | The measurement unit for every size on this panel and in the builder. Switching converts the values. | Inches |
+| **Film width** | The width of the film roll. Pieces nest across this. | 22 in |
+| **Max sheet length** | The longest sheet one order can use. A bigger order overflows onto a second sheet, which the customer sees as *Sheet 2*. | 120 in |
+| **Min billable length** | The shortest sheet a customer can order. A pack shorter than this is padded to it, and the summary shows the padding as free length. | 3 in |
+| **Bill per** | How the used length turns into the number sent to your store: per inch, per foot (or per centimeter for metric units), or fixed sheet lengths. The used length is rounded **up** to the next increment. | Inch |
+
+## Nesting
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Gap between pieces** | The minimum space the packer keeps between transfers so they can be cut apart. | 0.125 in |
+| **Sheet edge padding** | A keep-out margin along the film edges. | 0 |
+| **Allow rotating pieces** | The packer may turn pieces sideways to save film. Customers can switch this off per design in the list (*May rotate*). | On |
+| **Customer may adjust nesting** | Shows the gap and rotation controls in the builder's top bar so customers can change them for their sheet. | On |
+| **Customer may adjust pieces on the sheet** | Lets customers select, move and resize pieces directly on the sheet. A resize on the sheet updates the design's size in the list and re-checks its DPI. Off keeps the sheet view-only: every size comes from the design list, and the auto-nest owns the layout. | On |
+
+<Tip>
+    Leave **adjust pieces on the sheet** off if you want a layout you can
+    trust blindly. The nest is validated on our servers before checkout
+    either way, so a customer nudge that crosses the gap is caught, but a
+    view-only sheet never needs the check.
+</Tip>
+
+## Quality
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Minimum DPI** | Artwork below this resolution at its printed size is flagged in the list, on the sheet and in the summary, with the largest size that would pass. | 300 |
+| **Low DPI blocks checkout** | On: Preview & Save stays disabled until every design meets the floor. Off: the warning shows but the customer can still order. | On |
+
+Text pieces and SVG graphics from the gallery are vectors and never carry
+a DPI verdict.
+
+## Uploads
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Remove background** | Shows a *Remove background* switch on each uploaded design. Uploads that are already transparent get the switch disabled — there is nothing to cut. | On |
+| **Allow image effects** | Shows a *Halftone* switch per design, which screens the piece at print resolution. | On |
+| **Upscale small images** | Upscales low-resolution uploads to help them meet the DPI floor. | Off |
+| **Welcome message** | The text shown in the empty design list before the first upload. Leave it blank for the default. | — |
+
+## Design tools
+
+Each switch adds a control to the builder. All four are on by default.
+
+| Setting | What the customer gets |
+| --- | --- |
+| **Add text** | An *Add Text* button: type text, pick a font from your typography catalog, set the height, colour and an optional outline. The text is placed as a vector and prints sharp at any size. |
+| **Gallery** | A *Gallery* button listing the graphics folders this design's profiles allow. Raster graphics behave like uploads; SVG graphics stay vector. |
+| **Edit image** | An *Edit Image* button on uploaded and gallery rasters: rectangle or circle crop, brightness and contrast. |
+| **Outline** | An *Outline* button that adds a keyline around a design — a white outline for dark garments, for instance. |
+
+See [Design tools](/gangsheet/design-tools) for how each behaves.
+
+## Pricing
+
+Print.App does not price the sheet; your store does. These two fields
+connect the builder to the product page.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Price target on the product page** | Where the billable value is sent while the customer designs. Empty disables the push. `po:dimensions` feeds the Print Options widget with the film width and used length. Any other value is a CSS selector of an input on your product page, which receives the billable length in your billing unit (or the sheet count for fixed sheets). In Transfers-by-size mode the **total copy count** is sent instead, to `po:quantity` or to the selector you name. | — |
+| **Price display source** | Shows the product page's live price inside the builder. `po:price` reads the Print Options widget's total; otherwise a CSS selector of the theme's price element. Empty hides the price in the builder. | — |
+
+[Pricing](/gangsheet/pricing) walks through each path with numbers.

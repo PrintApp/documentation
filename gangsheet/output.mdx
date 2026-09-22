@@ -1,0 +1,59 @@
+---
+title: Output and production
+description: "What you receive when a gang sheet order comes in: the saved project, the print-ready PDF and the 300 dpi transparent PNG, how sheets and text print, and where the files are."
+---
+
+A saved gang sheet is an ordinary Print.App **project**: it appears with
+the order like any other design, and you fetch its print files the same
+way. What differs is what is in them.
+
+## The print file
+
+| | |
+| --- | --- |
+| **Page size** | The film width by the billed length of the sheet — a 13" sheet on 22" film is a 22" × 13" page. |
+| **One page per sheet** | An order that overflowed the maximum length has one page per sheet, named *Sheet 1*, *Sheet 2*… |
+| **Background** | Transparent. Nothing is printed where there is no piece. |
+| **Pieces** | Every uploaded design is placed from its **original** file at its nested position, size and rotation — the preview raster is never printed. Mirrored pieces are mirrored. |
+| **Text** | Vector. Text pieces print sharp at any size, outline included. |
+| **Gallery SVGs** | Vector, printed from the graphic file. |
+| **Halftone** | Pieces with the Halftone switch on are screened at 300 dpi and embedded as rasters. |
+| **Resolution** | Rasters are placed at native pixels; the DPI floor in the design guarantees at least the configured resolution at print size. |
+
+The PDF is what the RIP gets. If your workflow wants a raster, the same
+render is available as a **300 dpi PNG with alpha**, which is what most DTF
+printers take. Both come from the project's *Download* actions and from
+the platform integrations below.
+
+## Where the files are
+
+<CardGroup cols={2}>
+    <Card title="Shopify" icon="shopify" href="/platforms/shopify/installation">
+        Order line properties link to the project; download from the
+        Print.App app's orders page.
+    </Card>
+    <Card title="WordPress" icon="wordpress" href="/platforms/wordpress/how-to-access-files">
+        Files are listed on the order in WooCommerce.
+    </Card>
+    <Card title="Other platforms" icon="store" href="/platforms/platform-features">
+        PrestaShop, OpenCart, Odoo and Shopware follow the same pattern.
+    </Card>
+    <Card title="Webhooks" icon="webhook" href="/configuration/webhooks">
+        Get the project and its files pushed to your own system on save.
+    </Card>
+</CardGroup>
+
+## What the order carries
+
+Besides the project link, the saved design reports its **canvas**: film
+width, billed length, unit and the number of sheets. With Print Options this
+is what the widget prices from and what appears on the line. In Transfers
+by size the order also carries the per-design breakdown — each design's
+size and copy count — for the production ticket.
+
+## Transfers by size
+
+The customer only ever set sizes and copies, but a print sheet still
+exists: the builder packs every copy onto film in the background at save,
+so the project's print file is ready for the press without any manual
+nesting. Overflow sheets apply as in gang sheet mode.

@@ -1,0 +1,87 @@
+---
+title: Getting started
+description: "From nothing to a first gang sheet order: create the design in the dashboard, set the film, connect the price, assign it to a product and test it."
+---
+
+This walkthrough gets a 22" DTF gang sheet selling on your store. It
+assumes Print.App is installed on your platform — see
+[Installation](/installation) if not — and the new editor is on.
+
+<Steps>
+    <Step title="Turn on the new editor">
+        In the dashboard open **Settings** and switch on **Switch to new
+        Editor**. Gang sheets need it; without it the design type is not
+        offered.
+    </Step>
+    <Step title="Create the Gang Sheet design">
+        Go to **Designs**, choose **Create New Design** and pick **Gang
+        Sheet**. The configuration panel opens instead of the studio — a
+        gang sheet has no canvas to draw on.
+
+        Give it a title customers will recognise, such as *22" DTF Gang
+        Sheet*, and leave **Builder mode** on *Gang sheet*.
+    </Step>
+    <Step title="Set the film">
+        Under **Film and billing** enter your roll: width (22"), the
+        longest sheet you will print on one piece of film (120"), the
+        shortest you sell (3") and how you bill it (per inch). Under
+        **Nesting** set the gap you need to cut pieces apart; 0.125" is a
+        safe start.
+
+        The defaults match a common 22" DTF setup, so this step is often
+        just a check.
+    </Step>
+    <Step title="Choose the quality floor">
+        Under **Quality** keep **Minimum DPI** at 300 and **Low DPI blocks
+        checkout** on unless you are happy to print soft artwork. The
+        builder tells customers the exact size that would pass, so a block
+        is rarely a dead end.
+    </Step>
+    <Step title="Connect the price">
+        Under **Pricing** set **Price target** to `po:dimensions` and
+        **Price display source** to `po:price`. Then, in Print Options,
+        create an option set from the *DTF Gang Sheet* template, adjust the
+        per-foot rates, and publish it to the product.
+
+        No Print Options? Point **Price target** at your theme's quantity
+        input instead and price the product per inch. [Pricing](/gangsheet/pricing)
+        compares the paths.
+    </Step>
+    <Step title="Assign the design to a product">
+        Save the design, then assign it to the product the same way as any
+        other design. The product page shows the Print.App button; clicking
+        it opens the builder.
+    </Step>
+    <Step title="Place a test order">
+        Open the product, add two or three PNGs, set sizes and quantities
+        and watch the sheet pack and the price move. Save, add to cart and
+        check out. Then open the order's project and download the print
+        file — you should see a transparent PDF the width of your film.
+    </Step>
+</Steps>
+
+## Optional extras
+
+- **Design tools.** Text, gallery, image edit and outline are on by default.
+  Switch off any you would rather not support; the buttons disappear.
+- **Welcome message.** The text in the empty list before the first upload.
+  Use it for file advice: transparent PNGs at 300 dpi, no white boxes.
+- **Graphics for the gallery.** Assign a profile with graphics folders to
+  the design and the Gallery button lists them. See
+  [Assign resources](/guides/designs/assign-resources).
+- **Transfers by size.** Duplicate the design, switch **Builder mode**, and
+  price the product by area. See [Pricing](/gangsheet/pricing#path-3--transfers-by-size).
+
+## Tutorials
+
+<CardGroup cols={3}>
+    <Card title="Shopify + Print Options" icon="shopify" href="/gangsheet/tutorials/shopify-gang-sheet">
+        A gang sheet with per-foot tiers, end to end.
+    </Card>
+    <Card title="WooCommerce transfers by size" icon="wordpress" href="/gangsheet/tutorials/woocommerce-transfers-by-size">
+        Print size and copies, priced by area.
+    </Card>
+    <Card title="Theme pricing" icon="code" href="/gangsheet/tutorials/theme-pricing">
+        Per-inch pricing through the theme's quantity field.
+    </Card>
+</CardGroup>
