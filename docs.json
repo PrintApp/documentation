@@ -271,5 +271,27 @@
       "github": "https://github.com/printapp",
       "discord": "https://discord.gg/XNdtdFxNdE"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/api-reference/custom-installation",
+      "destination": "/api-reference/editor/installation"
+    },
+    {
+      "source": "/configuration/webhook",
+      "destination": "/configuration/webhooks"
+    },
+    {
+      "source": "/guides/designs/design-objects",
+      "destination": "/guides/designs/objects/settings"
+    },
+    {
+      "source": "/guides/designs/design-smart",
+      "destination": "/guides/designs/objects/smart"
+    },
+    {
+      "source": "/guides/designs/objects/clipping-mask",
+      "destination": "/guides/designs/objects/clipping-masks"
+    }
+  ]
 }
