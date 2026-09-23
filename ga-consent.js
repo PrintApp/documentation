@@ -1,8 +1,9 @@
 // Google Analytics 4 with Consent Mode v2 — mirrors the main site's setup
-// (print-app-website/src/components/ConsentBanner.astro). Docs are on
-// docs.print.app, a different origin than print.app, so the localStorage
-// consent choice is per-site (each shows its own banner once); GA's _ga
-// cookie lives on .print.app and is shared across both.
+// (print-app-website/src/components/ConsentBanner.astro). Docs are served at
+// print.app/docs and docs.print.app redirects there, so this shares an origin
+// with the marketing site: the localStorage consent choice and the _ga cookie
+// on .print.app are both shared, and a visitor sees the banner once across the
+// two. Reporting is separated by content_group, not by a second property.
 // EU/UK/CH visitors (timezone detection): denied until accepted via the banner.
 // Everyone else: granted by default; opt-out available on the main site footer.
 (function () {
@@ -34,7 +35,10 @@
 		analytics_storage: analytics
 	});
 	gtag('js', new Date());
-	gtag('config', GA_ID);
+	// Same property as the marketing site on purpose; content_group is what
+	// separates them in reporting. Break any GA4 report down by Content group to
+	// see Docs against Marketing without losing the shared user and session.
+	gtag('config', GA_ID, { content_group: 'Docs' });
 
 	var s = document.createElement('script');
 	s.async = true;
