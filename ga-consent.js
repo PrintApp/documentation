@@ -40,10 +40,22 @@
 	// see Docs against Marketing without losing the shared user and session.
 	gtag('config', GA_ID, { content_group: 'Docs' });
 
-	var s = document.createElement('script');
-	s.async = true;
-	s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-	document.head.appendChild(s);
+	// Singapore is excluded: a crawler on Huawei Cloud that executes JS and
+	// rotates IP every burst was GA4's largest "country", 97% of it on docs.
+	// /_country.js is answered by a CloudFront Function (viewer-country-js) with
+	// the viewer's country. If it fails to load, GA loads as normal.
+	function loadGa() {
+		var s = document.createElement('script');
+		s.async = true;
+		s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+		document.head.appendChild(s);
+	}
+	var geo = document.createElement('script');
+	geo.async = true;
+	geo.src = '/_country.js';
+	geo.onload = function () { if (window.__paCountry !== 'SG') loadGa(); };
+	geo.onerror = loadGa;
+	document.head.appendChild(geo);
 
 	if (!needsConsent || stored) return;
 
