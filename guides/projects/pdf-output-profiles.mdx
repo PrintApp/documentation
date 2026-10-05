@@ -36,6 +36,16 @@ When creating or editing a PDF Output Profile, you can configure the following s
 
 - **Include Screenshot**: This will include a screenshot capture of the canvas in your PDF. Please turn this OFF if you don't need it, as it can increase file size and may not be desired in production output. `Default: Off`.
 
+#### Dieline
+
+- **Render Dieline**: On die-cut pages (round stickers, shaped labels, phone cases), draw the cut outline into the PDF as a vector stroke in a named spot color, overprinting, so cutting plotters can read it. The line stays a spot color even when **Render Spot Colors** is off or the color profile is Device RGB. `Default: Off`.
+
+- **Dieline Spot Name**: Name of the spot color your cutter looks for, for example `CutContour`, `Thru-cut` or `Kiss-cut`. Only applies when **Render Dieline** is enabled. `Default: CutContour`.
+
+- **Dieline Width**: Stroke width of the cut line, in points. Only applies when **Render Dieline** is enabled. `Default: 0.25`.
+
+[Read more about cut contour lines here](/guides/resources/colors/create-Cut-Contour-lines)
+
 #### Images
 
 - **Downsample Images**: Downsample images above the specified DPI to target DPI. This can significantly reduce PDF size, but may reduce print quality if set too low for your output device. `Default: Off`.
