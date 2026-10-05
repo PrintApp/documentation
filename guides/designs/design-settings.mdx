@@ -57,6 +57,13 @@ A Design can be configured in the Design Tab when editing a design.
     Enabling this option instructs the PDF renderer to Print the Crop marks on the final PDF file as well as raster downloads.
 </ResponseField>
 
+<ResponseField name="Add to Cart on Save" type="">
+    Adds the product to the cart for your customer as soon as they finish their design.
+    <br/>The editor's button reads **Preview & Add to Cart**, then **Add to Cart** on the preview. When the customer saves, the editor closes and your store's own Add to Cart button is pressed for them, so cart drawers, upsell pop-ups and AJAX carts work as they normally do.
+    <br/>If the add can't go through (a variant still to choose, a required field, or another app holding the cart), nothing is forced: the page scrolls to the Add to Cart button and a short note asks the customer to press it. Their design is already saved.
+    <br/>Works with [Force Customization](/configuration/settings#store-settings) and the [Print Options](/print-options/introduction) widget. Developers using a custom cart can take over the add, see [Adding to the cart on save](/api-reference/editor/configuration#adding-to-the-cart-on-save).
+</ResponseField>
+
 <ResponseField name="Tags" type="">
     Tags can be used internally to categorize your designs for search
 </ResponseField>
