@@ -199,8 +199,7 @@
           "pages": [
             "guides/resources/colors/all-about-colors",
             "guides/resources/colors/ICC-Profiles",
-            "guides/resources/colors/import-colors-Pantone-HKS",
-            "guides/resources/colors/create-Cut-Contour-lines"
+            "guides/resources/colors/import-colors-Pantone-HKS"
           ]
         },
         "guides/resources/text-and-fonts",
@@ -215,7 +214,8 @@
         "guides/solutions/garment-printing",
         "guides/solutions/photo-prints",
         "guides/solutions/banner-large-prints",
-        "guides/solutions/promotional-items"
+        "guides/solutions/promotional-items",
+        "guides/solutions/cut-and-contour-lines"
       ]
     },
     {

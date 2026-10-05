@@ -1,0 +1,139 @@
+---
+title: Cut & Contour Lines
+description: "Export cut lines your plotter or die-cutter can read: die-cut shapes, contour-cut stickers, custom cut paths and trim marks."
+---
+
+Cutting plotters, flatbed cutters and RIPs (Roland VersaWorks, Summa, Mimaki, Zünd and others) find the cut by looking for a **spot color with a specific name** in the PDF, usually `CutContour`. Print.App can put that line in the print-ready PDF for you, as a thin vector stroke on top of the artwork that overprints instead of knocking out what is underneath.
+
+Which method to use depends on where the cut comes from:
+
+| You sell | The cut follows | Use |
+|---|---|---|
+| Round, oval or shaped stickers and labels, phone cases, shaped cards | a **fixed shape**, the same for every order | [Die-cut pages](#1-die-cut-pages) |
+| Stickers shaped around the customer's own artwork | the **artwork's outline**, different for every order | [The Stickers module](#2-contour-cut-stickers) |
+| Hang tags with a hole, perforations, kiss-cut sheets with several shapes | **paths you draw** on the design | [Custom cut paths](#3-custom-cut-paths) |
+| Business cards, flyers, posters | a **rectangle**, cut on a guillotine | [Trim marks](#4-rectangular-products) |
+
+Whichever you choose, check the result as described in [Check the PDF](#check-the-pdf) before your first production run.
+
+<Tip>
+Find out the exact spot name your cutter expects before you start. It is case-sensitive: `CutContour` and `cutcontour` are different separations, and a cutter looking for one ignores the other.
+</Tip>
+
+## 1. Die-cut pages
+
+A die-cut page is a page whose outline is a shape instead of a rectangle. Customers design inside the shape, the editor shows its edge, and the PDF gets the outline as a named cut line.
+
+<Note>
+Die-cut cut lines are drawn for designs made in the new editor. Turn on **Switch to new Editor** in your dashboard settings if you have not already.
+</Note>
+
+<Steps>
+    <Step title="Create a shaped design">
+        Start from one of the shaped templates (for example **Stickers → Round 50**) when you create the design.
+
+        Or turn any shape into the page: add the shape (a circle, a star, an imported SVG outline) to the canvas and size it, keep it selected, open the **Page** panel, expand **Advance Settings** and switch on **Mask Canvas with Object**. The page becomes that shape.
+    </Step>
+    <Step title="Set the safe area">
+        In the **Page** panel, set **Margin Lines** to how far text should stay from the cut, for example `2` mm. The dashed **Text Safety Margin** then follows the shape, and text that crosses it gets a warning.
+    </Step>
+    <Step title="Show the edge to your customers">
+        In the **Design** panel, switch on **Show Canvas Size**. Besides the width and height, a die-cut page gets a dashed magenta line along its edge, so customers see exactly where the cut runs. **Show Canvas Boundary** draws the same edge line.
+
+        These lines are editor guides only. They never appear in previews, thumbnails or the PDF.
+    </Step>
+    <Step title="Turn on the dieline in the PDF profile">
+        Open [PDF Output Profiles](/guides/projects/pdf-output-profiles), clone a profile (the store defaults cannot be edited) and, under **Dieline**:
+
+        - switch on **Render Dieline**,
+        - set **Dieline Spot Name** to your cutter's name; it defaults to `CutContour`,
+        - optionally set **Dieline Width** in points; it defaults to `0.25`, a hairline.
+
+        Save the profile.
+    </Step>
+    <Step title="Assign the profile">
+        Open the design's settings, go to the **Profiles** tab and select the profile. Every PDF from this design now carries the cut line. See [Assigning PDF Output Profiles](/guides/projects/pdf-output-profiles#assigning-pdf-output-profiles-to-design-templates).
+    </Step>
+</Steps>
+
+Each die-cut page in the PDF then has the artwork clipped to the shape and the shape's outline drawn on top: a stroke-only vector path in your spot color, with a 100% magenta CMYK alternate, set to overprint.
+
+<Tip>
+The die-cut line stays a named spot color even when the profile has **Render Spot Colors** switched off or uses **Device RGB**. Those settings change your artwork's colors, not the cut line.
+</Tip>
+
+## 2. Contour-cut stickers
+
+When the sticker's shape is the customer's artwork, use the [Stickers Generator](/guides/designs/modules/stickers) module. It traces everything on the canvas, adds a margin around it and draws the cut line on that outline, so a logo sticker is cut around the logo.
+
+<Steps>
+    <Step title="Add the module">
+        Create a design at the largest sticker size you sell. In the **Design** panel, click **Add a Module** and choose **Stickers**.
+    </Step>
+    <Step title="Name the cut line">
+        In the module settings, set **Cutline Name** to your cutter's spot name, for example `CutContour`. This name is written into the PDF.
+
+        **Cutline Color** is how the line looks on screen and in proofs; give it a CMYK value if you want a specific alternate color.
+    </Step>
+    <Step title="Set the margin">
+        **Margin** is the distance between the artwork and the cut. Turn on **Users can change margin** to give customers a slider on the canvas.
+    </Step>
+    <Step title="Keep spot colors on">
+        Make sure the PDF profile assigned to this design has **Render Spot Colors** on and a CMYK (or no) color profile, not **Device RGB**. With spot colors off, the sticker cut line is printed as an ordinary magenta line, which a cutter will not pick up.
+    </Step>
+</Steps>
+
+## 3. Custom cut paths
+
+For cuts you design yourself, such as a hole in a hang tag, perforation lines, or several kiss-cut shapes on one sheet, draw the path and give its stroke a spot color with your cutter's name.
+
+<Steps>
+    <Step title="Create the cut color">
+        On the [Colors page](https://admin.print.app/colors), add a color to one of your collections. Pick a color you use for nothing else (pure magenta, `#FF00FF`, is a common choice). Click the **CMYK** icon, enter the CMYK values (for example `0, 100, 0, 0`) and set the spot name to your cutter's name, for example `CutContour`.
+
+        [More about colors and spot names](/guides/resources/colors/all-about-colors)
+    </Step>
+    <Step title="Draw the path">
+        In your design, add a shape or import an SVG outline for the cut. Set its **fill to none** and its **stroke** to the cut color. A thin stroke such as 0.25 pt is enough; the cutter follows the path, not the stroke width.
+    </Step>
+    <Step title="Set it to overprint">
+        Select the path, open the **Object** panel's **Advanced** tab and switch on **Overprint Stroke**, so the line does not knock a gap into the artwork underneath.
+    </Step>
+    <Step title="Lock it">
+        Lock the path's position and selection (and turn on **Hide from client** if customers should not see it), so customers cannot move or delete the cut. See [Object settings](/guides/designs/objects/settings).
+    </Step>
+    <Step title="Optional: put cut lines on their own layer">
+        Create a [PDF Layer](/guides/designs/pdf-layers) named for your workflow (for example *Cut*) and assign the path to it. Operators can then hide or show the cut lines in Acrobat or the RIP with one click.
+    </Step>
+</Steps>
+
+<Warning>
+The spot name is applied to the cut color wherever it appears in that object. Do not use the same color for the object's fill or for artwork you want printed, or that ink becomes part of the cut separation too.
+</Warning>
+
+As with the Stickers module, keep **Render Spot Colors** on, and avoid **Device RGB**, in the PDF profile for these designs.
+
+## 4. Rectangular products
+
+Rectangular products are cut on a guillotine or a cutter that reads crop marks, not a spot line.
+
+- Set **Bleed Lines** and **Trim Box** in the **Page** panel so artwork runs past the cut ([Pages](/guides/designs/design-pages)).
+- Keep **Render Marks** on in the PDF profile. The PDF then carries crop marks, fold marks, and a correct **TrimBox**, which imposition software and most cutters use to find the cut.
+
+## Check the PDF
+
+Before the first production run, download a PDF from a test order and open it in Adobe Acrobat:
+
+1. Open **Tools → Print Production → Output Preview**.
+2. Under **Separations**, you should see your spot name (`CutContour` or yours) next to Cyan, Magenta, Yellow and Black.
+3. Untick every separation except your spot. Only the cut lines should be left on the page, exactly where the cut should run.
+4. Send the file to your RIP and confirm the cutter picks the line up as a cut path.
+
+### Troubleshooting
+
+| What you see | Likely cause |
+|---|---|
+| No spot separation at all | **Render Dieline** is off in the assigned profile (die-cut pages), the wrong profile is assigned, or, for the Stickers module and custom paths, **Render Spot Colors** is off or the profile uses **Device RGB**. |
+| The separation is there but the cutter ignores it | The name does not match exactly. Check capitalization and spaces against what your RIP expects. |
+| The cut line is there but knocks a white gap into the artwork | Overprint is off on a custom path. Switch on **Overprint Stroke** for it. |
+| Artwork shows up in the cut separation | The cut color is also used for printed artwork. Give cut lines a color of their own. |
