@@ -39,6 +39,18 @@ This can be used to show or hide any specific page in the editor.
 This connector clones a single page in the editor by the number of times spectified in your input / dropdown field. For instance, if you have a product with front & back with inner pages, you can have the editor clone the inner pages to the number of times specified in your input field.
 </Accordion>
 
+<Accordion title="Design Selector">
+The Design Selector connector opens a different design depending on what the customer chose on your product page. For instance, a flag sold in 70 × 100, 100 × 150 and 120 × 180 cm can have one design per size: the customer picks a size, and the editor opens the design made for that size. If they change the size while the editor is open, the editor switches to the matching design.<br/>
+
+To set it up:
+1. **Assign every design to the product.** In **Products**, assign all the designs the connector can open (here, all three sizes). The editor can only switch to designs assigned to the product.
+2. **Create the connector.** Choose **Design selector**, and for a [Print Options](/print-options/introduction) product choose **Print Options field** and the field that holds the choice (for sizes, **Size — customer picks a preset**, which finds the field with the role *Size*).
+3. **Add a mapping per choice.** On the left, type the choice as the customer sees it (`70 x 100 cm`) or its id. On the right, click **Pick a design** and choose the design for that choice from your library.
+4. **Attach the connector to every one of those designs** (see [How to use a Connector](#how-to-use-a-connector) below), so the editor can switch onwards from whichever design is open.
+
+While a Design Selector is active, the editor does not offer the product's other designs to the customer; the product page decides which design they get.
+</Accordion>
+
 <Accordion title="Underlay Color">
 An Underlay color is used for products like TShirts and other apparelts where customers can select the color of the physical product. On your product page, you may have a set of color options that your customers can select. With this connector, you can pass the selected color to the editor and have it pre-select the color when it loads.
 </Accordion>
