@@ -41,19 +41,31 @@ automatically — no theme edits.
 Shopify's new customer accounts are hosted by Shopify, so the page is added
 through their editor — a one-time step, no code:
 
-1. In your Shopify admin, go to **Settings → Checkout**.
-2. Next to **Customer accounts**, click **Customize**.
-3. In the editor, add the **Print.App — My designs** page. Shopify will offer to
-   add it to the account menu, so it appears alongside *Orders* and *Profile*.
-4. Optionally, also add the **Print.App** card to the Profile page — a small
-   teaser linking to the designs page.
-5. Save.
+1. In your Shopify admin, go to **Content → Menus** and open the **Customer
+   account main menu**.
+2. Click **Add menu item** and give it a label, e.g. *My designs*.
+3. In the **Link** field, choose **Apps → Print.App — My designs**.
+4. Save.
 
-Your customers now see **My designs** in their account menu, with every saved
-and ordered design listed — previews included — on any device they log in from.
+Your customers now see **My designs** in their account menu, alongside *Orders*
+and *Profile*, with every saved and ordered design listed — previews included —
+on any device they log in from.
+
+**Optional: a teaser card on the Profile page.** Go to **Settings → Checkout**,
+click **Customize** next to **Customer accounts**, switch the page dropdown at
+the top of the editor to **Profile**, add the **Print.App — Designs card** block
+and save. It links straight to the designs page.
+
+<Note>
+    The designs page is a full page in the account, not a block — you won't
+    find it on the *Order status* page's list of app blocks. Older versions of
+    the app listed the two extensions by their technical names:
+    `print-app-account-ui` (the page) and `print-app-account-link` (the Profile
+    card).
+</Note>
 
 <Note>
     Not sure which account system your store uses? Open your store's
     `/account` page: if the address changes to a `shopify.com/…` URL, you're on
-    new customer accounts and the editor step above applies.
+    new customer accounts and the steps above apply.
 </Note>
