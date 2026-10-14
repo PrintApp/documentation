@@ -1,6 +1,6 @@
 ---
 title: Pricing
-description: "How Print Options prices a job: base price, price changes on choices, quantity breaks, per-page and per-area rates, setup fees and minimum orders."
+description: "How Print Options prices a job: base price, price changes on choices, quantity breaks, an exact price per combination, per-page and per-area rates, setup fees and minimum orders."
 ---
 
 Print Options prices the way print shops quote: a base, adjustments for the
@@ -55,6 +55,50 @@ up to 499    $0.06 each
 up to 999    $0.045 each
 thereafter   $0.035 each
 ```
+
+## Price matrix: an exact price per combination
+
+When your supplier quotes a price for every combination (this paper, these
+sides, this turnaround, this finish, this quantity), adjusting a base price is
+the wrong tool. Use the **price matrix** under **Product** settings instead:
+every combination of your choice fields gets its own exact price.
+
+1. Make each option a **choice field**, quantity included: offer the
+   quantities your supplier prices (100, 250, 500…) as choices.
+2. Leave those options without price changes of their own, and set the base
+   price to **0, once per order**. A matrix price then is exactly what the
+   customer pays.
+3. Under **Price matrix**, add the options one by one. The builder lists
+   every combination.
+4. Fill in the prices. One or two options show as a grid you can paste a
+   spreadsheet block into; any number show as a list, one row per combination,
+   with filters to find a row.
+
+Untick a combination your supplier does not offer: the configurator marks the
+choices that lead to it as unavailable, and it cannot be ordered. Leave a
+price blank to use the base price for that combination.
+
+### Import a price list
+
+**Import / export CSV** shows every combination as a table: a column per
+option, then **Price**, **Available** and **SKU**. Download it (or copy it),
+fill in the prices in your spreadsheet, and choose the file again, or paste
+the rows straight from the spreadsheet into the box, then click **Apply
+prices**.
+
+- Options and choices are matched by name, so the columns must be named
+  after your options and the cells must use your choice names.
+- Commas, semicolons and tabs all work as separators, and prices such as
+  `12,50` or `€ 1.234,50` are read correctly.
+- A row that cannot be matched is skipped and listed with the reason. If a
+  whole column is missing, nothing is changed.
+
+<Note>
+    A matrix price replaces the base price, so it follows the base price's
+    setting: once per order, or per unit × quantity. Price changes on the
+    matrix's own choices are still added on top, and base-price quantity
+    breaks take precedence over the matrix. The builder warns you about both.
+</Note>
 
 ## Area pricing
 
