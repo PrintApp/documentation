@@ -224,8 +224,14 @@
         "api-reference/v2/introduction",
         "api-reference/v2/authentication",
         "api-reference/v2/errors",
-        "api-reference/v2/pagination",
-        "api-reference/v2/verify-a-project"
+        "api-reference/v2/pagination"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "api-reference/v2/verify-a-project",
+        "api-reference/guides/woocommerce-fulfilment"
       ]
     },
     {

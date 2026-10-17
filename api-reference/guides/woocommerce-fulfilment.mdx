@@ -1,0 +1,118 @@
+---
+title: "Automate fulfilment from WooCommerce"
+description: "When a WooCommerce order is paid, fetch each customer's print-ready PDF and send it to your print partner."
+---
+
+With the [Print.App WordPress plugin](/platforms/wordpress/installation), every WooCommerce order line that has a design carries its project. This guide reads the project from a paid order, downloads its print-ready PDF and hands it to a print partner or fulfilment API. The example partner is a book printer such as the Lulu Print API.
+
+<Note>
+To fetch files by hand instead, they are listed against each order in your WordPress admin: see [How to access files](/platforms/wordpress/how-to-access-files).
+</Note>
+
+## 1. Find the project on the order
+
+The plugin stores the design on each order line as the item meta `print_app_customization`, an array that holds the `projectId`:
+
+```php
+foreach ($order->get_items() as $item) {
+    $customization = $item->get_meta('print_app_customization', true);
+    $project_id = is_array($customization) ? ($customization['projectId'] ?? '') : '';
+}
+```
+
+Lines without a design have no such meta.
+
+## 2. Download the print-ready PDF
+
+The PDF is at:
+
+```
+https://pdf.print.app/{projectId}
+```
+
+For other formats, swap `pdf` for `png`, `jpeg` or `tiff` in the host name.
+
+- **It renders on request.** The file is produced from the saved project when you ask for it, which takes a few seconds. Allow a generous timeout.
+- **It answers with a redirect** to a short-lived download link. Follow the redirect. `wp_remote_get` does so by default.
+- **Download it once, when the order is paid, and keep your own copy.** A later download reflects the project's state at that later time.
+- **The link works without a key.** Treat it as confidential, and don't publish it.
+
+The PDF's page size and settings come from the design. Set the size in the design's pages, and choose the PDF version, colour profile and fonts with a [PDF output profile](/guides/projects/pdf-output-profiles).
+
+<Tip>
+To check from your server that the project is yours and finished before printing, call [`GET /v2/projects/{id}`](/api-reference/v2/projects/get) with a [secret key](/api-reference/v2/authentication). Its `exports.pdf` is the same link. See [Verify a project before fulfilling](/api-reference/v2/verify-a-project).
+</Tip>
+
+## 3. Send the order to your print partner
+
+This runs when an order becomes *processing*, which for most payment methods means it has been paid. It collects each cover PDF, stores a copy and creates one print job per order. Add it to a small plugin or your theme's `functions.php`:
+
+```php
+add_action('woocommerce_order_status_processing', function ($order_id) {
+    $order = wc_get_order($order_id);
+    if (!$order || $order->get_meta('_print_job_id')) return;   // already sent
+
+    $files = [];
+    foreach ($order->get_items() as $item) {
+        $customization = $item->get_meta('print_app_customization', true);
+        $project_id = is_array($customization) ? ($customization['projectId'] ?? '') : '';
+        if (!$project_id) continue;
+
+        // Rendered on request, then redirected to a short-lived download link
+        $response = wp_remote_get('https://pdf.print.app/' . rawurlencode($project_id), ['timeout' => 120]);
+        if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+            error_log("Print.App PDF for order $order_id failed");
+            return;   // stop; retry this order later rather than send it partly
+        }
+
+        // Your own copy, at an unguessable URL your print partner can fetch
+        $name = sprintf('print-%d-%s.pdf', $order_id, wp_generate_password(24, false));
+        $upload = wp_upload_bits($name, null, wp_remote_retrieve_body($response));
+        if (!empty($upload['error'])) {
+            error_log("Saving the PDF for order $order_id failed: {$upload['error']}");
+            return;
+        }
+        $files[] = ['item' => $item, 'url' => $upload['url'], 'project_id' => $project_id];
+    }
+    if (!$files) return;
+
+    // Your print partner's API: one line item per file
+    $job_id = my_create_print_job($order, $files);
+    if ($job_id) {
+        $order->update_meta_data('_print_job_id', $job_id);
+        $order->save();
+    }
+});
+```
+
+`my_create_print_job` is your own call to your partner's API. A few things to decide for production:
+
+- **Retries.** If a download or the partner's API fails, the hook stops without marking the order. Re-run it for that order later, for example with a scheduled action.
+- **Storage.** Media uploads are public URLs. The random file name keeps them unguessable, but you can also store the files privately and delete them once your partner has fetched them.
+- **Idempotency.** The `_print_job_id` check stops the same order being sent twice when its status changes again.
+
+## Example: personalised book covers with Lulu
+
+A common case: customers personalise only the cover of a notebook or book, and the interior PDF is the same for every order.
+
+<Steps>
+  <Step title="Design the cover as the full spread">
+    Lulu prints the cover from one PDF page holding the back cover, spine and front cover, plus bleed. Size the Print.App design to the cover dimensions Lulu gives for your trim size and page count. Your interior is fixed, so the spine width is fixed too.
+  </Step>
+  <Step title="Let customers change only the front">
+    Lock the back-cover and spine elements with the [object lock settings](/guides/designs/objects/settings), so customers can only personalise the front.
+  </Step>
+  <Step title="Match Lulu's file requirements">
+    Assign the design a [PDF output profile](/guides/projects/pdf-output-profiles) that matches Lulu's requirements, such as the PDF version and colour profile.
+  </Step>
+  <Step title="Create the print job">
+    In `my_create_print_job`, create a Lulu print job with one line item per cover: the stored cover URL, your fixed interior PDF URL and your book's product specification. Check Lulu's API documentation for the exact request.
+  </Step>
+  <Step title="Test before you go live">
+    Place a test order and run the cover through Lulu's file validation. That confirms the spread size and spine are right for your book.
+  </Step>
+</Steps>
+
+## Why not the "Project created" webhook?
+
+The [Project created webhook](/configuration/webhooks) fires the first time a project is saved. That can be an autosave, before the customer has finished and before any order exists. It's useful for notifications, but for fulfilment start from the paid order as above.
