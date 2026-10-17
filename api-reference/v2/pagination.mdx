@@ -1,0 +1,46 @@
+---
+title: "Pagination"
+description: "Page through lists with a cursor."
+---
+
+List endpoints return one page at a time:
+
+```json
+{
+  "object": "list",
+  "data": [ … ],
+  "hasMore": true,
+  "nextCursor": "eyJkb21haW5JZHgiOi…"
+}
+```
+
+- `limit` sets the page size (1–100, default 20).
+- To get the next page, send the previous page's `nextCursor` as `cursor`, **with the same filters**.
+- On the last page, `hasMore` is `false` and `nextCursor` is `null`.
+
+The cursor is opaque. Don't build or edit one: it is signed and tied to your account, and a modified cursor answers `400` with `param: "cursor"`.
+
+<Note>
+With a filter such as `status`, a page can hold fewer than `limit` items, and the last page can even come back empty while `hasMore` was `true`. Keep going until `nextCursor` is `null`.
+</Note>
+
+## Example: every submitted project from the last week
+
+```javascript
+const since = new Date(Date.now() - 7 * 864e5).toISOString();
+const projects = [];
+let cursor;
+
+do {
+  const url = new URL('https://api.print.app/v2/projects');
+  url.searchParams.set('status', 'submitted');
+  url.searchParams.set('modifiedFrom', since);
+  url.searchParams.set('limit', '100');
+  if (cursor) url.searchParams.set('cursor', cursor);
+
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${process.env.PRINTAPP_SECRET_KEY}` } });
+  const page = await res.json();
+  projects.push(...page.data);
+  cursor = page.nextCursor;
+} while (cursor);
+```

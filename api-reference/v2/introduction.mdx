@@ -1,0 +1,55 @@
+---
+title: "API overview"
+description: "Base URL, authentication and conventions of the Print.App REST API."
+---
+
+The Print.App REST API lets your **server** read your account's data, for example to check that a project a customer is ordering really belongs to your store before you fulfil it.
+
+<Note>
+The API is server-to-server. Call it from your backend with a [secret key](/api-reference/v2/authentication), never from browser code. In the browser, the editor runs with your public Domain Key as before.
+</Note>
+
+## Base URL
+
+```
+https://api.print.app/v2
+```
+
+## Authentication
+
+Send a secret key as a bearer token on every request:
+
+```bash
+curl https://api.print.app/v2/account \
+  -H "Authorization: Bearer sk_…"
+```
+
+Create secret keys in the [Print.App admin](https://admin.print.app/api-keys). See [Authentication](/api-reference/v2/authentication).
+
+## Endpoints
+
+| Endpoint | What it does |
+| --- | --- |
+| [`GET /v2/account`](/api-reference/v2/account/get) | The account a key belongs to. The quickest way to check a key works. |
+| [`GET /v2/projects`](/api-reference/v2/projects/list) | Your customers' projects, most recently modified first. |
+| [`GET /v2/projects/{id}`](/api-reference/v2/projects/get) | One project. Another account's project answers `404`, so a `200` proves the project is yours. |
+
+To put these together into an order check, follow [Verify a project before fulfilling](/api-reference/v2/verify-a-project).
+
+## Conventions
+
+- **JSON** request and response bodies, UTF-8, with `camelCase` field names.
+- **Every object** carries an `object` field naming its type (`"project"`, `"account"`, `"list"`).
+- **Timestamps** are ISO-8601 in UTC, for example `2026-10-17T09:12:03Z`.
+- **IDs** keep their prefixes: `dom_…` for your account (your Domain Key), `project_…` for projects.
+- **Every response** carries an `x-request-id` header. Quote it when you contact support.
+- **Errors** share one shape: see [Errors & rate limits](/api-reference/v2/errors).
+- **Lists** are paged with a cursor: see [Pagination](/api-reference/v2/pagination).
+
+## Versioning
+
+The version is in the path (`/v2`). Within v2, changes are additive only: new endpoints, new optional parameters, new fields in responses and new error codes. Write your client to ignore fields it doesn't know.
+
+<Tip>
+The older v1 endpoints that the store plugins use, authenticated with the Auth Key, keep working unchanged. New integrations should use v2.
+</Tip>

@@ -10,8 +10,10 @@ A Webhook makes this possible by invoking your specified external URL whenever a
 
 At the moment, we can notify you when:
 
--  **A new project is created, i.e when your customer completes a design.**
+-  **A new project is created**, the first time a customer's design is saved. That can be an autosave, before the customer has finished.
 -  **A file is uploaded by your customer.**
+
+The exact payloads are [at the end of this page](#payloads).
 
 You can utilize the new-project Webhook to send the completed PDF/JPEG/PNG files to your print service provider.
 
@@ -94,3 +96,49 @@ For this, we can use [Zapier](https://zapier.com), a service that connects diffe
         Publish your Zap to save it. 
     </Step>
 </Steps>
+
+### Payloads
+
+Each webhook is an HTTP `POST` with a JSON body and `Content-Type: application/json`.
+
+**New project**
+
+```json
+{
+  "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+  "title": "Business Card",
+  "author": "customer-1001",
+  "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+  "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+  "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+  "tiff": "https://tiff.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+  "created": "2026-10-17T09:12:03Z",
+  "modified": "2026-10-17T09:12:03Z",
+  "pages": [ … ],
+  "metadata": { … },
+  "settings": { … }
+}
+```
+
+`author` is the `userId` your page passed to the editor, if any. The `pdf`, `png`, `jpeg` and `tiff` links render the file from the project's current state when you request them.
+
+**File uploaded**
+
+```json
+{
+  "id": "file_01JABCDEF….png",
+  "size": 482113,
+  "contentType": "image/png",
+  "created": "2026-10-17T09:14:55Z",
+  "url": "https://…",
+  "thumbnail": "https://…"
+}
+```
+
+`url` is a download link that expires after one hour.
+
+### Delivery
+
+- You can enter several URLs for an event, separated by commas. Each one receives every event.
+- Each event is sent once. Failed deliveries are not retried, so make your endpoint answer quickly with a `2xx`. In rare cases an event can arrive twice, so ignore an `id` you have already handled.
+- Webhooks are not signed. Before you act on one, for example before printing, fetch the project from your server with the [REST API](/api-reference/v2/projects/get): a `200` there confirms the project is yours.

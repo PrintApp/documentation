@@ -1,0 +1,42 @@
+---
+title: "Errors & rate limits"
+description: "The error shape, every error code, and how to handle rate limits."
+---
+
+Every error the API returns has the same body:
+
+```json
+{
+  "error": true,
+  "code": "invalid_request",
+  "message": "limit must be an integer from 1 to 100.",
+  "param": "limit",
+  "requestId": "FZn-uhymjoEEJow="
+}
+```
+
+| Field | |
+| --- | --- |
+| `code` | Stable and machine-readable. **Match on this.** |
+| `message` | For people. It may be reworded at any time. |
+| `param` | Only for `invalid_request`: the parameter at fault. |
+| `requestId` | Also sent as the `x-request-id` header. Quote it when you contact support. |
+
+## Error codes
+
+| Status | `code` | Meaning | What to do |
+| --- | --- | --- | --- |
+| 400 | `invalid_request` | A parameter is malformed. | Fix the parameter named in `param`. Don't retry unchanged. |
+| 401 | `unauthorized` | The secret key is missing, unknown, revoked or expired. | Check the `Authorization: Bearer sk_…` header and the key in the admin. |
+| 403 | `account_suspended` | The account has an unpaid invoice. | Settle it in the Print.App admin. |
+| 404 | `not_found` | No such resource **in your account**. | Another account's project also answers `404`. |
+| 404 | `route_not_found` | No such endpoint. | Check the method and path. |
+| 500 | `internal_error` | Something failed on our side. | Retry with backoff. If it keeps failing, contact support with the `requestId`. |
+
+New codes may be added. Treat an unknown `code` by its HTTP status.
+
+## Rate limits
+
+Requests are rate limited. Past the limit you get `429 Too Many Requests`. This response comes from the API gateway itself, so its body is `{ "message": "Too Many Requests" }`, not the error shape above.
+
+Retry `429` and `5xx` responses with exponential backoff, for example 1s, 2s, 4s, up to a few attempts. Don't retry other `4xx` responses unchanged.
