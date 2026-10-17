@@ -13,7 +13,7 @@ At the moment, we can notify you when:
 -  **A new project is created**, the first time a customer's design is saved. That can be an autosave, before the customer has finished.
 -  **A file is uploaded by your customer.**
 
-The exact payloads are [at the end of this page](#payloads).
+The exact payloads are [at the end of this page](#payloads). To check that a webhook really comes from Print.App, turn on [signing](#verify-a-signature).
 
 You can utilize the new-project Webhook to send the completed PDF/JPEG/PNG files to your print service provider.
 
@@ -99,7 +99,14 @@ For this, we can use [Zapier](https://zapier.com), a service that connects diffe
 
 ### Payloads
 
-Each webhook is an HTTP `POST` with a JSON body and `Content-Type: application/json`.
+Each webhook is an HTTP `POST` with a JSON body. It carries these headers:
+
+| Header | |
+| --- | --- |
+| `Content-Type` | `application/json` |
+| `PrintApp-Event` | `project.created` or `file.uploaded` |
+| `PrintApp-Event-Id` | Identifies the event. The same event always has the same id. |
+| `PrintApp-Signature` | Only when [signing](#verify-a-signature) is on. |
 
 **New project**
 
@@ -108,6 +115,7 @@ Each webhook is an HTTP `POST` with a JSON body and `Content-Type: application/j
   "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
   "title": "Business Card",
   "author": "customer-1001",
+  "product": { "id": "sku-123", "ref": "cart-line-7f3a" },
   "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
   "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
   "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
@@ -120,7 +128,7 @@ Each webhook is an HTTP `POST` with a JSON body and `Content-Type: application/j
 }
 ```
 
-`author` is the `userId` your page passed to the editor, if any. The `pdf`, `png`, `jpeg` and `tiff` links render the file from the project's current state when you request them.
+`author` is the `userId` your page passed to the editor, if any. `product` is the [`product`](/api-reference/editor/configuration#parameters) object your page passed, or `null`. The `pdf`, `png`, `jpeg` and `tiff` links render the file from the project's current state when you request them.
 
 **File uploaded**
 
@@ -140,5 +148,101 @@ Each webhook is an HTTP `POST` with a JSON body and `Content-Type: application/j
 ### Delivery
 
 - You can enter several URLs for an event, separated by commas. Each one receives every event.
-- Each event is sent once. Failed deliveries are not retried, so make your endpoint answer quickly with a `2xx`. In rare cases an event can arrive twice, so ignore an `id` you have already handled.
-- Webhooks are not signed. Before you act on one, for example before printing, fetch the project from your server with the [REST API](/api-reference/v2/projects/get): a `200` there confirms the project is yours.
+- Each event is sent once. Failed deliveries are not retried, so make your endpoint answer quickly with a `2xx`. In rare cases an event can arrive twice, so ignore a `PrintApp-Event-Id` you have already handled.
+- With [signing](#verify-a-signature) on, your server can reject anything that isn't from Print.App. Without it, confirm a project with the [REST API](/api-reference/v2/projects/get) before you act on it: a `200` there confirms the project is yours.
+
+### Verify a signature
+
+Signing is off until you turn it on. Once it's on, every webhook carries a `PrintApp-Signature` header that proves it came from Print.App and was sent recently.
+
+**Turn it on**: in the [Print.App admin](https://admin.print.app/api-keys), open **Domains**, expand your current domain, click **Manage** next to **Secret keys**, then **Create signing secret** under **Webhook signing**. Copy the secret (`whsec_…`) to your server. You can reveal it again there later.
+
+The header looks like this:
+
+```
+PrintApp-Signature: t=1760693523,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+```
+
+`t` is when the webhook was sent, in Unix seconds. `v1` is the hex HMAC-SHA256 of `t`, a full stop and the raw request body, keyed with your secret. To verify:
+
+1. Read the **raw** request body, before any JSON parsing. Re-serialized JSON won't match.
+2. Compute the HMAC of `<t>.<raw body>` and compare it with each `v1`, in constant time.
+3. Reject the request if no `v1` matches, or if `t` is more than 5 minutes from your clock. The time check stops an old request being replayed.
+
+<CodeGroup>
+
+```javascript Node.js
+import crypto from 'node:crypto';
+
+function verifyPrintAppSignature(rawBody, header, secret, toleranceSeconds = 300) {
+	const parts = (header || '').split(',').map(part => part.split('='));
+	const timestamp = Number(parts.find(([key]) => key === 't')?.[1]);
+	const signatures = parts.filter(([key]) => key === 'v1').map(([, value]) => value);
+	if (!timestamp || Math.abs(Date.now() / 1000 - timestamp) > toleranceSeconds) return false;
+
+	const expected = crypto.createHmac('sha256', secret).update(`${timestamp}.${rawBody}`).digest('hex');
+	return signatures.some(signature => signature.length === expected.length &&
+		crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected)));
+}
+
+// Express: keep the body raw for this route
+app.post('/webhooks/printapp', express.raw({ type: 'application/json' }), (req, res) => {
+	if (!verifyPrintAppSignature(req.body.toString('utf8'), req.get('PrintApp-Signature'), process.env.PRINTAPP_WEBHOOK_SECRET))
+		return res.sendStatus(400);
+	const event = JSON.parse(req.body);
+	res.sendStatus(200);
+});
+```
+
+```php PHP
+function verify_printapp_signature(string $rawBody, ?string $header, string $secret, int $tolerance = 300): bool {
+    if (!$header) return false;
+    $timestamp = 0;
+    $signatures = [];
+    foreach (explode(',', $header) as $part) {
+        [$key, $value] = array_pad(explode('=', $part, 2), 2, '');
+        if ($key === 't') $timestamp = (int) $value;
+        elseif ($key === 'v1') $signatures[] = $value;
+    }
+    if (!$timestamp || abs(time() - $timestamp) > $tolerance) return false;
+
+    $expected = hash_hmac('sha256', $timestamp . '.' . $rawBody, $secret);
+    foreach ($signatures as $signature) {
+        if (hash_equals($expected, $signature)) return true;
+    }
+    return false;
+}
+
+$rawBody = file_get_contents('php://input');
+if (!verify_printapp_signature($rawBody, $_SERVER['HTTP_PRINTAPP_SIGNATURE'] ?? null, getenv('PRINTAPP_WEBHOOK_SECRET'))) {
+    http_response_code(400);
+    exit;
+}
+$event = json_decode($rawBody, true);
+```
+
+```python Python
+import hashlib
+import hmac
+import time
+
+
+def verify_printapp_signature(raw_body: bytes, header: str, secret: str, tolerance: int = 300) -> bool:
+    if not header:
+        return False
+    parts = [part.split("=", 1) for part in header.split(",") if "=" in part]
+    timestamp = next((value for key, value in parts if key == "t"), "")
+    signatures = [value for key, value in parts if key == "v1"]
+    if not timestamp.isdigit() or abs(time.time() - int(timestamp)) > tolerance:
+        return False
+    expected = hmac.new(secret.encode(), timestamp.encode() + b"." + raw_body, hashlib.sha256).hexdigest()
+    return any(hmac.compare_digest(expected, signature) for signature in signatures)
+
+
+# Flask: request.get_data() is the raw body
+# verify_printapp_signature(request.get_data(), request.headers.get("PrintApp-Signature"), secret)
+```
+
+</CodeGroup>
+
+**Rolling the secret**: click **Roll secret**. The new secret starts signing at once, and the previous one keeps signing alongside it for 24 hours, so the header carries two `v1` values. Update your server within that day; the code above accepts either. **Stop signing** deletes the secret and sends webhooks unsigned again.

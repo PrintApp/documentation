@@ -38,6 +38,8 @@ Create secret keys in the [Print.App admin](https://admin.print.app/api-keys). S
 
 To put these together into an order check, follow [Verify a project before fulfilling](/api-reference/v2/verify-a-project).
 
+To be told when a project is created or a file is uploaded rather than asking, use [webhooks](/configuration/webhooks). Turn on [signing](/configuration/webhooks#verify-a-signature) so your server can check that each one comes from Print.App.
+
 ## Conventions
 
 - **JSON** request and response bodies, UTF-8, with `camelCase` field names.
