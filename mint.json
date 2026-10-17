@@ -219,16 +219,46 @@
       ]
     },
     {
-      "group": "API References",
+      "group": "REST API (v2)",
+      "pages": [
+        "api-reference/v2/introduction",
+        "api-reference/v2/authentication",
+        "api-reference/v2/errors",
+        "api-reference/v2/pagination",
+        "api-reference/v2/verify-a-project"
+      ]
+    },
+    {
+      "group": "Endpoints",
       "pages": [
         {
-          "group": "Editor",
+          "group": "Account",
           "pages": [
-            "api-reference/editor/installation",
-            "api-reference/editor/configuration",
-            "api-reference/editor/embed"
+            "api-reference/v2/account/get"
+          ]
+        },
+        {
+          "group": "Projects",
+          "pages": [
+            "api-reference/v2/projects/list",
+            "api-reference/v2/projects/get"
+          ]
+        },
+        {
+          "group": "Designs",
+          "pages": [
+            "api-reference/v2/designs/list",
+            "api-reference/v2/designs/get"
           ]
         }
+      ]
+    },
+    {
+      "group": "Editor",
+      "pages": [
+        "api-reference/editor/installation",
+        "api-reference/editor/configuration",
+        "api-reference/editor/embed"
       ]
     }
   ],

@@ -1,0 +1,1381 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Print.App API",
+    "version": "2.0.0",
+    "description": "Server-to-server API for Print.App integrations. Authenticate every request with a secret key: `Authorization: Bearer sk_…`. Never call it from a browser."
+  },
+  "servers": [
+    {
+      "url": "https://api.print.app",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account",
+      "description": "The account a secret key belongs to."
+    },
+    {
+      "name": "Projects",
+      "description": "Your customers' saved designs."
+    },
+    {
+      "name": "Designs",
+      "description": "The designs (templates) your customers start from."
+    }
+  ],
+  "paths": {
+    "/v2/account": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "getAccount",
+        "summary": "Get the account",
+        "description": "Returns the account (domain) the secret key belongs to. The quickest way to check a key works.",
+        "responses": {
+          "200": {
+            "description": "The account.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                },
+                "example": {
+                  "object": "account",
+                  "id": "dom_01KA1WFS6BSCBQQV1H3EVTAXEA",
+                  "hostnames": [
+                    "shop.example.com"
+                  ],
+                  "created": "2026-03-02T10:15:00Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "listProjects",
+        "summary": "List projects",
+        "description": "Lists your account's projects, most recently modified first. Page through them with `cursor`.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Projects per page."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page. Keep the other parameters the same between pages."
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "saved",
+                "submitted"
+              ]
+            },
+            "description": "Only projects with this status."
+          },
+          {
+            "name": "modifiedFrom",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Only projects last saved at or after this time: ISO-8601 (`2026-10-01T00:00:00Z`) or epoch milliseconds."
+          },
+          {
+            "name": "modifiedTo",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Only projects last saved at or before this time: ISO-8601 or epoch milliseconds."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of projects.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "project",
+                      "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                      "title": "Business Card",
+                      "status": "submitted",
+                      "product": {
+                        "id": "sku-123",
+                        "ref": "cart-line-7f3a"
+                      },
+                      "userId": "customer-1001",
+                      "userData": {
+                        "id": "customer-1001",
+                        "name": "Jane Doe",
+                        "email": "jane@example.com"
+                      },
+                      "designId": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                      "created": "2026-10-17T09:12:03Z",
+                      "modified": "2026-10-17T09:20:41Z",
+                      "pages": [
+                        {
+                          "index": 0,
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_a1.png&size=1000"
+                        },
+                        {
+                          "index": 1,
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b2.png&size=1000"
+                        }
+                      ],
+                      "exports": {
+                        "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                        "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                        "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                        "tiff": "https://tiff.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b"
+                      }
+                    }
+                  ],
+                  "hasMore": true,
+                  "nextCursor": "eyJkb21haW5JZHgiOi…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter is malformed; `param` names it.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "limit must be an integer from 1 to 100.",
+                  "param": "limit",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/projects/{id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "getProject",
+        "summary": "Get a project",
+        "description": "Returns one of your account's projects. A project that belongs to another account answers 404, exactly like one that doesn't exist, so a 200 proves the project is yours.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `projectId` from the editor's `app:saved` event."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The project.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                },
+                "example": {
+                  "object": "project",
+                  "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                  "title": "Business Card",
+                  "status": "submitted",
+                  "product": {
+                    "id": "sku-123",
+                    "ref": "cart-line-7f3a"
+                  },
+                  "userId": "customer-1001",
+                  "userData": {
+                    "id": "customer-1001",
+                    "name": "Jane Doe",
+                    "email": "jane@example.com"
+                  },
+                  "designId": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "created": "2026-10-17T09:12:03Z",
+                  "modified": "2026-10-17T09:20:41Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_a1.png&size=1000"
+                    },
+                    {
+                      "index": 1,
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b2.png&size=1000"
+                    }
+                  ],
+                  "exports": {
+                    "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "tiff": "https://tiff.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such project in your account.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Project not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/designs": {
+      "get": {
+        "tags": [
+          "Designs"
+        ],
+        "operationId": "listDesigns",
+        "summary": "List designs",
+        "description": "Lists your account's designs, in id order. Use it to map your products to the `designId` you open the editor with. Folders are not listed.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Designs per page."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of designs.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DesignList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "design",
+                      "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                      "title": "Business Card",
+                      "unit": "mm",
+                      "pages": [
+                        {
+                          "index": 0,
+                          "title": "Front",
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+                        },
+                        {
+                          "index": 1,
+                          "title": "Back",
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+                        }
+                      ],
+                      "tags": [
+                        "cards"
+                      ],
+                      "created": "2026-09-02T14:05:11Z",
+                      "modified": "2026-10-11T08:40:27Z"
+                    }
+                  ],
+                  "hasMore": true,
+                  "nextCursor": "eyJkb21haW5JZHgiOi…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter is malformed; `param` names it.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "limit must be an integer from 1 to 100.",
+                  "param": "limit",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/designs/{id}": {
+      "get": {
+        "tags": [
+          "Designs"
+        ],
+        "operationId": "getDesign",
+        "summary": "Get a design",
+        "description": "Returns one of your account's designs. Another account's design answers 404, like one that doesn't exist.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `designId`."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The design.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Design"
+                },
+                "example": {
+                  "object": "design",
+                  "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "title": "Business Card",
+                  "unit": "mm",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "title": "Front",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+                    },
+                    {
+                      "index": 1,
+                      "title": "Back",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+                    }
+                  ],
+                  "tags": [
+                    "cards"
+                  ],
+                  "created": "2026-09-02T14:05:11Z",
+                  "modified": "2026-10-11T08:40:27Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such design in your account.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Design not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "A secret key from Print.App admin → Domains → Secret keys, sent as `Authorization: Bearer sk_…`. Server-side only."
+      }
+    },
+    "headers": {
+      "RequestId": {
+        "description": "Identifies the request. Quote it when contacting support.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "Account": {
+        "title": "Account",
+        "description": "The Print.App account (domain) a secret key belongs to.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "hostnames",
+          "created"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "account"
+          },
+          "id": {
+            "type": "string",
+            "description": "Your Domain Key (`dom_…`), the public key you use in the browser."
+          },
+          "hostnames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The store hostnames registered for this account."
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "object": "account",
+            "id": "dom_01KA1WFS6BSCBQQV1H3EVTAXEA",
+            "hostnames": [
+              "shop.example.com"
+            ],
+            "created": "2026-03-02T10:15:00Z"
+          }
+        ]
+      },
+      "DesignList": {
+        "title": "DesignList",
+        "description": "A page of designs, in id order.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Design"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "Design": {
+        "title": "Design",
+        "description": "A design (template) your customers start from. Open it in the editor with `new PrintAppClient({ designId })`.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "unit",
+          "pages",
+          "tags",
+          "created",
+          "modified"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "design"
+          },
+          "id": {
+            "type": "string",
+            "description": "The `designId` to pass to `PrintAppClient`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The unit the design is measured in: `mm`, `cm`, `in`, `pt`, `px` or `ft`."
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "index",
+                "title",
+                "previewUrl"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "The page's name, when it has one (for example *Front*)."
+                },
+                "previewUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "A preview image of the page."
+                }
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "object": "design",
+            "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+            "title": "Business Card",
+            "unit": "mm",
+            "pages": [
+              {
+                "index": 0,
+                "title": "Front",
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+              },
+              {
+                "index": 1,
+                "title": "Back",
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+              }
+            ],
+            "tags": [
+              "cards"
+            ],
+            "created": "2026-09-02T14:05:11Z",
+            "modified": "2026-10-11T08:40:27Z"
+          }
+        ]
+      },
+      "Error": {
+        "title": "Error",
+        "description": "Every error the API itself returns. Match on `code`; `message` is for people and may be reworded.",
+        "type": "object",
+        "required": [
+          "error",
+          "code",
+          "message",
+          "requestId"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "const": true
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "unauthorized",
+              "account_suspended",
+              "invalid_request",
+              "not_found",
+              "route_not_found",
+              "internal_error"
+            ],
+            "description": "`unauthorized` (401): missing, unknown, revoked or expired secret key. `account_suspended` (403): the account has an unpaid invoice. `invalid_request` (400): a parameter is malformed — see `param`. `not_found` (404): no such resource in your account. `route_not_found` (404): no such endpoint. `internal_error` (500): retry; contact support with the `requestId` if it persists."
+          },
+          "message": {
+            "type": "string"
+          },
+          "param": {
+            "type": "string",
+            "description": "For `invalid_request`: the parameter at fault."
+          },
+          "requestId": {
+            "type": "string",
+            "description": "Also sent as the `x-request-id` header. Quote it when contacting support."
+          }
+        },
+        "examples": [
+          {
+            "error": true,
+            "code": "invalid_request",
+            "message": "limit must be an integer from 1 to 100.",
+            "param": "limit",
+            "requestId": "FZn-uhymjoEEJow="
+          }
+        ]
+      },
+      "ProjectList": {
+        "title": "ProjectList",
+        "description": "A page of projects, most recently modified first.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow. A following page can come back empty when a `status` filter excludes the remaining projects."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page, with the same filters. `null` on the last page."
+          }
+        }
+      },
+      "Project": {
+        "title": "Project",
+        "description": "A customer's saved design.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "status",
+          "product",
+          "userId",
+          "userData",
+          "designId",
+          "created",
+          "modified",
+          "pages",
+          "exports"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "project"
+          },
+          "id": {
+            "type": "string",
+            "description": "The `projectId` from the editor's `app:saved` event."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "saved",
+              "submitted"
+            ],
+            "description": "`submitted`: the customer finished the design (the editor's submit). `saved`: saved for later. `draft`: autosaved, not yet saved by the customer."
+          },
+          "product": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true,
+            "description": "Exactly the `product` object your page passed to `PrintAppClient` when the project was created — for example `{ id, ref }`. Use it to check the project was made for the product being ordered. It passes through the customer's browser, so treat it as the customer's claim about the page, not as proof."
+          },
+          "userId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The `userId` your page passed to `PrintAppClient`, if any."
+          },
+          "userData": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true,
+            "description": "Customer details attached to the project by a store plugin or your page: `id`, `name`, `email`, `phone`, `info`.",
+            "properties": {
+              "id": {},
+              "name": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "info": {
+                "type": "string"
+              }
+            }
+          },
+          "designId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The design (template) the project was made from."
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Last save."
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "index",
+                "previewUrl"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "previewUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "A preview image of the page."
+                }
+              }
+            }
+          },
+          "exports": {
+            "type": "object",
+            "required": [
+              "pdf",
+              "png",
+              "jpeg",
+              "tiff"
+            ],
+            "additionalProperties": false,
+            "description": "Print files, rendered on request from the project's current state.",
+            "properties": {
+              "pdf": {
+                "type": "string"
+              },
+              "png": {
+                "type": "string"
+              },
+              "jpeg": {
+                "type": "string"
+              },
+              "tiff": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "examples": [
+          {
+            "object": "project",
+            "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+            "title": "Business Card",
+            "status": "submitted",
+            "product": {
+              "id": "sku-123",
+              "ref": "cart-line-7f3a"
+            },
+            "userId": "customer-1001",
+            "userData": {
+              "id": "customer-1001",
+              "name": "Jane Doe",
+              "email": "jane@example.com"
+            },
+            "designId": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+            "created": "2026-10-17T09:12:03Z",
+            "modified": "2026-10-17T09:20:41Z",
+            "pages": [
+              {
+                "index": 0,
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_a1.png&size=1000"
+              },
+              {
+                "index": 1,
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b2.png&size=1000"
+              }
+            ],
+            "exports": {
+              "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+              "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+              "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+              "tiff": "https://tiff.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b"
+            }
+          }
+        ]
+      },
+      "GatewayError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "description": "Returned by the API gateway itself (429)."
+      }
+    }
+  }
+}

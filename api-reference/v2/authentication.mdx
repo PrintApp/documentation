@@ -1,0 +1,64 @@
+---
+title: "Authentication"
+description: "Your Domain Key runs in the browser; secret keys run on your server."
+---
+
+Print.App uses two kinds of keys.
+
+| Key | Looks like | Where it runs |
+| --- | --- | --- |
+| **Domain Key** | `dom_…` | In page JavaScript, to load the editor. Public: safe to ship in browser code. |
+| **Secret key** | `sk_…` | On your server, to call the REST API. **Never put it in browser code**, a mobile app or a public repository. |
+
+<Note>
+The older **Auth Key** shown under Domains is for the v1 endpoints and the store plugins. The v2 API does not accept it.
+</Note>
+
+## Create a secret key
+
+1. In the [Print.App admin](https://admin.print.app), open **Domains** and expand your current domain.
+2. Next to **Secret keys**, click **Manage**, then **New secret key**. Give it a label, such as *Production server*.
+3. Copy the key straight away. It is shown only once: Print.App stores a hash of it, not the key itself.
+
+Keys belong to the domain that is current when you create them. An account can hold up to 10 secret keys at a time.
+
+## Use it
+
+Send the key as a bearer token on every request:
+
+<CodeGroup>
+
+```bash cURL
+curl https://api.print.app/v2/account \
+  -H "Authorization: Bearer $PRINTAPP_SECRET_KEY"
+```
+
+```javascript Node.js
+const res = await fetch('https://api.print.app/v2/account', {
+  headers: { Authorization: `Bearer ${process.env.PRINTAPP_SECRET_KEY}` },
+});
+const account = await res.json();
+```
+
+```php PHP
+$ch = curl_init('https://api.print.app/v2/account');
+curl_setopt_array($ch, [
+    CURLOPT_HTTPHEADER => ['Authorization: Bearer ' . getenv('PRINTAPP_SECRET_KEY')],
+    CURLOPT_RETURNTRANSFER => true,
+]);
+$account = json_decode(curl_exec($ch), true);
+```
+
+</CodeGroup>
+
+A missing, unknown, revoked or expired key answers `401` with the code `unauthorized`. If the account is suspended for an unpaid invoice, requests answer `403` with `account_suspended`.
+
+## Rotate a key
+
+Rotating replaces a key without downtime. Click **Rotate** on the key and choose how long the old key keeps working: stop it now, or keep it for 1 hour, 24 hours or 7 days. You get a new key with the same label, shown once. Deploy it to your server before the old one stops.
+
+If a key may have leaked, rotate it with **Stop the old key now**.
+
+## Revoke a key
+
+Click the trash icon on a key. Requests using it are refused within a minute. Revoking can't be undone.

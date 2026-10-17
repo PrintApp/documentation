@@ -31,7 +31,7 @@ If you already have a website in place, this will naturally be your products pag
 2.  Initialize `PrintAppClient`:
     ```javascript
     const printAppInstance = new PrintAppClient({
-        domainKey: '',		//	Kinldy provide your APIKey
+        domainKey: '',		//	Your Domain Key
         designId: '',	    //	Change this to your designId
         custom: true,
         mode: 'new-project',
@@ -56,11 +56,11 @@ If you already have a website in place, this will naturally be your products pag
     A complete sample code is posted at the end of this page.
 
 This is the most basic installation step.
-You should event listeners to know when the app is ready.
+You should attach event listeners to know when the app is ready.
 For a full API specs please read our [Editor Configuration section](/api-reference/editor/configuration) to get more detailed api parameter and event lists.
 
 <Tip>
--   **APIKey:** Fetch your APIKey from [Domains section in Print.App Admin](https://admin.print.app/domains)
+-   **Domain Key:** Fetch your Domain Key from the [Domains section in Print.App Admin](https://admin.print.app/domains)
 
 -   **designId:** To get a designId, simply click the more button against a [Print.App Design](https://admin.print.app/designs) and click the Copy link.
     This action copies the designId to your clipboard as plain text.
@@ -68,7 +68,7 @@ For a full API specs please read our [Editor Configuration section](/api-referen
 </Tip>
 
 ### Complete Sample Code
-Here's the complete sample code. Insert your APIKey, designId and run in a local server.
+Here's the complete sample code. Insert your Domain Key and designId, and run it in a local server.
 
 ```html
 
@@ -117,7 +117,7 @@ Here's the complete sample code. Insert your APIKey, designId and run in a local
 			//	Initialize Print.App
 			//	Kindly read more here on the options.. https://print.app/docs
 			var printAppInstance = new PrintAppClient({
-					domainKey: '',		//Kinldy provide your own APIKey
+					domainKey: '',		//Your own Domain Key
 					designId: '',	//Change this to your designId
 					custom: true,
 					mode: 'new-project',
@@ -143,7 +143,7 @@ Here's the complete sample code. Insert your APIKey, designId and run in a local
 					// Show the preview images
 					let html = '';
 					for (let i = 0; i < data.previews.length; i++) {
-						html += `<img src="${data.previews[i]}">`;
+						html += `<img src="${data.previews[i].url}">`;
 					}
 					previewDiv.innerHTML = html;
 				}
