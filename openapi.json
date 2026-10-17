@@ -24,6 +24,10 @@
     {
       "name": "Projects",
       "description": "Your customers' saved designs."
+    },
+    {
+      "name": "Designs",
+      "description": "The designs (templates) your customers start from."
     }
   ],
   "paths": {
@@ -529,6 +533,342 @@
           }
         }
       }
+    },
+    "/v2/designs": {
+      "get": {
+        "tags": [
+          "Designs"
+        ],
+        "operationId": "listDesigns",
+        "summary": "List designs",
+        "description": "Lists your account's designs, in id order. Use it to map your products to the `designId` you open the editor with. Folders are not listed.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Designs per page."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of designs.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DesignList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "design",
+                      "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                      "title": "Business Card",
+                      "unit": "mm",
+                      "pages": [
+                        {
+                          "index": 0,
+                          "title": "Front",
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+                        },
+                        {
+                          "index": 1,
+                          "title": "Back",
+                          "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+                        }
+                      ],
+                      "tags": [
+                        "cards"
+                      ],
+                      "created": "2026-09-02T14:05:11Z",
+                      "modified": "2026-10-11T08:40:27Z"
+                    }
+                  ],
+                  "hasMore": true,
+                  "nextCursor": "eyJkb21haW5JZHgiOi…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter is malformed; `param` names it.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "limit must be an integer from 1 to 100.",
+                  "param": "limit",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/designs/{id}": {
+      "get": {
+        "tags": [
+          "Designs"
+        ],
+        "operationId": "getDesign",
+        "summary": "Get a design",
+        "description": "Returns one of your account's designs. Another account's design answers 404, like one that doesn't exist.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `designId`."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The design.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Design"
+                },
+                "example": {
+                  "object": "design",
+                  "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "title": "Business Card",
+                  "unit": "mm",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "title": "Front",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+                    },
+                    {
+                      "index": 1,
+                      "title": "Back",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+                    }
+                  ],
+                  "tags": [
+                    "cards"
+                  ],
+                  "created": "2026-09-02T14:05:11Z",
+                  "modified": "2026-10-11T08:40:27Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such design in your account.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Design not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -591,6 +931,157 @@
               "shop.example.com"
             ],
             "created": "2026-03-02T10:15:00Z"
+          }
+        ]
+      },
+      "DesignList": {
+        "title": "DesignList",
+        "description": "A page of designs, in id order.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Design"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "Design": {
+        "title": "Design",
+        "description": "A design (template) your customers start from. Open it in the editor with `new PrintAppClient({ designId })`.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "unit",
+          "pages",
+          "tags",
+          "created",
+          "modified"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "design"
+          },
+          "id": {
+            "type": "string",
+            "description": "The `designId` to pass to `PrintAppClient`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The unit the design is measured in: `mm`, `cm`, `in`, `pt`, `px` or `ft`."
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "index",
+                "title",
+                "previewUrl"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "The page's name, when it has one (for example *Front*)."
+                },
+                "previewUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "A preview image of the page."
+                }
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "object": "design",
+            "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+            "title": "Business Card",
+            "unit": "mm",
+            "pages": [
+              {
+                "index": 0,
+                "title": "Front",
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+              },
+              {
+                "index": 1,
+                "title": "Back",
+                "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+              }
+            ],
+            "tags": [
+              "cards"
+            ],
+            "created": "2026-09-02T14:05:11Z",
+            "modified": "2026-10-11T08:40:27Z"
           }
         ]
       },

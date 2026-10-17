@@ -243,6 +243,13 @@
             "api-reference/v2/projects/list",
             "api-reference/v2/projects/get"
           ]
+        },
+        {
+          "group": "Designs",
+          "pages": [
+            "api-reference/v2/designs/list",
+            "api-reference/v2/designs/get"
+          ]
         }
       ]
     },

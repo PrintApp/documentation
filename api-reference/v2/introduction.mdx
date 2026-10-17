@@ -33,6 +33,8 @@ Create secret keys in the [Print.App admin](https://admin.print.app/api-keys). S
 | [`GET /v2/account`](/api-reference/v2/account/get) | The account a key belongs to. The quickest way to check a key works. |
 | [`GET /v2/projects`](/api-reference/v2/projects/list) | Your customers' projects, most recently modified first. |
 | [`GET /v2/projects/{id}`](/api-reference/v2/projects/get) | One project. Another account's project answers `404`, so a `200` proves the project is yours. |
+| [`GET /v2/designs`](/api-reference/v2/designs/list) | Your designs (templates), to map your products to the `designId` you open the editor with. |
+| [`GET /v2/designs/{id}`](/api-reference/v2/designs/get) | One design. |
 
 To put these together into an order check, follow [Verify a project before fulfilling](/api-reference/v2/verify-a-project).
 
@@ -41,7 +43,7 @@ To put these together into an order check, follow [Verify a project before fulfi
 - **JSON** request and response bodies, UTF-8, with `camelCase` field names.
 - **Every object** carries an `object` field naming its type (`"project"`, `"account"`, `"list"`).
 - **Timestamps** are ISO-8601 in UTC, for example `2026-10-17T09:12:03Z`.
-- **IDs** keep their prefixes: `dom_…` for your account (your Domain Key), `project_…` for projects.
+- **IDs** keep their prefixes: `dom_…` for your account (your Domain Key), `project_…` for projects, `design_…` for designs.
 - **Every response** carries an `x-request-id` header. Quote it when you contact support.
 - **Errors** share one shape: see [Errors & rate limits](/api-reference/v2/errors).
 - **Lists** are paged with a cursor: see [Pagination](/api-reference/v2/pagination).

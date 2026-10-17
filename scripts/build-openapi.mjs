@@ -48,7 +48,7 @@ for (const schema of loaded) {
   rewriteRefs(rest);
   schemas[schema.title] = rest;
 }
-for (const needed of ['Account', 'Project', 'ProjectList', 'Error'])
+for (const needed of ['Account', 'Project', 'ProjectList', 'Design', 'DesignList', 'Error'])
   if (!schemas[needed]) throw new Error(`schema "${needed}" missing from ${SCHEMA_DIR}`);
 
 // ---- responses -------------------------------------------------------------
@@ -86,6 +86,7 @@ const spec = {
   tags: [
     { name: 'Account', description: 'The account a secret key belongs to.' },
     { name: 'Projects', description: "Your customers' saved designs." },
+    { name: 'Designs', description: 'The designs (templates) your customers start from.' },
   ],
   paths: {
     '/v2/account': {
@@ -133,6 +134,43 @@ const spec = {
         responses: {
           '200': ok('Project', 'The project.'),
           '404': fail('No such project in your account.', errorExample('not_found', 'Project not found.')),
+          ...common,
+        },
+      },
+    },
+    '/v2/designs': {
+      get: {
+        tags: ['Designs'],
+        operationId: 'listDesigns',
+        summary: 'List designs',
+        description: "Lists your account's designs, in id order. Use it to map your products to the `designId` you open the editor with. Folders are not listed.",
+        parameters: [
+          { name: 'limit', in: 'query', required: false, schema: { type: 'integer', minimum: 1, maximum: 100, default: 20 }, description: 'Designs per page.' },
+          { name: 'cursor', in: 'query', required: false, schema: { type: 'string' }, description: 'The `nextCursor` of the previous page.' },
+        ],
+        responses: {
+          '200': {
+            description: 'A page of designs.',
+            headers: withRequestId,
+            content: body('DesignList', { object: 'list', data: [exampleOf('Design')], hasMore: true, nextCursor: 'eyJkb21haW5JZHgiOi…' }),
+          },
+          '400': fail('A parameter is malformed; `param` names it.', errorExample('invalid_request', 'limit must be an integer from 1 to 100.', 'limit')),
+          ...common,
+        },
+      },
+    },
+    '/v2/designs/{id}': {
+      get: {
+        tags: ['Designs'],
+        operationId: 'getDesign',
+        summary: 'Get a design',
+        description: "Returns one of your account's designs. Another account's design answers 404, like one that doesn't exist.",
+        parameters: [
+          { name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'The `designId`.' },
+        ],
+        responses: {
+          '200': ok('Design', 'The design.'),
+          '404': fail('No such design in your account.', errorExample('not_found', 'Design not found.')),
           ...common,
         },
       },

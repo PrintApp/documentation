@@ -18,7 +18,7 @@ const printAppInstance = new PrintAppClient({
 | Property          | Type              |  | Description                           |
 | --------          | ----              | ---- | ------------------------------------- |
 | `domainKey`       | String            | - | Your store domainKey. You can fetch this from your [Print.App Admin](https://admin.print.app/domains) |
-| `designId`        | String            | - | The id of the design you want your customer to edit.<br/>You can fetch this from the [Designs page](https://admin.print.app/designs). Click the more icon and copy the design. That should also copy the designId into your clipboard. |
+| `designId`        | String            | - | The id of the design you want your customer to edit.<br/>You can fetch this from the [Designs page](https://admin.print.app/designs). Click the more icon and copy the design. That should also copy the designId into your clipboard. From your server, you can also list them with [`GET /v2/designs`](/api-reference/v2/designs/list). |
 | `designList`      | Array of strings  | - | A list of designId. This is only valid if you want your customers to pick from a list of designs you specify here. The first design is always loaded as default. If this is provided, you can omit the designId parameter |
 | `designTemplate`  | Object            | - | An object describing a sample design source to display when the editor loads. This is optional and only required if you do not want to use a pre-generated designId. [More details](#loading-the-editor-without-a-designid) can be found at the end of this page |
 | `projectId`       | String            | - | This is required if you want to load the editor to edit an existing project. Remember to also set the `mode` to `edit-project`  |
