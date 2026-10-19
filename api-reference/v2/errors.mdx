@@ -35,6 +35,12 @@ Every error the API returns has the same body:
 
 New codes may be added. Treat an unknown `code` by its HTTP status.
 
+## A 403 with an HTML page
+
+A `403` whose body is an HTML page, with no `code` and no `requestId`, didn't come from the API. Our firewall stopped the request before it reached the API, because it matched a common attack pattern: for example a path-traversal sequence such as `../` in the URL, or traffic from an IP address on a known-abuse list.
+
+Check the request for anything unusual in its URL or body. If it looks normal, contact support with the time of the request (in UTC) and the IP address it came from, so we can find it.
+
 ## Rate limits
 
 Requests are rate limited. Past the limit you get `429 Too Many Requests`. This response comes from the API gateway itself, so its body is `{ "message": "Too Many Requests" }`, not the error shape above.

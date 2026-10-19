@@ -47,6 +47,7 @@ To be told when a project is created or a file is uploaded rather than asking, u
 - **Timestamps** are ISO-8601 in UTC, for example `2026-10-17T09:12:03Z`.
 - **IDs** keep their prefixes: `dom_…` for your account (your Domain Key), `project_…` for projects, `design_…` for designs.
 - **Every response** carries an `x-request-id` header. Quote it when you contact support.
+- **Send a `User-Agent` header** that names your integration, for example `User-Agent: MyStore-Integration/1.0`. It isn't required, but it lets us identify your traffic if you need help.
 - **Errors** share one shape: see [Errors & rate limits](/api-reference/v2/errors).
 - **Lists** are paged with a cursor: see [Pagination](/api-reference/v2/pagination).
 

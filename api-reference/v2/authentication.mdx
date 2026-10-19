@@ -49,6 +49,19 @@ curl_setopt_array($ch, [
 $account = json_decode(curl_exec($ch), true);
 ```
 
+```python Python
+import os
+import requests
+
+session = requests.Session()
+# update(), not assignment: assigning a new dict drops requests' default headers
+session.headers.update({
+    "Authorization": f"Bearer {os.environ['PRINTAPP_SECRET_KEY']}",
+    "User-Agent": "MyStore-Integration/1.0",
+})
+account = session.get("https://api.print.app/v2/account", timeout=30).json()
+```
+
 </CodeGroup>
 
 A missing, unknown, revoked or expired key answers `401` with the code `unauthorized`. If the account is suspended for an unpaid invoice, requests answer `403` with `account_suspended`.
