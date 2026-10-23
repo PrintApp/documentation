@@ -55,6 +55,43 @@ instance, appears only when the binding choice is *hardcover*.
 Hidden fields are also excluded from pricing — a customer never pays for an
 option they were never shown.
 
+## Requiring an agreement before upload
+
+An artwork declaration, a copyright confirmation, or terms the customer must
+accept: a tick box they have to check before they can upload. There is no
+separate checkbox type — a one-option **Multiple choice** field shown as a
+**List** is a checkbox, and the Logic tab keeps the upload hidden until it is
+ticked.
+
+1.  **Add the tick box.** Add a **Multiple choice** field, label it (for
+    example *Artwork declaration*), set **Display** to **List** and turn on
+    **Required**.
+2.  **Give it one option.** On the **Options** tab, keep a single option value
+    and label it with the short sentence the customer ticks — *I agree to the
+    artwork declaration*. Open its **Details** and put the full wording in
+    **Description**; it appears in small print under the box. Delete any other
+    option values.
+3.  **Gate the upload.** Select your **File upload** field, turn on
+    **Required**, and on its **Logic** tab turn on *Only show this option under
+    a condition* with the rule *Artwork declaration* **is set**.
+4.  Drag the tick box above the upload, then **Publish**.
+
+The upload stays hidden until the box is ticked and disappears again if it is
+unticked. A customer who tries to add to cart without ticking is stopped at the
+tick box with *Please make a selection*.
+
+<Note>
+    The order records the option's **label**, not its description — that line
+    is your record of what the customer agreed to. Keep the label short and
+    put the full wording in the description, which you can change at any time
+    and republish.
+</Note>
+
+<Tip>
+    If the product also offers the Print.App designer, its button sits in the
+    same upload step, so the agreement is required before designing too.
+</Tip>
+
 ## Roles
 
 Fields can carry an optional **Role** (Size, Pages, Material, Orientation).
