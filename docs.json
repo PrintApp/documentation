@@ -143,6 +143,15 @@
               "gangsheet/developers",
               "gangsheet/faqs"
             ]
+          },
+          {
+            "group": "Template Studio",
+            "pages": [
+              "template-studio/introduction",
+              "template-studio/creating-designs",
+              "template-studio/pricing",
+              "template-studio/faqs"
+            ]
           }
         ]
       },
