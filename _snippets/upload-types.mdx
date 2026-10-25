@@ -2,7 +2,13 @@
 | --------    | ----| ----              |------------        |
 | `png`       | -   |  image/png         | PNG Image with transparency |
 | `jpeg`     | -   | image/jpeg        | Jpeg Image file |
+| `webp`     | -   | image/webp        | Converted to PNG as it uploads |
+| `heic`, `heif` | - | image/heic, image/heif | iPhone photos. Converted to JPEG as they upload, or to PNG if the photo has transparency |
 | `svg`     | -   | image/svg+xml        | SVG Graphics files (version 1.1 or lower) |
 | `pdf`       | -   |  application/pdf         | PDF pages are placed in the output from the original files |
 | `ai`       | -   |  application/ai         | Illustrator files just like PDF |
 | `csv`       | -   |  text/csv         | For use as Datasources |
+
+<Note>
+    HEIC photos are converted in the customer's browser before they upload, in both the classic and the new editor. They keep their orientation and colour: the wide Display P3 colour of iPhone photos is converted to sRGB. Photos over 50 megapixels are scaled down to 50 (16.7 on phones). The converted file is what's stored, previewed and printed.
+</Note>
