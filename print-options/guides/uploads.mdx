@@ -16,6 +16,11 @@ Uploaded files are stored for **30 days** and then removed automatically. Print
 Options is a configurator, not a file archive — download what you need into your
 production workflow.
 
+Each order line with an upload has a **Download file** link: a button under
+the line on the WooCommerce order screen, and a line property on the Shopify
+order. See
+[Downloading customer uploads](/print-options/guides/cart-and-orders#downloading-customer-uploads).
+
 <Tip>
     Need customers to accept an artwork declaration or your terms before they
     upload? See
@@ -74,4 +79,35 @@ rates on the colour choice.
 <Tip>
     Combine with [tiered pricing](/print-options/guides/pricing): per-page rates
     can carry quantity breaks, so long documents get cheaper per page.
+</Tip>
+
+## Artwork from the Print.App designer
+
+If your product also uses the [Print.App designer](/introduction), customers
+can design their artwork online instead of uploading a file. The designer's
+button appears in the configurator's artwork step, and the finished design
+becomes the job's artwork, with its page count available to your
+pricing.
+
+How the button finds its place:
+
+- **With a File upload field**, the designer's button sits in that field,
+  next to the upload. To offer *only* the designer, set the field's
+  **Display** to **Designer only (no direct upload)**. Customers then see the
+  designer button and no dropzone.
+- **Without a File upload field**, the configurator adds an artwork step of
+  its own when the designer is on the page, titled with the designer's button
+  label (*Design online*, say). It is optional; whether a design is required
+  is set in Print.App.
+
+Once a design is saved, the step shows *Your design* (in the customer's
+language) with **Change** and **Remove**, and the order reads *Design online:
+Your design*. The page count is shown only when your pricing uses
+them.
+
+<Tip>
+    Connectors pass values between the designer and the configurator: the
+    number of printed sides into a *Sides* choice, the chosen size into the
+    designer, and more. See
+    [Connectors](/configuration/connectors).
 </Tip>

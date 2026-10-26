@@ -50,6 +50,28 @@ description: "Common questions about Print Options: pricing, currencies, orders,
     archive.
 </Accordion>
 
+<Accordion title="How do I download the files customers uploaded?">
+    From the order: WooCommerce shows a **Download file** button under each
+    line with an upload, and Shopify adds a **Download file** link to the
+    line's properties. See
+    [Downloading customer uploads](/print-options/guides/cart-and-orders#downloading-customer-uploads).
+</Accordion>
+
+<Accordion title="Which languages does the configurator speak?">
+    English, Danish, German, Spanish, French, Italian, Dutch and Romanian,
+    following your store's language. On WooCommerce you can add or change any
+    wording with Loco Translate or the `papo_widget_strings` filter. See
+    [Languages, prices & tax](/print-options/guides/languages-and-tax).
+</Accordion>
+
+<Accordion title="Can the summary show the tax?">
+    Yes: on Shopify, turn on **Show tax in the summary** in the block's
+    **Tax** settings and enter your rate; on WooCommerce it is automatic when
+    prices are displayed including tax. It is a display only; checkout
+    calculates the tax as before. See
+    [Showing the tax in the summary](/print-options/guides/languages-and-tax#showing-the-tax-in-the-summary).
+</Accordion>
+
 <Accordion title="Do I need a Filecheck account?">
     No. Uploads work without one. Filecheck adds validation and file facts —
     page counts, colour detection, preflight — which unlock per-page pricing
@@ -67,6 +89,28 @@ description: "Common questions about Print Options: pricing, currencies, orders,
     On Shopify stores that are not on the Plus plan, a configured job is
     expanded into a bundle-style line at checkout. It is cosmetic — the price,
     the options and the order data are all correct.
+</Accordion>
+
+<Accordion title="Can I price with a formula instead of tiers?">
+    Yes. A **Formula** price rule works the price out from the quantity, the
+    size and the page count, for prices that follow a curve, such as
+    custom-size signs or a minimum price per item. See
+    [Pricing by formula](/print-options/guides/formula-pricing).
+</Accordion>
+
+<Accordion title="Can a customer order several sizes in one go?">
+    Yes, with a **Quantity per option** field: a count for each size (M × 5,
+    L × 3, 3XL × 2), priced as one order of 10 so quantity breaks apply to
+    the total. See
+    [Quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs).
+</Accordion>
+
+<Accordion title="Why is my configured job quantity 1 in the cart?">
+    By default a configured job is one cart line: the copies are in the line's
+    title and options, and the line's price is the whole job. To put the real
+    copy count in the cart's quantity column (for stock and shipping weight),
+    switch the cart quantity to **Real quantity**. See
+    [Cart & orders](/print-options/guides/cart-and-orders#the-cart-quantity).
 </Accordion>
 
 <Accordion title="Where do I get help?">

@@ -1,10 +1,12 @@
 ---
 title: Pricing
-description: "How Print Options prices a job: base price, price changes on choices, quantity breaks, an exact price per combination, per-page and per-area rates, setup fees and minimum orders."
+description: "How Print Options prices a job: base price, price changes on choices, quantity breaks, an exact price per combination, per-page, per-area and per-length rates, formulas, setup fees and minimum orders."
 ---
 
 Print Options prices the way print shops quote: a base, adjustments for the
-choices made, rates that scale with pages or area, then fees and floors.
+choices made, rates that scale with pages, area or length, then fees and
+floors. When your price follows a curve that none of these describe, a
+[formula](/print-options/guides/formula-pricing) can calculate it directly.
 
 ## The base price
 
@@ -14,10 +16,23 @@ Every option set has a base price, set under **Product** settings:
 - **Per unit × quantity** — multiplied by the quantity the customer picks.
   This is the usual choice for cards, flyers and stickers.
 
+A base price of 0 is left out of the customer's price summary, so a product
+priced entirely by its options doesn't show a "Base price $0.00" line.
+
+<Note>
+    If your option set has a quantity field but nothing in it depends on the
+    quantity, the builder warns: *Changing the quantity does not change the
+    price.* Two items then cost the same as one. Set the base price to **Per
+    unit × quantity**, or price the options **Per unit** instead of
+    **Fixed**.
+</Note>
+
 ## Price changes on choices
 
 Each choice can carry one or more price changes. Select a choice in the
-builder, open its details, and add them under **Pricing**.
+builder, open its details, and add them under **Pricing**. A field can carry
+price changes too, on its own **Pricing** tab: they apply whenever the field
+is shown, whatever the customer chooses in it.
 
 | Type | What it does |
 | --- | --- |
@@ -26,15 +41,24 @@ builder, open its details, and add them under **Pricing**.
 | **Per page** | Multiplied by the uploaded file's page count and the quantity. |
 | **Per colour page** / **Per mono page** | The same, split by colour and black-and-white pages. Needs a file source that reports them, such as [Filecheck](/print-options/guides/uploads). |
 | **Per area** | Multiplied by the job's area and quantity — for banners, posters and stickers. |
+| **Per length** | Multiplied by the job's length and quantity — for roll media and gang sheets. See [Length pricing](#length-pricing). |
 | **Percent** | A percentage of the running total. Good for premium finishes. |
 | **Multiplier** | Multiplies the running total, e.g. `1.1` for double-sided. |
 | **Setup** | A flat fee added at the very end, after percentages and multipliers. |
+| **Formula** | The price worked out from the quantity, size and page count. See [Pricing by formula](/print-options/guides/formula-pricing). |
 
 <Note>
-    Order matters, and it is fixed: amounts first, then percentages, then
-    multipliers, then setup fees, then the minimum price. That is why a paper
-    upgrade multiplier never inflates your plate fee.
+    Order matters, and it is fixed: amounts (formulas included) first, then
+    percentages, then multipliers, then setup fees, then the minimum price.
+    That is why a paper upgrade multiplier never inflates your plate fee.
 </Note>
+
+<Tip>
+    On a [quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs)
+    field, each option's **Per item of this option** price is multiplied by
+    that option's own count: a 3XL surcharge is charged on the 3XL shirts
+    only.
+</Tip>
 
 ## Quantity breaks
 
@@ -55,6 +79,15 @@ up to 499    $0.06 each
 up to 999    $0.045 each
 thereafter   $0.035 each
 ```
+
+For the base price, click **Add quantity breaks** under **Product** settings.
+While breaks are set, the base price **Amount** is not used: the rows are the
+price. **Remove breaks** goes back to a single amount, starting from the first
+row's.
+
+The configurator can tell customers how close the next break is ("Add 15 more
+to get 15% off"): see
+[Show the next price break](/print-options/guides/quantities#show-the-next-price-break).
 
 ## Price matrix: an exact price per combination
 
@@ -77,6 +110,16 @@ every combination of your choice fields gets its own exact price.
 Untick a combination your supplier does not offer: the configurator marks the
 choices that lead to it as unavailable, and it cannot be ordered. Leave a
 price blank to use the base price for that combination.
+
+Only **Single choice** fields can be matrix options. The builder lists your
+other fields under the matrix with a **Make single choice** button, which
+changes that field's type for you. If you later delete a field the matrix
+uses, or change its type, the builder drops it from the matrix so the option
+set stays valid.
+
+There is no fixed limit on the number of options or combinations. An option
+set can be up to 1 MB, and price matrices are stored compactly, so a price
+list across six or seven options with a few thousand combinations fits.
 
 ### Import a price list
 
@@ -112,6 +155,26 @@ customer's width × height for you.
     dimensions field, leave the field reference empty: the area is then taken
     from the file's own canvas size.
 </Tip>
+
+A per-area price is the same rate for every size and quantity. If small items
+need a minimum price, or the rate changes with the size *and* the quantity,
+use a [formula](/print-options/guides/formula-pricing) instead.
+
+## Length pricing
+
+Roll media, banners by the metre and DTF gang sheets are priced by length:
+the film or roll has a fixed width, and the customer pays for the length they
+use. Give the field or choice a **Per length** price change and set:
+
+- **The unit it is priced in:** per m, per ft, per in or per cm.
+- **Where the size comes from:** a dimensions field, or **From uploaded file
+  canvas** to measure the artwork itself (a gang sheet editor's sheet, for
+  instance).
+- **Which side is the length:** **Height (length)**, the default for a roll
+  whose width is fixed, **Width**, or **Longest side**.
+
+Length rates can carry breaks on the length, so long runs get cheaper per
+metre, or on the quantity.
 
 ## Order rules
 

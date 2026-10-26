@@ -1,0 +1,131 @@
+---
+title: Cart & orders
+description: "What a configured job looks like in the cart and on the order, how the cart quantity works, shipping weight on WooCommerce, and how to download the artwork customers uploaded."
+---
+
+When a customer adds a configured job to the cart, Print Options recalculates
+the price on our servers, and the job arrives as a cart line that carries the
+whole specification. This page covers what that line contains and the choices
+you have about it.
+
+## What the cart line shows
+
+A configured job is one cart line. It carries:
+
+- **The price our servers calculated** for the job. The total the customer saw
+  in the configurator is a preview; this is the price charged. See
+  [Prices are verified, always](/print-options/guides/pricing#prices-are-verified-always).
+- **Every answer, under your own labels**, such as *Paper: 350gsm matte*,
+  *Size: 24 × 18 in* and *Quantity: 500 cards* (with the quantity field's
+  [unit](/print-options/guides/quantities#the-quantity-field) word after the
+  number). A [quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs)
+  field lists its counts: *Size: M × 5, L × 3, 3XL × 2*. An uploaded file is
+  listed by its file name.
+- **The resolved SKU**, combined from the SKU fragments on the chosen options.
+- **On Shopify, the copies in the title**: a job of 500 business cards is
+  titled *Business Cards × 500*, so the order list shows the size of each job
+  at a glance. WooCommerce keeps the product's own title.
+
+The same details are stored on the order line, so your production team reads
+them from the order, not from the customer's email.
+
+### How fields are named
+
+Each answer is listed under the field's label, so give every field a label:
+that is how it is named on the order. A field without a label is named, in
+this order of preference:
+
+1.  after its **section title**, when it is the only question in its section
+    (a *Size* section holding one unlabeled size question reads *Size: 24 × 18
+    in*),
+2.  *Quantity* (in the customer's language), for a quantity field,
+3.  its internal id, as a last resort.
+
+Info / summary fields are not questions and are left out.
+
+<Tip>
+    On Shopify, line-item properties that other apps or your theme add to the
+    product form, such as a gift note or a design reference from the
+    Print.App designer, are kept on the configured job's cart line alongside
+    the options.
+</Tip>
+
+## The cart quantity
+
+By default a configured job is **one line with quantity 1**: the line's price
+is the whole job, and the copies are shown in its title and options. That
+keeps every job, however many copies, in one tidy line.
+
+If you want your store's quantity column, stock and shipping weight to use the
+real number of copies, open **Product** settings in the builder and, under
+**Cart quantity**, change **Line quantity**:
+
+| Line quantity | The cart line |
+| --- | --- |
+| **One line per job (quantity 1)** | Quantity 1, at the job's total. The default. |
+| **Real quantity (when the price divides evenly)** | Quantity = the copies, at the price per copy. |
+
+Real quantity only applies when the verified total divides into equal prices
+per copy, to the cent (to your store's price decimals on WooCommerce). A job
+of 250 flyers at $12.00 would be 250 × $0.048, which a cart can't charge, so
+that job stays one line at the same total. The customer never pays a different
+amount either way. On Shopify, real quantity
+also needs the customer to pay in your store's default currency, and allows at
+most 2,000 copies per line, Shopify's own limit for a bundle component.
+
+<Note>
+    On WooCommerce, a real-quantity line's quantity is fixed at the number of
+    copies, in the classic cart and the cart and checkout blocks alike: the
+    copies are part of the configuration and its verified price. To order a
+    different number, the customer changes it on the product page, where the
+    price is verified again.
+</Note>
+
+<Warning>
+    With real quantity, every copy counts against the product's stock. If you
+    track stock on the product, make sure it covers your largest jobs before
+    you switch.
+</Warning>
+
+## Shipping weight on WooCommerce
+
+Set a product's **Weight** in WooCommerce to the weight of **one copy**. A
+configured job of 500 cards then ships at 500 × that weight, whichever cart
+quantity mode you use, so shipping rates that depend on weight are right.
+
+Developers can adjust the weight with the `papo_cart_item_weight` filter,
+which receives the line's total weight, the weight of one copy, the number of
+copies and the cart item.
+
+## Downloading customer uploads
+
+Files customers upload through a **File upload** field (shown as a
+**Dropzone**) come with a download link on the order:
+
+- **WooCommerce:** open the order in your admin. Each line with an uploaded
+  file has a **Download file** button under it. It works for older orders
+  too, as long as the file is still stored.
+- **Shopify:** open the order. The line item's properties include **Download
+  file** (in the customer's language), right under the file name. It is an
+  ordinary line property, so depending on your theme the customer may see it
+  in the cart too, where it leads to the file they uploaded.
+
+Each click downloads the file under the name the customer gave it. Files are
+kept for **30 days** after upload, then removed automatically; after that the
+link shows *File no longer available*. Download what you need into your
+production workflow within that time.
+
+<Note>
+    The link needs no login: its long random address is what protects it, like
+    a private sharing link. Treat it accordingly, and share it only with the
+    people who produce the job.
+</Note>
+
+Files checked by [Filecheck](/print-options/guides/uploads#filecheck-validated-uploads)
+and designs made in the Print.App designer don't get this link: you reach
+them through Filecheck and Print.App, where they are stored.
+
+<Tip>
+    WooCommerce developers can change the link with the
+    `papo_file_download_url` filter, which receives the URL and the file id.
+</Tip>

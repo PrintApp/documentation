@@ -59,4 +59,39 @@ total is a live preview; the price charged is always recomputed server-side
 when the item enters the cart, and the full specification is stored on the
 order for your production team.
 
+<Note>
+    The WooCommerce product's own regular price is not used for a product
+    with an option set, and is hidden on the storefront. Leave it at 0 (or any
+    placeholder): the option set is the price.
+</Note>
+
+Prices print with your WooCommerce currency options (symbol, position,
+decimals and separators), and the configurator follows the site language:
+Danish, German, Spanish, French, Italian, Dutch and Romanian translations ship
+with the plugin. With WooCommerce taxes on and prices displayed including tax,
+the summary shows the tax automatically. See
+[Languages, prices & tax](/print-options/guides/languages-and-tax).
+
+## Orders and shipping
+
+- A configured job is one cart line carrying every option, and the order
+  screen shows a **Download file** button under each line with an uploaded
+  file. See [Cart & orders](/print-options/guides/cart-and-orders).
+- Enter the **weight of one copy** on the WooCommerce product. The plugin
+  ships a configured job at that weight times the number of copies. See
+  [Shipping weight](/print-options/guides/cart-and-orders#shipping-weight-on-woocommerce).
+- To have the cart's quantity column show the real copies, switch the option
+  set's cart quantity to **Real quantity**. See
+  [The cart quantity](/print-options/guides/cart-and-orders#the-cart-quantity).
+
+## Hooks for developers
+
+| Filter | What it changes |
+| --- | --- |
+| `papo_widget_strings` | Any label the configurator shows. |
+| `papo_price_note` | The note under the total (default: your price display suffix). |
+| `papo_tax_display` | The tax breakdown: rate, name, or none. |
+| `papo_cart_item_weight` | The shipping weight of a configured line. |
+| `papo_file_download_url` | The download link for an uploaded file. |
+
 <Snippet file="print-options-troubles.mdx" />
