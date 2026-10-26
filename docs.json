@@ -120,7 +120,8 @@
               {
                 "group": "Developers",
                 "pages": [
-                  "print-options/developers/page-api"
+                  "print-options/developers/page-api",
+                  "print-options/developers/option-set-json"
                 ]
               },
               "print-options/faqs"

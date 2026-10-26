@@ -1,0 +1,323 @@
+---
+title: Option set JSON
+description: "Every option set is a JSON document. Export it, edit it yourself or with an AI assistant, and import it back: the format, its rules and a complete example."
+---
+
+Everything the builder edits (sections, fields, choices, prices and rules) is
+saved as one JSON document, the **option set**. You can take it out of the
+builder as text, change it, and bring it back. That makes it the quickest way
+to:
+
+- set up a large or detailed option set with an AI assistant,
+- copy a set to another store, or keep a backup,
+- make many similar changes at once.
+
+## Getting JSON in and out
+
+<Tabs>
+<Tab title="Shopify and WooCommerce">
+    Open an option set in the builder and click **More** (the **⋯** button at
+    the top right):
+
+    - **Export JSON…** shows the whole set as text, with **Copy** and
+      **Download .json**.
+    - **Import JSON…** takes pasted text or a `.json` file and **replaces the
+      options you're editing**. The builder checks the JSON first and lists
+      any problem, and the import can be undone. Nothing reaches your store
+      until you **Publish** (Shopify) or **Save** (WooCommerce).
+</Tab>
+<Tab title="Standalone builder">
+    The [standalone builder](https://options.print.app/builder/) has an
+    **Import** button, which opens the JSON as a new draft, and a **JSON** tab
+    next to the preview with **Copy** and **Download**.
+</Tab>
+</Tabs>
+
+## Working with an AI assistant
+
+An assistant that can read web pages can write option sets for you:
+
+1.  **Export** the set you want to change, or start from a template that is
+    close, and export that.
+2.  Give the assistant the exported JSON, a link to this page, and your price
+    list or a description of the product. For example:
+
+    ```text
+    Here is my Print Options option set as JSON. Following
+    https://print.app/docs/print-options/developers/option-set-json and the
+    schema at https://options.print.app/builder/blueprint.schema.json,
+    add an A3 size at $0.15 per flyer extra, and a 170gsm silk paper at +15%.
+    Return the complete JSON.
+    ```
+
+3.  **Import** the JSON it returns. The builder lists any problem with the
+    field it is in; fix it, or paste the message back to the assistant.
+4.  Check the **Preview**, then publish or save.
+
+<Tip>
+    Paste the JSON into the **Import JSON** box rather than having the
+    assistant click through the builder: it is one step instead of hundreds,
+    and the builder checks all of it at once.
+</Tip>
+
+## The shape of an option set
+
+```text
+option set
+├── version, productId, title, layout
+├── pricing        currency, basePrice, setupFee, minimumPrice, lineQuantity
+├── variants       an optional price matrix
+└── sections[]     id, title
+    └── fields[]   the questions: id, type, label, display, …
+        ├── priceModifiers[]   price rules while the field is shown
+        └── options[]          choices
+            └── priceModifiers[]   price rules while the choice is selected
+```
+
+The machine-readable [JSON Schema](https://options.print.app/builder/blueprint.schema.json)
+describes every key; editors such as VS Code use it to complete and check the
+JSON as you type.
+
+### A complete example
+
+Flyers in three sizes, two papers and one or two printed sides, priced per
+flyer with quantity breaks, plus a $5 setup fee and a $20 minimum:
+
+```json
+{
+  "version": "2.0",
+  "productId": "flyers",
+  "title": "Flyers",
+  "layout": "stacked",
+  "pricing": {
+    "currency": "USD",
+    "basePrice": {
+      "amount": 0,
+      "per": "unit",
+      "tiers": {
+        "basis": "quantity",
+        "mode": "flat",
+        "rows": [
+          { "upTo": 249, "amount": 0.12 },
+          { "upTo": 999, "amount": 0.08 },
+          { "amount": 0.06 }
+        ]
+      }
+    },
+    "setupFee": 5,
+    "minimumPrice": 20
+  },
+  "sections": [
+    {
+      "id": "flyer",
+      "title": "Your flyers",
+      "fields": [
+        {
+          "id": "size",
+          "type": "select-one",
+          "label": "Size",
+          "display": "pills",
+          "required": true,
+          "options": [
+            { "id": "a6", "label": "A6", "default": true },
+            { "id": "a5", "label": "A5", "priceModifiers": [{ "type": "perUnit", "amount": 0.03 }] },
+            { "id": "a4", "label": "A4", "priceModifiers": [{ "type": "perUnit", "amount": 0.07 }] }
+          ]
+        },
+        {
+          "id": "paper",
+          "type": "select-one",
+          "label": "Paper",
+          "display": "cards",
+          "options": [
+            { "id": "gloss-135", "label": "Gloss 135gsm", "default": true },
+            { "id": "silk-170", "label": "Silk 170gsm", "priceModifiers": [{ "type": "percent", "amount": 15 }] }
+          ]
+        },
+        {
+          "id": "sides",
+          "type": "select-one",
+          "label": "Printed sides",
+          "display": "pills",
+          "options": [
+            { "id": "single", "label": "Single-sided", "default": true },
+            { "id": "double", "label": "Double-sided", "priceModifiers": [{ "type": "multiplier", "amount": 1.6 }] }
+          ]
+        },
+        {
+          "id": "copies",
+          "type": "quantity",
+          "label": "Quantity",
+          "display": "pills",
+          "presets": [100, 250, 500, 1000, 2500],
+          "defaultValue": 250,
+          "unit": "flyers",
+          "nextBreakHint": true
+        },
+        {
+          "id": "artwork",
+          "type": "file",
+          "label": "Artwork",
+          "required": true,
+          "accept": ["application/pdf"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+1,000 A5 flyers on silk, double-sided: $60.00 (1,000 × $0.06) + $30.00 (A5)
+= $90.00, +15% silk = $103.50, × 1.6 double-sided = $165.60, + $5.00 setup =
+**$170.60**.
+
+## Fields
+
+| `type` | `display` | Main settings |
+| --- | --- | --- |
+| `select-one` | `pills`, `cards`, `grid`, `swatches`, `dropdown`, `list` | `options` |
+| `select-many` | `list`, `pills`, `cards`, `grid`, `swatches` | `options`, `minSelect`, `maxSelect` |
+| `quantity` | `stepper`, `pills`, `dropdown`, `input` | `min`, `max`, `step`, `defaultValue`, `presets`, `unit`, `nextBreakHint` |
+| `quantities` | `grid`, `list` | `options`, per option `min`, `max`, `step`; `minTotal`, `maxTotal`, `unit`, `nextBreakHint`. See [Quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs). |
+| `number` | `input`, `stepper`, `slider` | `min`, `max`, `step`, `defaultValue` |
+| `text` | `input`, `textarea` | `placeholder`, `maxLength` |
+| `dimensions` | `inputs` | `units` (`mm`, `cm`, `in`), `defaultUnit`, `minW`, `maxW`, `minH`, `maxH`, `defaultValue` (`{ "w": …, "h": … }`) |
+| `file` | `dropzone`, `producer` | `accept` (file types). `producer` shows only the Print.App designer, no upload. |
+| `info` | `note`, `summary` | `body` for a note; `summary` is a live recap |
+
+Every field has an `id` (unique across the whole option set) and may have
+`label`, `helpText`, `required`, `visibleWhen` and `priceModifiers`.
+
+**Choices** (`options`) have an `id` (unique within the field) and a `label`,
+and may have `description`, `image` (an `https://` URL or a `data:` image,
+for cards and grids), `color` (for swatches),
+`default`, `sku`, `disabled` and `priceModifiers`.
+
+## Prices
+
+The base price, under `pricing.basePrice`, has an `amount` and `per`:
+`"order"` (once) or `"unit"` (× the quantity), and may have quantity `tiers`.
+
+Price rules (`priceModifiers`) go on fields and choices:
+
+| `type` | Builder name | Charged |
+| --- | --- | --- |
+| `fixed` | Fixed (once per order) | once |
+| `perUnit` | Per unit | × quantity |
+| `perPage`, `perColorPage`, `perMonoPage` | Per page, Per color page, Per B/W page | × the file's pages × quantity |
+| `perArea` | Per area | × area × quantity (`areaUnit`: `sqm`, `sqft`, `sqin`; `dimensionsField`) |
+| `perLength` | Per length | × length × quantity (`lengthUnit`: `m`, `ft`, `in`, `cm`; `lengthAxis`: `h`, `w`, `max`; `dimensionsField`) |
+| `percent` | Percent % | % of the running total |
+| `multiplier` | Multiplier × | × the running total |
+| `setup` | Setup fee | once, after percentages and multipliers |
+| `formula` | Formula | the result of `formula`. See [Pricing by formula](/print-options/guides/formula-pricing) and the example below. |
+
+Every rule has an `amount` (`0` on a formula rule). A per-unit, per-page,
+per-area or per-length rule can have `tiers` instead of a single rate:
+
+```json
+{
+  "type": "perUnit",
+  "amount": 0.08,
+  "tiers": {
+    "basis": "quantity",
+    "mode": "flat",
+    "rows": [{ "upTo": 249, "amount": 0.08 }, { "upTo": 999, "amount": 0.05 }, { "amount": 0.035 }]
+  }
+}
+```
+
+`basis` is `quantity`, `pages`, `area` or `length`; `mode` is `flat` (the
+whole quantity at the matched row's rate) or `graduated` (each band at its own
+rate, summed). Every row but the last has an `upTo`, increasing; the last has
+none.
+
+A formula rule:
+
+```json
+{
+  "type": "formula",
+  "amount": 0,
+  "dimensionsField": "size",
+  "lengthUnit": "in",
+  "areaUnit": "sqft",
+  "formula": {
+    "steps": [{ "name": "P1", "expression": "25 + 6 * area" }],
+    "expression": "P1 * qty"
+  }
+}
+```
+
+### A price matrix
+
+`variants` gives an exact price for each combination of single-choice fields.
+`axes` lists the field ids; each combination names one choice per axis:
+
+```json
+"variants": {
+  "axes": ["paper", "sides"],
+  "combinations": [
+    { "select": { "paper": "gloss-135", "sides": "single" }, "price": 0.09 },
+    { "select": { "paper": "gloss-135", "sides": "double" }, "price": 0.14 },
+    { "select": { "paper": "silk-170", "sides": "single" }, "price": 0.11 },
+    { "select": { "paper": "silk-170", "sides": "double" }, "available": false }
+  ]
+}
+```
+
+A combination's `price` replaces the base amount (and follows its `per`
+setting); `"available": false` rules the combination out. Base price
+quantity breaks take precedence over matrix prices, so leave them out. See
+[Price matrix](/print-options/guides/pricing#price-matrix-an-exact-price-per-combination).
+
+## Showing fields only when they apply
+
+`visibleWhen` shows a field only when its rules hold. Hidden fields are left
+out of the price.
+
+```json
+"visibleWhen": {
+  "all": [
+    { "ref": "binding", "op": "eq", "value": "hardcover" }
+  ]
+}
+```
+
+Group rules with `all`, `any` or `not` (groups can nest). Operators are `eq`,
+`neq`, `gt`, `gte`, `lt`, `lte`, `in`, `isSet` and `notSet`. A `ref` is
+another field's `id`, or `quantity`, `file.pages`, `file.colorPages`,
+`file.monoPages` or `file.status`.
+
+## Rules the builder checks
+
+Import refuses JSON that breaks these, and says where:
+
+- `version` is `"2.0"`.
+- Field and section ids are unique across the whole option set; choice ids
+  are unique within their field. A field id can't be `quantity` or start with
+  `file.`.
+- Single and multiple choice fields, and quantity per option fields, have at
+  least one choice. Choice ids on a quantity per option field use only
+  letters, digits, `-` and `_`.
+- At most one quantity field shows at a time: any others need a
+  `visibleWhen`.
+- Tier rows: every row but the last has an increasing `upTo`; the last has
+  none. A graduated base price needs `"per": "unit"`.
+- Per-area and per-length rules (and formulas that use the size) read a
+  `dimensions` field named in `dimensionsField`, or the uploaded file's size.
+- A formula is valid as described in [Pricing by formula](/print-options/guides/formula-pricing#writing-formulas).
+- Each role (`size`, `pages`, `material`, `orientation`) is used by at most one
+  field.
+
+Warnings, such as a quantity that changes nothing about the price, don't
+block an import; the builder lists them so you can decide.
+
+<Note>
+    - Price in your store's own currency (`pricing.currency`, such as `"USD"`).
+      Import warns when it differs, and publishing is refused until it
+      matches.
+    - `productId` can be anything: your store sets it when you publish or
+      save.
+    - Option sets can be up to 1 MB. Images embedded as `data:` count
+      towards it, so large pictures are better linked by URL.
+</Note>
