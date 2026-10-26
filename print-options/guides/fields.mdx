@@ -13,27 +13,37 @@ individual questions your customer answers.
 | **Single choice** | Pick exactly one — paper, finish, binding. |
 | **Multiple choice** | Pick any number — extra finishes, add-ons. |
 | **Quantity** | Copies or print run. Drives all per-unit pricing. |
+| **Quantity per option** | A count for each option, such as the sizes of a T-shirt run. The total is the quantity. |
 | **Number** | Any free numeric value, like page count. |
 | **Text** | Customer-entered text, such as a job reference. |
-| **Dimensions** | Width × height, for area pricing. |
+| **Dimensions** | Width × height, for area, length and formula pricing. |
 | **File upload** | Artwork or documents — see [Artwork uploads](/print-options/guides/uploads). |
 | **Info / summary** | Not a question: a static note, or a live recap of everything chosen. |
 
 <Note>
-    An option set has at most one Quantity field. It is what "per unit" pricing
+    One quantity is in play at a time. It is what "per unit" pricing
     multiplies by, so the stepper, the summary and the price can never
-    disagree.
+    disagree. You can still have several Quantity fields when each has a
+    visibility rule, so that one shows at a time: see
+    [Quantities & size runs](/print-options/guides/quantities).
 </Note>
 
 ## Choosing how a field looks
 
 The **Display** setting changes the control without changing the data:
 
-- **Single / multiple choice** — Pills, Image cards, Image grid, Colour
+- **Single / multiple choice** — Pills, Image cards, Image grid, Color
   swatches, Dropdown, or List.
-- **Quantity** — Stepper, preset Pills, preset Dropdown, or a plain input.
+- **Quantity** — Stepper, Preset pills, Preset dropdown, or Plain input.
   Presets are ideal for print runs: 100 / 250 / 500 / 1000.
+- **Quantity per option** — Grid of steppers, or List.
+- **Number** — Input, Stepper, or Slider.
+- **Text** — Single line, or Multi-line.
 - **Dimensions** — width and height inputs with a unit selector.
+- **File upload** — Dropzone, or Designer only (no direct upload) when
+  artwork comes from the Print.App designer. See
+  [Artwork uploads](/print-options/guides/uploads#artwork-from-the-print-app-designer).
+- **Info / summary** — Static note, or Live summary.
 
 <Tip>
     Image cards and grids show a picture per choice. Upload it on the choice —
@@ -105,3 +115,10 @@ integration; see the [Page API](/print-options/developers/page-api).
 Each choice can carry a SKU fragment. When the customer configures a job, the
 fragments combine into a resolved SKU that travels with the order — so your
 production system sees `BC-350-MATTE-500`, not a paragraph of prose.
+
+## Labels on the order
+
+Each answer reaches the cart and the order under its field's label, so give
+every field one. A field without a label is named after its section title
+when it is the only question in that section. See
+[How fields are named](/print-options/guides/cart-and-orders#how-fields-are-named).

@@ -1,0 +1,165 @@
+---
+title: Quantities & size runs
+description: "Set up the quantity a job is priced on: presets and units, a hint that shows the next price break, a count per option for mixed-size orders, and quantity fields that change with the paper."
+---
+
+The quantity is the number most of your pricing turns on: per-unit prices,
+quantity breaks and formulas all read it, and it travels to the cart with
+the job. Print Options gives you three ways to ask for it.
+
+| You want | Use |
+| --- | --- |
+| One number: 250 flyers, 10 banners | A **Quantity** field |
+| A count for each option: M × 5, L × 3, 3XL × 2 | A **Quantity per option** field |
+| Different quantities depending on an earlier choice | Several **Quantity** fields that [take turns](#quantity-fields-that-take-turns) |
+
+## The quantity field
+
+Add a field of type **Quantity** and choose how it looks under **Display**:
+
+- **Stepper**: − and + buttons around the number.
+- **Preset pills** or **Preset dropdown**: only the quantities you list,
+  such as 100 / 250 / 500 / 1000. Ideal for print runs.
+- **Plain input**: a number box.
+
+Its **Basics** tab has:
+
+| Setting | What it does |
+| --- | --- |
+| **Min**, **Max**, **Step**, **Default** | The range and grid of quantities a customer can order. |
+| **Presets** | Comma-separated quantities for the pill and dropdown displays. |
+| **Unit** | An optional word shown after the number in the cart and on the order: *5 banners*, *500 cards*. |
+| **Show 'add N more' hint** | Tells the customer how close the next price break is. See [below](#show-the-next-price-break). |
+
+A quantity is always one the customer can actually order: a number typed
+between steps is moved onto the step grid (with a step of 25, 333 becomes 325)
+and kept within the minimum and maximum. The cart line always shows the
+quantity the job is charged for.
+
+<Note>
+    If nothing in your pricing depends on the quantity, the builder warns that
+    *changing the quantity does not change the price*. See
+    [The base price](/print-options/guides/pricing#the-base-price).
+</Note>
+
+## Show the next price break
+
+Turn on **Show 'add N more' hint** on the quantity field, and the summary
+tells customers how many more items reach the next quantity break:
+
+- *Add 15 more to get 15% off*, when the break is a percentage discount (a
+  **Percent** price change with quantity breaks, such as −10% from 10 and
+  −15% from 25).
+- *Add 50 more for $8.90 each*, for any other break: the price per item at
+  the next break, for the same choices.
+
+The hint looks at the base price's quantity breaks and the quantity breaks on
+every price change in play, steps onto your quantity grid, and stays quiet
+when the next break is beyond the maximum or doesn't lower the price per item.
+It is a display only, and changes nothing about the price charged.
+
+## Quantity per option (size runs)
+
+A bulk T-shirt order is one design printed on a mix of sizes. Without a
+count per size, the customer adds each size as a separate cart line, and five
+M plus three L plus two 3XL are priced as three small jobs instead of one
+order of ten.
+
+A **Quantity per option** field gives each option its own stepper. The
+**total** of the counts is the job's quantity: it drives the base price per
+unit, quantity breaks, formulas and the cart.
+
+<Note>
+    Quantity per option is available on Shopify, and on WooCommerce from
+    plugin version 0.4.16.
+</Note>
+
+### Set it up
+
+1.  **Add the field.** Add a field of type **Quantity per option**. It
+    starts as *Sizes* with S, M, L and XL; rename and add options on the
+    **Options** tab (XS to 4XL, say).
+2.  **Choose the display.** **Grid of steppers** shows a card per option;
+    **List** shows one row per option.
+3.  **Set the limits** on the **Basics** tab:
+
+    | Setting | What it does |
+    | --- | --- |
+    | **Min per option** | The smallest count for an option, when that option is ordered at all. |
+    | **Max per option** | The largest count for one option. Empty means no limit. |
+    | **Step** | Counts go up in this step, per option. |
+    | **Minimum total** | The smallest order across all options. |
+    | **Maximum total** | The largest order. Empty means no limit. |
+    | **Unit** | Shown after the total: *Total: 10 shirts*. |
+    | **Show 'add N more' hint** | The [next price break](#show-the-next-price-break) hint, counted on the total. |
+
+4.  **Price it.** Set the base price to **Per unit × quantity** (the
+    price of one shirt). Then:
+    - For a surcharge on some sizes, open that option's details and add a
+      **Per item of this option** price change: a 3XL at +€3 adds €3 for
+      each 3XL ordered.
+    - For a volume discount on the whole order, add a **Percent** price
+      change on the field's own **Pricing** tab with quantity breaks, such
+      as 0% up to 9, −10% up to 24, −15% up to 49 and −20% above.
+5.  **Publish**, and remove your platform's own size variants from the
+    product: the grid replaces them.
+
+<Tip>
+    An option can carry **Per item of this option**, per page, per area, per
+    length, **Fixed** and **Setup** prices. Fixed and setup prices are charged
+    once if that option is ordered at all, for example a different blank for
+    4XL. Percentages, multipliers and formulas act on the whole order, so they
+    belong on the field instead, and the builder doesn't offer them on an
+    option.
+</Tip>
+
+### Example
+
+Base price €19.90 per unit, 3XL +€3 per item, and the volume discount
+above. An order of M × 5, L × 3 and 3XL × 2 is ten shirts:
+
+| | Amount |
+| --- | --- |
+| Base: 10 shirts × €19.90 | €199.00 |
+| 3XL: 2 × €3 | €6.00 |
+| Volume discount, −10% | −€20.50 |
+| **Total** | **€184.50** |
+
+With the hint on, the summary also says *Add 15 more to get 15% off*.
+
+### What the customer sees
+
+A stepper for each size and a running *Total: 10 shirts*. If the order is
+below the minimum total, the field asks them to *Choose at least 10 in total*
+(or *at most*, above the maximum), and add to cart stops at the field until
+the order fits. On the cart line and the order, the field reads like this:
+
+```text
+Size: M × 5, L × 3, 3XL × 2
+```
+
+Sizes are listed in your option order and sizes with no count are left out.
+See [Cart & orders](/print-options/guides/cart-and-orders) for the rest of the
+line.
+
+<Note>
+    Option ids on a quantity per option field may only use letters, digits,
+    `-` and `_`. Ids made by the builder always do; the builder flags any
+    other.
+</Note>
+
+## Quantity fields that take turns
+
+Some products are sold in different quantities depending on an earlier
+choice: one paper comes in packs of 100, 250 and 500, another only in 500 and
+1000. Give each group its own quantity field, and let them take turns:
+
+1.  Add a **Quantity** field for each paper group, each with its own presets.
+2.  On each one's **Logic** tab, add a visibility rule on the paper field, so
+    exactly one quantity field shows for any paper.
+3.  Publish.
+
+The quantity field that is showing is the quantity. At most one quantity
+field may show without a visibility rule; with two, the builder says *Only one
+quantity field can show unconditionally* and asks you to give the others a
+rule. A quantity field's own rule can't depend on the quantity.

@@ -1,0 +1,113 @@
+---
+title: Languages, prices & tax
+description: "The configurator speaks your customer's language, prints prices in your store's own format, and can show the tax in its summary. How each works on Shopify and WooCommerce."
+---
+
+## The customer's language
+
+Everything the configurator writes itself (*Summary*, *Add to cart*, *Drop
+your file here or click to browse*, validation messages, the tax lines) follows
+your store's language. Your option names, choices and help text come from your
+option set, so write them in your store's language.
+
+<Tabs>
+<Tab title="Shopify">
+    The configurator follows the storefront language, with nothing to set up.
+    It speaks **English, Danish, German, Spanish, French, Italian, Dutch and
+    Romanian**. Storefronts in other languages show English.
+</Tab>
+<Tab title="WooCommerce">
+    Translations for **Danish, German, Spanish, French, Italian, Dutch and
+    Romanian** ship with the plugin and follow the site language, including
+    regional variants such as German (Austria), German (Switzerland), formal
+    Dutch and Mexican Spanish. Language packs from translate.wordpress.org
+    take precedence when they exist.
+
+    To change any wording, or to add a language:
+
+    - use [Loco Translate](https://wordpress.org/plugins/loco-translate/), or
+    - put a `.po`/`.mo` file in `wp-content/languages/plugins`, or
+    - change individual labels from code with the `papo_widget_strings`
+      filter:
+
+    ```php
+    add_filter('papo_widget_strings', function (array $strings): array {
+        $strings['summary.addToCart'] = 'Add to basket';
+        return $strings;
+    });
+    ```
+</Tab>
+</Tabs>
+
+## Prices in your store's format
+
+The configurator prints prices exactly as your store does, so the price in
+the summary matches the price in the cart.
+
+- **Shopify** uses your store's currency formatting (**Settings** →
+  **General**, under the store currency). A format the configurator doesn't
+  recognise falls back to the standard format for the customer's language.
+- **WooCommerce** uses your currency options (**WooCommerce** → **Settings** →
+  **General**): currency symbol, its position, the number of decimals, and the
+  thousand and decimal separators. A Romanian store prints *10,00 lei*, just
+  as its cart does.
+
+## A note under the price (WooCommerce)
+
+The summary shows your WooCommerce **price display suffix** (**WooCommerce** →
+**Settings** → **Tax** → **Price display suffix**) under the total, such as
+*incl. VAT*. Placeholders like `{price_including_tax}` are left out. To use
+different wording, or to hide the note, return your text (or an empty string)
+from the `papo_price_note` filter.
+
+## Showing the tax in the summary
+
+The summary can show how much of the price is tax: the total excluding tax,
+the tax and the total including tax, or the tax included in the total. It is
+a display only: your store still calculates tax at checkout from the
+customer's address, exactly as before.
+
+What the customer sees depends on whether your prices include tax:
+
+| Your prices | The summary shows |
+| --- | --- |
+| **Exclude tax** | *Total excl. VAT*, then *VAT (20%)*, then *Total incl. VAT* as the headline price. The price per item is shown including tax too. |
+| **Include tax** | *Total* as usual, with *Includes VAT (20%): €3.33* under it. |
+
+The tax is named in the customer's language unless you give it a name:
+*VAT*, *MwSt.*, *TVA*, *IVA*, *moms* or *btw*. French summaries use *Total
+HT* and *Total TTC*. The tax is rounded once and the other lines are derived
+from it, so the figures always add up.
+
+<Tabs>
+<Tab title="Shopify">
+    Open the theme editor, select the **Print Configurator** block, and find
+    the **Tax** settings:
+
+    | Setting | What it does |
+    | --- | --- |
+    | **Show tax in the summary** | Turns the breakdown on. |
+    | **Tax rate (%)** | Your standard rate, such as `20` or `5.5` (`5,5` and `20%` work too). Without a valid rate between 0 and 100, no breakdown is shown. |
+    | **Tax name (optional)** | Leave empty to use the shopper's language: VAT, TVA, MwSt., IVA… |
+
+    Whether your prices include tax comes from Shopify's own **Taxes and
+    duties** setting, so the summary can't contradict your checkout.
+</Tab>
+<Tab title="WooCommerce">
+    There is nothing to set up. The breakdown shows when:
+
+    - WooCommerce taxes are enabled,
+    - the product is taxable, and
+    - prices are displayed **including tax** in the shop (**WooCommerce** →
+      **Settings** → **Tax** → **Display prices in the shop**).
+
+    The rate is the one that applies to the shopper's location (or your
+    store's base location), for the product's tax class. When exactly one rate
+    applies, its own name is used (*MwSt.*, *GST*). Whether your prices are
+    entered with or without tax picks the layout above. Stores with compound
+    tax rates, and stores that display prices excluding tax, see no breakdown.
+
+    To change the rate or name, or to hide the breakdown on some products,
+    use the `papo_tax_display` filter (return an empty array for none).
+</Tab>
+</Tabs>

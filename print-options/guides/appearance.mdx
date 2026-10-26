@@ -57,11 +57,32 @@ print-configurator::part(summary) {
 }
 ```
 
-Available parts include `base`, `section`, `section-title`, `field`,
-`field-label`, `field-help`, `field-error`, `summary`, `summary-title`,
-`summary-line`, `summary-recap`, `price`, `cta`, `hold-message`, `dropdown`,
-`dimensions`, and the stepper group (`stepper`, `stepper-input`,
-`stepper-increment`, `stepper-decrement`).
+The available parts:
+
+| Area | Parts |
+| --- | --- |
+| Layout | `base`, `section`, `section-title`, and for the wizard layout `wizard-nav`, `wizard-step` (with `wizard-step-done`, `wizard-step-active`, `wizard-step-todo`), `wizard-back`, `wizard-next` |
+| Fields | `field`, `field-label`, `field-help`, `field-error` |
+| Choices | `choice`, `choice-selected`, `card`, `pill`, `swatch`, `dropdown` |
+| Inputs | `stepper`, `stepper-decrement`, `stepper-input`, `stepper-increment`, `text-input`, `dimensions` |
+| Quantity per option | `quantities`, `quantities-item`, `quantities-item-active`, `quantities-label`, `quantities-total` |
+| Uploads and designs | `upload`, `upload-input`, `artwork`, `artwork-name`, `artwork-meta`, `artwork-change`, `artwork-remove`, `producer` |
+| Summary | `summary`, `summary-title`, `summary-line`, `summary-line-label`, `summary-line-value`, `summary-total`, `summary-total-label`, `price`, `summary-unit`, `summary-hint`, `summary-note`, `hold-message`, `cta` |
+| Tax lines | `summary-net`, `summary-net-label`, `summary-net-value`, `summary-tax`, `summary-tax-label`, `summary-tax-value`, `summary-tax-included` |
+| Live summary field | `summary-recap`, `recap-row`, `recap-label`, `recap-value` |
+
+`summary-unit` is the *500 × $0.08* line, `summary-hint` the
+[next price break](/print-options/guides/quantities#show-the-next-price-break)
+hint, and `summary-note` the price note
+([WooCommerce](/print-options/guides/languages-and-tax#a-note-under-the-price-woocommerce)).
+The tax parts appear when the summary
+[shows the tax](/print-options/guides/languages-and-tax#showing-the-tax-in-the-summary).
+
+<Tip>
+    On a narrow page column, and on phones, the summary sits after the
+    options and scrolls with the page, rather than staying fixed at the bottom
+    of the screen over the options.
+</Tip>
 
 ## Layout
 

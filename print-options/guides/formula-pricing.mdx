@@ -1,0 +1,357 @@
+---
+title: Pricing by formula
+description: "Price a job from a formula of its quantity, size and page count, for prices that follow a curve rather than tiers: custom-size signs, per-item minimums, size bands and more."
+---
+
+Some prices don't come in tiers. A sign shop's quote is often a curve: the
+first sign carries the setup, each further sign costs less, and every number
+depends on the sign's size. You can approximate that with quantity breaks,
+but you need a row for every quantity, and a product the customer sizes
+themselves can't be broken down by size *and* quantity at the same time.
+
+A **Formula** price rule calculates the price directly from the job:
+
+```text
+P1 + F * (qty - 1) + b * (1 - 0.25^(qty - 1)) / 0.75
+```
+
+You write the formula once, in the builder, and the configurator works the
+price out for whatever size and quantity the customer enters.
+
+<Note>
+    Formula pricing is available on Shopify, and on WooCommerce from plugin
+    version 0.4.16.
+</Note>
+
+## When to use a formula
+
+Reach for a formula when:
+
+- your price list is already a spreadsheet formula,
+- the price depends on the size **and** the quantity together, as with
+  custom-size signs, banners and panels,
+- each item has a minimum price, whatever its size, or
+- you price in size bands *and* want quantity to count as well.
+
+For simpler cases the other tools are quicker to set up: a per-unit price
+with [quantity breaks](/print-options/guides/pricing#quantity-breaks), a
+[price matrix](/print-options/guides/pricing#price-matrix-an-exact-price-per-combination)
+when your supplier quotes every combination, or
+[area pricing](/print-options/guides/pricing#area-pricing) at a flat rate per
+square metre.
+
+## How a formula rule works
+
+A formula is a price rule like any other, so it lives in the same places:
+
+- **On a field** (its **Pricing** tab): it applies while that field is
+  shown. A formula on the size field is the usual choice.
+- **On a choice** (open the choice's details, then **Pricing**): it applies
+  while that choice is selected. Give each material its own formula when
+  aluminium and foam board are priced differently.
+
+The formula's result is the rule's **whole charge for the order**. Unlike a
+per-unit price, it is *not* multiplied by the quantity afterwards. Use `qty`
+in the formula wherever the quantity matters.
+
+Everything else in your option set still applies around it: the base price
+is added, a choice's percentage (a rush surcharge, say) applies to the
+running total after it, and setup fees and the minimum price come last.
+To let the formula be the whole price, set the base price to **0, once per
+order**.
+
+## Your first formula: custom-size signs
+
+This walk-through builds the sign price from the top of this page. Each sign
+size has three numbers, all worked out from the sign's area in square feet:
+
+| Name | Meaning | Formula |
+| --- | --- | --- |
+| `P1` | The price of the first sign | `25 + 6 * area` |
+| `F` | Each further sign, in the long run | `4 + 3.5 * area` |
+| `b` | The extra on the second sign, quartering with every sign after it | `8 + 2 * area` |
+
+1.  **Add the size.** Add a **Dimensions** field labelled *Size*, with
+    inches as its unit. (The **Posters** template already has one, in
+    centimetres.)
+2.  **Zero the base price.** Under **Product** settings, set the base
+    price to **0**, charged **Once per order**.
+3.  **Add the rule.** Select the *Size* field, open its **Pricing** tab,
+    click **+ Add price rule**, and change the rule's type to **Formula**.
+    A starter formula, `10 * area * qty`, appears.
+4.  **Set the units.** **Size from** is the field the formula reads (*Size*).
+    Set **w and h in** to **in** and **area in** to **ft²**. The builder
+    picks these for you from the size field: inches go with square feet,
+    centimetres with square metres.
+5.  **Add the steps.** Click **+ Add step** three times, and fill in the
+    names and formulas from the table above: `P1` = `25 + 6 * area`,
+    `F` = `4 + 3.5 * area`, `b` = `8 + 2 * area`.
+6.  **Write the price.** In **Price =**, enter
+    `P1 + F * (qty - 1) + b * (1 - 0.25^(qty - 1)) / 0.75`.
+7.  **Check it.** Open **Check prices**, enter a size such as 24 × 18, and
+    compare the table with your own price list (see
+    [Checking your prices](#checking-your-prices)).
+8.  **Publish.**
+
+For three sign sizes, that formula charges:
+
+| Size | Area | 1 sign | 2 signs | 5 signs | 10 signs | 25 signs |
+| --- | --- | --- | --- | --- | --- | --- |
+| 12 × 12 in | 1 ft² | $31.00 | $48.50 | $74.28 | $111.83 | $224.33 |
+| 24 × 18 in | 3 ft² | $43.00 | $71.50 | $119.59 | $192.17 | $409.67 |
+| 36 × 24 in | 6 ft² | $61.00 | $106.00 | $187.56 | $312.67 | $687.67 |
+
+<Tip>
+    Steps are optional. You could write the whole price as one long formula,
+    but naming the parts the way your price list does (first sign, further
+    signs, premium) makes the formula readable months later, and an error
+    points at the step it is in.
+</Tip>
+
+## Writing formulas
+
+### Names you can use
+
+| Name | What it is |
+| --- | --- |
+| `qty` | The quantity being ordered. With a [quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs) field, the total across all options. |
+| `w`, `h` | The width and height, in the unit set under **w and h in**. |
+| `area` | Width × height, in the unit set under **area in**. |
+| `pages` | The uploaded file's page count. Needs a file upload that reports it, such as [Filecheck](/print-options/guides/uploads#filecheck-validated-uploads). |
+| Your steps | Each step can use the steps above it, and the price can use them all. |
+
+- Names don't care about capitals: `Qty`, `QTY` and `qty` are the same.
+- `w`, `h` and `area` are 0 until the customer has entered a size. If the
+  rule's **Size from** is set to **Uploaded file canvas**, they come from the
+  artwork's own size instead of a dimensions field.
+
+### Operators
+
+| Write | Meaning |
+| --- | --- |
+| `+` `-` `*` `/` | Add, subtract, multiply, divide |
+| `^` | Power: `0.25^(qty - 1)`, `area^0.5` |
+| `( )` | Brackets, as deep as you need |
+| `0.25` | Numbers take a **dot** for decimals, never a comma |
+
+Two things a spreadsheet lets you do that a formula doesn't:
+
+- **Write the multiplication.** `2 * area`, not `2area`.
+- **Bracket a negative power.** Spreadsheets read `-2^2` as 4, maths reads
+  it as −4. To avoid surprises the builder asks you to write `(-2)^2` or
+  `-(2^2)`. `2^-1` (a negative exponent) is fine as it is.
+
+### Functions
+
+| Function | What it does | Example |
+| --- | --- | --- |
+| `min(a, b, …)` | The smallest value | `min(qty, 100)` |
+| `max(a, b, …)` | The largest value | `max(30, 12.99 * area)` |
+| `round(x)`, `round(x, d)` | Rounds half up, to `d` decimals (0 to 4) | `round(9.5 * area, 2)` |
+| `ceil(x)` | Rounds up to a whole number | `ceil(area)`: per started square foot |
+| `floor(x)` | Rounds down to a whole number | `floor(qty / 10)` |
+| `abs(x)` | Drops the sign | `abs(w - h)` |
+| `sqrt(x)` | Square root | `sqrt(area)` |
+| `band(x, upTo1, v1, upTo2, v2, …, last)` | A size or quantity table inside a formula | `band(area, 2, 30, 6, 26, 22)` |
+
+`band()` works like a price-break table: it checks the limits from left to
+right and gives the value of the first band that `x` fits under (each limit is
+included in its band), or the last value when `x` is above them all.
+`band(area, 2, 30, 6, 26, 22)` is 30 up to 2 ft², 26 up to 6 ft², and 22
+above that.
+
+### From a spreadsheet
+
+Pasting a formula from a spreadsheet or a document works: the builder turns
+`×` into `*` and `−` or `–` into `-` as you paste. Spreadsheet functions
+translate like this:
+
+| Spreadsheet | Formula |
+| --- | --- |
+| `POWER(a, b)` | `a^b` |
+| `ROUNDUP(x, 0)` | `ceil(x)` |
+| `ROUNDDOWN(x, 0)` | `floor(x)` |
+| `ROUND(x, 2)` | `round(x, 2)` |
+| `MIN(…)`, `MAX(…)` | `min(…)`, `max(…)` |
+| `IF(area<=2, 30, IF(area<=6, 26, 22))` | `band(area, 2, 30, 6, 26, 22)` |
+| `B2`, `C2` (cell references) | `qty`, `area`, or a step you name |
+| `0,75` | `0.75` |
+
+### Limits
+
+- Up to **10 steps**, and up to **500 characters** per step or price.
+- A step name starts with a letter and then uses letters, digits or `_`
+  (up to 32 characters). It can't reuse a name the formula already has, such
+  as `area`, `qty` or `max`.
+- Only letters, digits, spaces and `_ . , + - * / ^ ( )` are allowed.
+  There are no comparisons (`<`, `>`) and no `if`: use `min`, `max` and
+  `band` instead. (WordPress would rewrite `<`, `>` and `%` when your option
+  set is saved, so they are kept out of formulas on every platform.)
+- A formula rule has no volume breaks of its own. Put the breaks in the
+  formula with `band()`.
+- A formula can't go on one option of a
+  [quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs)
+  field. Put it on the field itself, where `qty` is the total.
+
+## Units
+
+**w and h in** and **area in** are separate on purpose. A US sign shop
+measures in inches and prices by the square foot: with **in** and **ft²**, a
+24 × 18 in sign reads as `w = 24`, `h = 18` and `area = 3`. The customer can
+enter the size in any unit the size field offers. The formula always sees it
+converted into your units.
+
+| w and h in | area in |
+| --- | --- |
+| in, ft, cm, m | ft², in², m² |
+
+Sizes are converted exactly as you would expect on paper. A 12 in width is
+12 in the formula, not 11.999…, so `floor(w)` and `band()` limits behave.
+
+## Checking your prices
+
+**Check prices**, under the formula, shows what the rule charges at one size
+for several quantities: the quantity field's presets if it has some, otherwise
+1, 2, 5, 10 and 25. **This rule adds** is the rule's total; **Each** is that
+divided by the quantity. It uses the same calculation as your storefront.
+
+The table shows this rule only. Other rules (a material surcharge, a rush
+percentage, a setup fee, the minimum price) still apply on top, and the
+**Preview** pane on the right shows the whole product as your customers will
+see it.
+
+### When the builder flags a formula
+
+Mistakes show in red under the step or price they are in, as you type, and
+the option set can't be published until they are fixed:
+
+| You see | What to do |
+| --- | --- |
+| Use a dot for decimals: 0.75. | Write `0.75`, not `0,75`. |
+| Missing an operator between 2 and area: write 2 \* area. | Add the `*`. |
+| Add brackets: -(2^2) or (-2)^2. | Say which you mean. |
+| Unknown name "aera". You can use: qty, w, h, area, pages. | A typo, or a step used before it is defined. The list shows what is available at that point. |
+| "b" is worked out in a later step — move that step up. | Steps run top to bottom. |
+| There is no function "pow". You can use: min, max, … | Use the operator instead: `a^b`. |
+| max() needs at least two values, like max(a, b). | Add the missing value. |
+| The limits in band() must increase (2 after 6). | List the bands smallest first. |
+| A bracket opened here is never closed. | Add the missing `)`. |
+| `"<"` can't be used in a formula. | Rewrite it with `min`, `max` or `band`. |
+
+## When a formula has no price
+
+Some formulas have no answer for some jobs: dividing by `qty - 1` when one
+sign is ordered, or `sqrt` of a negative number. The configurator then tells
+the customer *This size can't be priced online. Please contact us.* and won't
+add the job to the cart. A job is never sold at a price of 0 because a formula
+broke.
+
+To keep every size priceable, give the size field a minimum and maximum
+width and height, and guard any division, for example
+`100 / max(qty - 1, 1)`.
+
+## Recipes
+
+<AccordionGroup>
+
+<Accordion title="A minimum price per item">
+    A per-area price undercharges small items. This charges $12.99 per square
+    foot, but never less than $30 a sign:
+
+    ```text
+    qty * max(30, 12.99 * area)
+    ```
+
+    Ten 9 × 12 in signs (0.75 ft² each) cost $300 rather than $97.40.
+</Accordion>
+
+<Accordion title="Size bands">
+    $30 a sign up to 2 ft², $26 up to 6 ft², $22 above:
+
+    ```text
+    band(area, 2, 30, 6, 26, 22) * qty
+    ```
+</Accordion>
+
+<Accordion title="Per started square foot">
+    Round the area up before pricing it, so 2.25 ft² is billed as 3:
+
+    ```text
+    ceil(area) * 9.5 * qty
+    ```
+</Accordion>
+
+<Accordion title="Edge finishing by the perimeter">
+    Hemming or edge banding is priced by the length around the item. With
+    **w and h in** set to **ft**:
+
+    ```text
+    2 * (w + h) * 0.4 * qty
+    ```
+</Accordion>
+
+<Accordion title="A discount that grows with quantity">
+    0.1% off per item ordered, capped at 30%:
+
+    ```text
+    12 * qty * (1 - min(0.3, 0.001 * qty))
+    ```
+</Accordion>
+
+<Accordion title="Setup plus run">
+    A $35 setup and $0.80 per item, as one rule:
+
+    ```text
+    35 + 0.8 * qty
+    ```
+
+    (A setup fee under **Product** settings does the same for the setup part,
+    and is never scaled by percentages or multipliers.)
+</Accordion>
+
+<Accordion title="Booklets by the sheet">
+    Four pages fit on one sheet, and a started sheet is a whole sheet. With a
+    file upload that reports the page count:
+
+    ```text
+    ceil(pages / 4) * 0.12 * qty
+    ```
+</Accordion>
+
+<Accordion title="A different formula for each material">
+    Put a formula rule on each material choice instead of on the size field:
+    only the selected material's formula applies.
+</Accordion>
+
+</AccordionGroup>
+
+## Questions
+
+<AccordionGroup>
+
+<Accordion title="Can a formula use other fields' answers?">
+    Not yet: a formula reads the quantity, the size and the page count. For
+    choices such as material or finish, put a formula (or a percentage) on
+    each choice instead.
+</Accordion>
+
+<Accordion title="Can a customer change the price the formula gives?">
+    No. The configurator shows a preview, and the same formula runs again on
+    our servers when the job is added to the cart. Your store charges the
+    price our servers calculate and sign, as with every other price rule.
+</Accordion>
+
+<Accordion title="The storefront total differs from Check prices. Why?">
+    **Check prices** shows the formula rule on its own. The storefront adds
+    the base price, other price rules on the selected choices, percentages,
+    setup fees and the minimum price. Set the base price to 0 if the formula
+    should be the whole price.
+</Accordion>
+
+<Accordion title="Does the 'Add 15 more to get 15% off' hint work with formulas?">
+    The hint reads quantity breaks, so a product priced only by a formula
+    doesn't show it. See
+    [the next price break](/print-options/guides/quantities#show-the-next-price-break).
+</Accordion>
+
+</AccordionGroup>

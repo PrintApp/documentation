@@ -41,6 +41,13 @@ const sizes = po.field("size").options;
 Both `state` and `schema` hand back copies, so mutating what you read never
 affects the configurator.
 
+`state.price` carries `total`, `quantity`, `unitPrice`, the summary `lines`,
+and `unavailable`. While `unavailable` is `true` the job can't be added to the
+cart, and `unavailableReason` says why: `"combination"` when the merchant has
+ruled the combination out, `"formula"` when a
+[formula price rule](/print-options/guides/formula-pricing) has no price for
+this size or quantity.
+
 ## Writing
 
 ```js
@@ -57,6 +64,27 @@ po.setFile({ fileId: "job-77", source: "my-app", pages: 12 }, { source: "my-app"
 Writes go through exactly the same validation and pricing path as a customer's
 click. Unknown fields or invalid values are ignored with a console warning —
 never an exception, so a partner script cannot break the product page.
+
+### Quantities
+
+A quantity is stored as the number it is priced at: snapped to the field's
+step and kept within its minimum and maximum. Writing 333 to a field sold in
+steps of 25 stores 325, and `state.selections` and the next `change` event
+report 325, so read the value back rather than assuming the one you wrote.
+
+A [quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs)
+field (a size run) answers with a map of counts, keyed by the field's option
+ids. Write the whole map; a `0` clears an option, and an unknown option id
+refuses the write:
+
+```js
+po.setSelection("sizes", { m: 5, l: 3, "3xl": 2 }, { source: "my-app" });
+po.state.quantity; // 10, the total
+```
+
+`po.field("quantity")` returns the quantity field currently in play: the
+visible one when [several take turns](/print-options/guides/quantities#quantity-fields-that-take-turns),
+and a quantity per option field when that is what the product uses.
 
 ## Reacting to changes
 

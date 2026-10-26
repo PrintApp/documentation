@@ -108,8 +108,12 @@
                 "pages": [
                   "print-options/guides/option-sets",
                   "print-options/guides/pricing",
+                  "print-options/guides/formula-pricing",
                   "print-options/guides/fields",
+                  "print-options/guides/quantities",
                   "print-options/guides/uploads",
+                  "print-options/guides/cart-and-orders",
+                  "print-options/guides/languages-and-tax",
                   "print-options/guides/appearance"
                 ]
               },
