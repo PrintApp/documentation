@@ -6,7 +6,7 @@ description: "When a WooCommerce order is paid, fetch each customer's print-read
 With the [Print.App WordPress plugin](/platforms/wordpress/installation), every WooCommerce order line that has a design carries its project. This guide reads the project from a paid order, downloads its print-ready PDF and hands it to a print partner or fulfilment API.
 
 <Note>
-**Printing with Lulu?** The plugin can send paid orders to Lulu for you, with no code: see [Send to Lulu](#send-to-lulu). To fetch files by hand instead, they are listed against each order in your WordPress admin: see [How to access files](/platforms/wordpress/how-to-access-files).
+The plugin can also send paid orders to a [fulfilment provider](#fulfilment-providers) for you, with no code. To fetch files by hand instead, they are listed against each order in your WordPress admin: see [How to access files](/platforms/wordpress/how-to-access-files).
 </Note>
 
 ## 1. Find the project on the order
@@ -91,16 +91,24 @@ add_action('woocommerce_order_status_processing', function ($order_id) {
 - **Storage.** Media uploads are public URLs. The random file name keeps them unguessable, but you can also store the files privately and delete them once your partner has fetched them.
 - **Idempotency.** The `_print_job_id` check stops the same order being sent twice when its status changes again.
 
-## Send to Lulu
+## Fulfilment providers
 
-From version 2.4.0, the plugin sends paid orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site/print-api) itself, so the code above isn't needed. It's built for personalised notebooks and books: the customer designs the cover in Print.App, and the interior PDF is the same for every order.
+The plugin can send paid orders to a fulfilment provider itself, so the code above isn't needed for that provider. Providers are optional and off until you set one up. In your WordPress admin, open **PrintApp** in the left menu and expand **Fulfilment providers** at the bottom of the page.
+
+The providers available now:
+
+- [Lulu](#lulu), for print-on-demand books, notebooks and journals
+
+### Lulu
+
+Sends orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site/print-api) (plugin 2.4.0 and later). It's built for personalised notebooks and books: the customer designs the cover in Print.App, and the interior PDF is the same for every order.
 
 <Steps>
   <Step title="Get Lulu API keys">
     Generate an API key and secret at [developers.lulu.com](https://developers.lulu.com/user-profile/api-keys). To test first without printing or paying for anything, use Lulu's [sandbox](https://developers.sandbox.lulu.com/user-profile/api-keys), which has its own keys.
   </Step>
   <Step title="Switch it on">
-    In your WordPress admin, open **PrintApp** in the left menu and find **Send to Lulu**. Switch on **Send paid orders to Lulu**, choose the environment (**Sandbox** or **Production**), enter the API key and secret, and pick a shipping level. Lulu writes to the contact email if it has questions about a print job; it defaults to the site admin email.
+    In your WordPress admin, open **PrintApp**, expand **Fulfilment providers**, then **Lulu**. Switch on **Send paid orders to Lulu**, choose the environment (**Sandbox** or **Production**), enter the API key and secret, and pick a shipping level. Lulu writes to the contact email if it has questions about a print job; it defaults to the site admin email.
   </Step>
   <Step title="Set up the product">
     On the WooCommerce product, open the **Lulu** tab under **Product data** and fill in:
@@ -125,7 +133,7 @@ From version 2.4.0, the plugin sends paid orders to the [Lulu Print API](https:/
 Lulu downloads the cover PDFs from your site's uploads folder, so your site must be reachable from the internet. A shop running only on your own computer won't work.
 </Warning>
 
-### What happens to an order
+#### What happens to an order
 
 - **When an order becomes Processing**, the plugin sends it to Lulu in the background as one print job. Each order line with a Print.App design, on a product with a Lulu product and interior PDF set, becomes a line item with its quantity. Other lines are left out, so mixed orders are fine.
 - **The cover** is downloaded from `pdf.print.app` and stored in your uploads folder under an unguessable name, for Lulu to fetch.
@@ -142,11 +150,11 @@ Order actions, in the order's **Order actions** box:
 | **Send Print.App designs to Lulu again** | Lulu rejected or canceled the order's print job (plugin 2.4.1 and later) | Sends the order as a new print job. The old job stays in your Lulu account, marked rejected or canceled |
 | **Refresh Lulu print job status** | The order has a print job | Reads the job's latest status from Lulu, with tracking links once it ships |
 
-### Paying for print jobs
+#### Paying for print jobs
 
 Lulu bills **your** Lulu account, not your customer. A new print job stays **Unpaid** until you pay for it in your Lulu account, unless you keep a payment card on file with Lulu. An order note such as *"print job #354632 is UNPAID. Lulu accepted the files"* means the files passed Lulu's checks and the job is waiting for payment.
 
-### If Lulu rejects a file
+#### If Lulu rejects a file
 
 The order note gives Lulu's reason. The common ones are about the cover:
 
