@@ -3,10 +3,10 @@ title: "Automate fulfilment from WooCommerce"
 description: "When a WooCommerce order is paid, fetch each customer's print-ready PDF and send it to your print partner."
 ---
 
-With the [Print.App WordPress plugin](/platforms/wordpress/installation), every WooCommerce order line that has a design carries its project. This guide reads the project from a paid order, downloads its print-ready PDF and hands it to a print partner or fulfilment API. The example partner is a book printer such as the Lulu Print API.
+With the [Print.App WordPress plugin](/platforms/wordpress/installation), every WooCommerce order line that has a design carries its project. This guide reads the project from a paid order, downloads its print-ready PDF and hands it to a print partner or fulfilment API.
 
 <Note>
-To fetch files by hand instead, they are listed against each order in your WordPress admin: see [How to access files](/platforms/wordpress/how-to-access-files).
+**Printing with Lulu?** The plugin can send paid orders to Lulu for you, with no code: see [Send to Lulu](#send-to-lulu). To fetch files by hand instead, they are listed against each order in your WordPress admin: see [How to access files](/platforms/wordpress/how-to-access-files).
 </Note>
 
 ## 1. Find the project on the order
@@ -91,27 +91,68 @@ add_action('woocommerce_order_status_processing', function ($order_id) {
 - **Storage.** Media uploads are public URLs. The random file name keeps them unguessable, but you can also store the files privately and delete them once your partner has fetched them.
 - **Idempotency.** The `_print_job_id` check stops the same order being sent twice when its status changes again.
 
-## Example: personalised book covers with Lulu
+## Send to Lulu
 
-A common case: customers personalise only the cover of a notebook or book, and the interior PDF is the same for every order.
+From version 2.4.0, the plugin sends paid orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site/print-api) itself, so the code above isn't needed. It's built for personalised notebooks and books: the customer designs the cover in Print.App, and the interior PDF is the same for every order.
 
 <Steps>
-  <Step title="Design the cover as the full spread">
-    Lulu prints the cover from one PDF page holding the back cover, spine and front cover, plus bleed. Size the Print.App design to the cover dimensions Lulu gives for your trim size and page count. Your interior is fixed, so the spine width is fixed too.
+  <Step title="Get Lulu API keys">
+    Generate an API key and secret at [developers.lulu.com](https://developers.lulu.com/user-profile/api-keys). To test first without printing or paying for anything, use Lulu's [sandbox](https://developers.sandbox.lulu.com/user-profile/api-keys), which has its own keys.
   </Step>
-  <Step title="Let customers change only the front">
-    Lock the back-cover and spine elements with the [object lock settings](/guides/designs/objects/settings), so customers can only personalise the front.
+  <Step title="Switch it on">
+    In your WordPress admin, open **PrintApp** in the left menu and find **Send to Lulu**. Switch on **Send paid orders to Lulu**, choose the environment (**Sandbox** or **Production**), enter the API key and secret, and pick a shipping level. Lulu writes to the contact email if it has questions about a print job; it defaults to the site admin email.
   </Step>
-  <Step title="Match Lulu's file requirements">
-    Assign the design a [PDF output profile](/guides/projects/pdf-output-profiles) that matches Lulu's requirements, such as the PDF version and colour profile.
+  <Step title="Set up the product">
+    On the WooCommerce product, open the **Lulu** tab under **Product data** and fill in:
+
+    - **Lulu product (POD package ID)**, the book specification from Lulu's pricing calculator, such as `0600X0900.BW.STD.CO.060UW444.MXX`
+    - **Interior PDF URL**, a link Lulu can download your fixed interior PDF from
+    - **Interior page count**
+
+    Save the product. The tab then shows the **Cover size** for that book and page count, such as `311.2 × 235 mm`.
   </Step>
-  <Step title="Create the print job">
-    In `my_create_print_job`, create a Lulu print job with one line item per cover: the stored cover URL, your fixed interior PDF URL and your book's product specification. Check Lulu's API documentation for the exact request.
+  <Step title="Design the cover at that size">
+    Lulu prints the cover from **one PDF page** that holds the back cover, spine and front cover. Make the Print.App design a single page at exactly the size the Lulu tab shows. That size already includes bleed, so don't add any on top.
+
+    Lock the back cover and spine with the [object lock settings](/guides/designs/objects/settings), so customers personalise only the front. Assign a [PDF output profile](/guides/projects/pdf-output-profiles) that matches Lulu's file requirements.
   </Step>
-  <Step title="Test before you go live">
-    Place a test order and run the cover through Lulu's file validation. That confirms the spread size and spine are right for your book.
+  <Step title="Test in the sandbox">
+    With the **Sandbox** environment, place an order for the product and mark it **Processing**. Within a few minutes the order notes show the Lulu print job. Use the order action **Refresh Lulu print job status** to see whether Lulu accepted the files. Switch to **Production** once it does.
   </Step>
 </Steps>
+
+<Warning>
+Lulu downloads the cover PDFs from your site's uploads folder, so your site must be reachable from the internet. A shop running only on your own computer won't work.
+</Warning>
+
+### What happens to an order
+
+- **When an order becomes Processing**, the plugin sends it to Lulu in the background as one print job. Each order line with a Print.App design, on a product with a Lulu product and interior PDF set, becomes a line item with its quantity. Other lines are left out, so mixed orders are fine.
+- **The cover** is downloaded from `pdf.print.app` and stored in your uploads folder under an unguessable name, for Lulu to fetch.
+- **The address** is the order's shipping address, or the billing address when there is none. Lulu allows at most 30 characters in each street and city line, and 35 in the name.
+- **Temporary failures** are retried after 15 minutes and again after an hour. These include a network error, a cover PDF that couldn't be generated, or Lulu being busy.
+- **An order is never sent twice**, even if its status changes again.
+- **Every result is written to the order notes:** the print job number, its status, and Lulu's reasons if it refuses an address or rejects a file.
+
+Two order actions, in the order's **Order actions** box:
+
+| Action | When it shows | What it does |
+| --- | --- | --- |
+| **Send Print.App designs to Lulu** | The order hasn't been sent | Sends it now, for example after you fix a product's Lulu settings |
+| **Refresh Lulu print job status** | The order has a print job | Reads the job's latest status from Lulu, with tracking links once it ships |
+
+### Paying for print jobs
+
+Lulu bills **your** Lulu account, not your customer. A new print job stays **Unpaid** until you pay for it in your Lulu account, unless you keep a payment card on file with Lulu. An order note such as *"print job #354632 is UNPAID. Lulu accepted the files"* means the files passed Lulu's checks and the job is waiting for payment.
+
+### If Lulu rejects a file
+
+The order note gives Lulu's reason. The common ones are about the cover:
+
+- **The PDF dimensions need to be within a range.** The design isn't the cover size shown in the product's Lulu tab.
+- **The cover must be a single page.** The design has more than one page.
+
+A customer's project keeps the size of the design it was made from, so correct the design before more orders come in. Testing each product in the sandbox first catches both problems.
 
 ## Why not the "Project created" webhook?
 
