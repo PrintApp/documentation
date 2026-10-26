@@ -134,11 +134,12 @@ Lulu downloads the cover PDFs from your site's uploads folder, so your site must
 - **An order is never sent twice**, even if its status changes again.
 - **Every result is written to the order notes:** the print job number, its status, and Lulu's reasons if it refuses an address or rejects a file.
 
-Two order actions, in the order's **Order actions** box:
+Order actions, in the order's **Order actions** box:
 
 | Action | When it shows | What it does |
 | --- | --- | --- |
 | **Send Print.App designs to Lulu** | The order hasn't been sent | Sends it now, for example after you fix a product's Lulu settings |
+| **Send Print.App designs to Lulu again** | Lulu rejected or canceled the order's print job (plugin 2.4.1 and later) | Sends the order as a new print job. The old job stays in your Lulu account, marked rejected or canceled |
 | **Refresh Lulu print job status** | The order has a print job | Reads the job's latest status from Lulu, with tracking links once it ships |
 
 ### Paying for print jobs
@@ -152,7 +153,7 @@ The order note gives Lulu's reason. The common ones are about the cover:
 - **The PDF dimensions need to be within a range.** The design isn't the cover size shown in the product's Lulu tab.
 - **The cover must be a single page.** The design has more than one page.
 
-A customer's project keeps the size of the design it was made from, so correct the design before more orders come in. Testing each product in the sandbox first catches both problems.
+Fix the cause, then use the order action **Send Print.App designs to Lulu again**. A customer's project keeps the size of the design it was made from, so correct the design too, before more orders come in. Testing each product in the sandbox first catches both problems.
 
 ## Why not the "Project created" webhook?
 
