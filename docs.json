@@ -25,7 +25,8 @@
             "group": "AI agents",
             "pages": [
               "mcp/server",
-              "mcp/quickstart-agents"
+              "mcp/quickstart-agents",
+              "mcp/connectors"
             ]
           },
           {
@@ -293,7 +294,9 @@
                   "api-reference/v2/designs/apply-ops",
                   "api-reference/v2/designs/add-pages",
                   "api-reference/v2/designs/update-page",
-                  "api-reference/v2/designs/delete-page"
+                  "api-reference/v2/designs/delete-page",
+                  "api-reference/v2/designs/attach-connector",
+                  "api-reference/v2/designs/detach-connector"
                 ]
               },
               {
@@ -374,6 +377,38 @@
                   "api-reference/v2/links/create-link",
                   "api-reference/v2/links/get-link",
                   "api-reference/v2/links/delete-link"
+                ]
+              },
+              {
+                "group": "Connectors",
+                "pages": [
+                  "api-reference/v2/connectors/list-connectors",
+                  "api-reference/v2/connectors/create-connector",
+                  "api-reference/v2/connectors/get-connector",
+                  "api-reference/v2/connectors/update-connector",
+                  "api-reference/v2/connectors/delete-connector",
+                  "api-reference/v2/connectors/test-connector",
+                  "api-reference/v2/connectors/inspect-product-page"
+                ]
+              },
+              {
+                "group": "Resource profiles",
+                "pages": [
+                  "api-reference/v2/resource-profiles/list-resource-profiles",
+                  "api-reference/v2/resource-profiles/create-resource-profile",
+                  "api-reference/v2/resource-profiles/get-resource-profile",
+                  "api-reference/v2/resource-profiles/update-resource-profile",
+                  "api-reference/v2/resource-profiles/delete-resource-profile"
+                ]
+              },
+              {
+                "group": "PDF profiles",
+                "pages": [
+                  "api-reference/v2/pdf-profiles/list-pdf-profiles",
+                  "api-reference/v2/pdf-profiles/create-pdf-profile",
+                  "api-reference/v2/pdf-profiles/get-pdf-profile",
+                  "api-reference/v2/pdf-profiles/update-pdf-profile",
+                  "api-reference/v2/pdf-profiles/delete-pdf-profile"
                 ]
               }
             ]

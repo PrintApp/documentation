@@ -135,10 +135,16 @@ Redirect URIs must be `https` addresses, as ChatGPT's and Claude's are. Apps tha
 | Fonts | `list_fonts`, `manage_font` |
 | Palettes | `list_palettes`, `manage_palette` |
 | Products | `list_products`, `get_product`, `set_product_designs` |
+| Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
+| Profiles | `list_profiles`, `manage_profile` (resource and PDF profiles) |
 | Projects | `list_projects`, `get_project`, `manage_project` |
 | Editor links | `create_editor_link`, `manage_editor_link` |
 
 Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; tools that can delete are marked destructive, so clients that ask before running those will ask.
+
+`update_design` also sets what a design uses: its connectors, resource profiles and PDF profile.
+
+The server also offers one prompt, `set_up_connector` (*Set up a connector*), for clients that list MCP prompts: it takes a product page and a goal, and writes out the steps below for the agent.
 
 ## How an agent builds a design
 
@@ -150,9 +156,19 @@ Each tool calls the REST API with your key, so the same rules, limits and errors
 
 Try it with a prompt like *"Create a two-sided 85 × 55 mm business card for a bakery called Crumb & Co with 3 mm bleed: logo from https://…/logo.png, the name, job title and phone as fields customers fill in, and a warm palette. Show me both sides."*
 
+## How an agent sets up a connector
+
+1. `inspect_product_page` reads the product page of your store: each option control with a selector that finds it and the choices it sends, the Print Options fields with their roles, and the designs the product opens.
+2. `get_design` and `preview_design` show the design's pages.
+3. `test_connector` plays the connector, before it is saved, against the design for every choice: what the page sends, which mapping matches, what the editor does, with images of the pages each choice shows. It reports what stands in the way: a selector that finds nothing, choices without a mapping, pages the design doesn't have, a design that isn't on the product, another connector fighting this one.
+4. `manage_connector` saves it and attaches it to the designs (`create` with `designIds`), and `test_connector` runs once more with its id.
+
+The walk-through for store owners is [Set up connectors with AI](/mcp/connectors).
+
 ## Things to know
 
 - **Page content** can only be edited on accounts that use the new editor. Others get `editor_not_supported`.
 - **SVG graphics go in as files.** The firewall in front of the API refuses requests that carry markup, so an agent should upload an SVG with `upload_file` and place it as an `asset`, not write SVG into an operation. It stays vector in print. A tool call with SVG or HTML in its arguments fails with an HTTP `403` before it reaches the server, so the client reports a connection error rather than a tool error.
 - **Fonts** must be families your account has. `list_fonts` lists them; `manage_font` imports any Google font.
 - **Previews** are redrawn each time a design is saved. They are for checking a layout; the PDF is made from the design itself.
+- **Product pages** are read as your server sends them, and only pages of your own store. Options a theme builds in JavaScript after the page loads aren't seen; a store behind a password answers with its password page (give `test_connector` the choices as `values` instead).

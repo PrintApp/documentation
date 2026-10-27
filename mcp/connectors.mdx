@@ -1,0 +1,74 @@
+---
+title: "Set up connectors with AI"
+description: "Let your AI assistant read your product page and your design, build the connector, test every choice and attach it, so the editor follows the options your customers pick."
+---
+
+A [connector](/configuration/connectors) makes the editor follow an option on your product page: the T-shirt shows its front, its back or both as the customer picks, each flag size opens its own design, the shirt takes the colour they chose. Setting one up by hand means finding the option's selector in your page, writing a mapping for every choice and testing it.
+
+Connected to the [Print.App MCP server](/mcp/server), your AI assistant does that for you. It reads your product page and your design, builds the connector, plays every choice to check what the editor will do, and attaches it once you agree.
+
+## Ask for it
+
+Tell it the product page and what should happen:
+
+```
+On https://mystore.com/products/custom-tee, make the T-shirt design show the front,
+the back or both, depending on the "Print side" option. Test every choice before you save it.
+```
+
+More examples:
+
+- *"Each size of https://mystore.com/products/flag should open the design made for that size."*
+- *"The booklet on https://mystore.com/products/booklet should have as many pages as the Pages option says."*
+- *"Show the shirt in the colour customers pick from the Color swatches on https://mystore.com/products/tee."*
+- *"Fill the name on the mug design with what customers type in the Name box on the product page."*
+
+In Claude, Cursor and other apps that list MCP prompts, you can also pick **Set up a connector** and fill in the page and the goal.
+
+## What the assistant does
+
+<Steps>
+  <Step title="Reads the product page">
+    It finds the option you mean: a dropdown, swatches or a text box of your theme, with a selector that finds it, or a [Print Options](/print-options/introduction) field, which it addresses by role (*size*, *pages*, *material*, *orientation*) so the connector works on every product. It also notes which designs the product opens.
+  </Step>
+  <Step title="Looks at the design">
+    It checks the design has the pages or the sizes the option needs, and looks at them.
+  </Step>
+  <Step title="Builds and tests the connector">
+    Before saving anything, it plays every choice the page offers: what the page sends, which mapping matches, and what the editor then does. For the T-shirt: *Front* shows page 1, *Back* page 2, *Front and back* both. It fixes what the test reports and shows you the result, with images of the pages each choice shows.
+  </Step>
+  <Step title="Saves and attaches it">
+    When you agree, it saves the connector, attaches it to the design (for a design per size, to every one of those designs) and tests it again.
+  </Step>
+</Steps>
+
+Then open your product page and try the options once yourself.
+
+## What the test checks
+
+- The selector finds the option on your page, and only one element.
+- Every choice has a mapping, and every mapping matches a choice. Radio buttons and swatches send their value, never their label, so the test plays exactly what your page sends.
+- The pages a mapping names exist in the design.
+- The designs a design selector opens are assigned to the product and carry the connector too.
+- The design is assigned to the product the page sells.
+- No other connector on the design acts on the same thing.
+- A choice is selected when the page loads, so the editor has something to start from.
+
+## What it cannot see
+
+- **Options your theme builds after the page loads.** The assistant reads the page as your server sends it. If it can't find an option you can see, tell it the selector, or ask your theme developer.
+- **A store behind a password.** It gets the password page instead. Give it the choices in your message and it tests with those.
+- **Pages of other sites.** Only pages of your own store are read.
+
+The classic editor applies a Page Index connector when it opens: changing the option while the editor is open does nothing. The new editor follows every change. The test tells you which one your design uses.
+
+## Profiles, too
+
+The assistant can also set up the two kinds of profile customers ask about most:
+
+- **Resource profiles** limit the fonts, colours and graphics the editor offers on some designs: *"Only offer the wedding fonts on the invitation designs."*
+- **PDF profiles** hold the settings print PDFs are made with: *"Our printer says the colours print dull: make the business cards' PDFs use CMYK FOGRA39."* or *"The stickers need a CutContour cut line in the PDF."*
+
+## For developers
+
+The same features are in the [REST API](/api-reference/v2/introduction): [read a product page](/api-reference/v2/connectors/inspect-product-page), [test a connector](/api-reference/v2/connectors/test-connector), [create one](/api-reference/v2/connectors/create-connector) and [attach it](/api-reference/v2/designs/attach-connector), and manage [resource profiles](/api-reference/v2/resource-profiles/list-resource-profiles) and [PDF profiles](/api-reference/v2/pdf-profiles/list-pdf-profiles). The tools are listed in the [MCP reference](/api-reference/v2/mcp).
