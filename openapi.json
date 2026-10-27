@@ -9699,7 +9699,20 @@
                   "type": [
                     "number",
                     "null"
-                  ]
+                  ],
+                  "description": "How far inside the trim the safe zone starts; null without one."
+                },
+                "safeArea": {
+                  "type": "array",
+                  "items": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "description": "The safe zone as [x, y, width, height] from the top-left of the trim: keep text and key artwork inside it."
                 },
                 "printArea": {
                   "type": "boolean",

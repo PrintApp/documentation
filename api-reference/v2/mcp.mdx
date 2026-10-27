@@ -1,0 +1,107 @@
+---
+title: "MCP server"
+description: "Let AI agents manage your Print.App account: create designs and lay them out, upload graphics, set up fonts and colours, and assign designs to products."
+---
+
+Print.App runs a remote [Model Context Protocol](https://modelcontextprotocol.io) server, so AI agents such as Claude, Cursor or your own can work in your account through the [REST API](/api-reference/v2/introduction): build a design from a brief, look at it and fix it, then put it on a product.
+
+```
+https://api.print.app/mcp
+```
+
+It authenticates with a [secret key](/api-reference/v2/authentication), sent as `Authorization: Bearer sk_…`.
+
+<Warning>
+An agent with your key can change and delete anything in your account that the API can. Create a separate key for each agent, labelled so you recognise it, and revoke it in the admin when you no longer need it.
+</Warning>
+
+## Connect a client
+
+<Tabs>
+  <Tab title="Claude Code">
+    ```bash
+    claude mcp add --transport http printapp https://api.print.app/mcp \
+      --header "Authorization: Bearer sk_…"
+    ```
+  </Tab>
+  <Tab title="Cursor">
+    In `.cursor/mcp.json` (or your global Cursor MCP settings):
+
+    ```json
+    {
+      "mcpServers": {
+        "printapp": {
+          "url": "https://api.print.app/mcp",
+          "headers": { "Authorization": "Bearer sk_…" }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="VS Code">
+    In `.vscode/mcp.json`:
+
+    ```json
+    {
+      "servers": {
+        "printapp": {
+          "type": "http",
+          "url": "https://api.print.app/mcp",
+          "headers": { "Authorization": "Bearer sk_…" }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Claude API">
+    With the [MCP connector](https://docs.claude.com/en/docs/agents-and-tools/mcp-connector) of the Messages API:
+
+    ```json
+    {
+      "mcp_servers": [{
+        "type": "url",
+        "url": "https://api.print.app/mcp",
+        "name": "printapp",
+        "authorization_token": "sk_…"
+      }]
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Any MCP client that speaks Streamable HTTP and can send an `Authorization` header works the same way. The server is stateless: it answers JSON over `POST` and keeps no sessions.
+
+## What an agent can do
+
+| Area | Tools |
+| --- | --- |
+| Account | `get_account` |
+| Designs | `list_designs`, `get_design`, `create_design`, `update_design`, `duplicate_design`, `delete_design`, `manage_pages` |
+| Page content | `get_design_content`, `edit_design`, `design_ops_reference`, `preview_design` |
+| Design folders | `list_design_folders`, `manage_design_folder` |
+| Files | `list_files`, `get_file`, `upload_file`, `manage_file` |
+| Graphic folders | `list_graphic_folders`, `manage_graphic_folder` |
+| Fonts | `list_fonts`, `manage_font` |
+| Palettes | `list_palettes`, `manage_palette` |
+| Products | `list_products`, `get_product`, `set_product_designs` |
+| Projects | `list_projects`, `get_project`, `manage_project` |
+| Editor links | `create_editor_link`, `manage_editor_link` |
+
+Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; tools that can delete are marked destructive, so clients that ask before running those will ask.
+
+## How an agent builds a design
+
+1. `create_design` at the trim size, with bleed and a safe margin.
+2. `upload_file` for logos, photos and SVG graphics.
+3. `get_design_content` to read the page size and safe area, then `edit_design` with a batch of operations: text, shapes, graphics, photo frames, QR codes, calendars. The batch saves as one change, or not at all.
+4. `preview_design` returns images of the pages, so the agent can look at its work and fix what it sees with another `edit_design`.
+5. `set_product_designs` to sell it on a store product, or `create_editor_link` to share it.
+
+Try it with a prompt like *"Create a two-sided 85 × 55 mm business card for a bakery called Crumb & Co with 3 mm bleed: logo from https://…/logo.png, the name, job title and phone as fields customers fill in, and a warm palette. Show me both sides."*
+
+## Things to know
+
+- **Page content** can only be edited on accounts that use the new editor. Others get `editor_not_supported`.
+- **SVG graphics go in as files.** The firewall in front of the API refuses requests that carry markup, so an agent should upload an SVG with `upload_file` and place it as an `asset`, not write SVG into an operation. It stays vector in print. A tool call with SVG or HTML in its arguments fails with an HTTP `403` before it reaches the server, so the client reports a connection error rather than a tool error.
+- **Fonts** must be families your account has. `list_fonts` lists them; `manage_font` imports any Google font.
+- **Previews** are redrawn each time a design is saved. They are for checking a layout; the PDF is made from the design itself.
