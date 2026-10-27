@@ -67,9 +67,43 @@ An agent with your key can change and delete anything in your account that the A
     }
     ```
   </Tab>
+  <Tab title="Codex">
+    In `~/.codex/config.toml`, with the key in an environment variable rather than in the file:
+
+    ```toml
+    [mcp_servers.printapp]
+    url = "https://api.print.app/mcp"
+    bearer_token_env_var = "PRINTAPP_SECRET_KEY"
+    ```
+
+    ```bash
+    export PRINTAPP_SECRET_KEY=sk_…
+    ```
+  </Tab>
+  <Tab title="OpenAI API">
+    With the [remote MCP tool](https://developers.openai.com/api/docs/guides/tools-connectors-mcp) of the Responses API:
+
+    ```json
+    {
+      "tools": [{
+        "type": "mcp",
+        "server_label": "printapp",
+        "server_url": "https://api.print.app/mcp",
+        "authorization": "sk_…",
+        "require_approval": "never"
+      }]
+    }
+    ```
+
+    Send `authorization` with every request: OpenAI doesn't store it. Leave out `require_approval` to approve each tool call yourself.
+  </Tab>
 </Tabs>
 
 Any MCP client that speaks Streamable HTTP and can send an `Authorization` header works the same way. The server is stateless: it answers JSON over `POST` and keeps no sessions.
+
+<Note>
+**ChatGPT** connects only to MCP servers that sign in with OAuth, or that need no sign-in at all. It can't send a secret key, so it can't connect to the Print.App MCP server today. From OpenAI, use the **OpenAI API** or **Codex** above.
+</Note>
 
 ## What an agent can do
 
