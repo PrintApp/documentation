@@ -1,0 +1,96 @@
+---
+title: "Create a design through the API"
+description: "Make a design from scratch on your server: blank pages at a size, your logo, text your customers can edit, then a product to sell it on."
+---
+
+This guide builds a two-sided business card template from your server, the way you would by hand in the Print.App dashboard. Every request uses a [secret key](/api-reference/v2/authentication).
+
+<Note>
+Placing content on pages needs an account on the new editor (Settings → Designer in the dashboard). Accounts still on the classic editor can create designs and manage their pages, but `POST /v2/designs/{id}/ops` answers `409 editor_not_supported`.
+</Note>
+
+## 1. Create the design
+
+[`POST /v2/designs`](/api-reference/v2/designs/create-design) makes blank pages at a trim size. Bleed sits outside the trim and the safe margin inside it.
+
+```bash
+curl https://api.print.app/v2/designs \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: $(uuidgen)" \
+  -d '{
+    "title": "Business card",
+    "unit": "mm", "width": 85, "height": 55,
+    "pages": 2, "pageTitles": ["Front", "Back"],
+    "bleed": 3, "safeMargin": 3
+  }'
+```
+
+The answer is the new design. Keep its `id`.
+
+## 2. Upload your logo
+
+[`POST /v2/files`](/api-reference/v2/files/create-file) downloads an image from a public URL into your files. For a file that is only on your server, use a [direct upload](/api-reference/v2/files/create-file-upload) instead.
+
+```bash
+curl https://api.print.app/v2/files \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://example.com/logo.png", "title": "Logo" }'
+```
+
+The file's `id` is what you place on a page as `asset`.
+
+## 3. Put content on the front
+
+[`POST /v2/designs/{id}/ops`](/api-reference/v2/designs/apply-ops) runs a batch of operations. Boxes are `[x, y, width, height]` from the top-left of the trim, in `units`; text sizes are in points. Each item you add gets a `ref`, a name you choose, so later operations can target it.
+
+```bash
+curl https://api.print.app/v2/designs/design_…/ops \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "units": "mm",
+    "page": 1,
+    "ops": [
+      { "op": "shape.add", "ref": "band", "kind": "rect", "box": [0, 0, 85, 14], "fill": "#1f2a44" },
+      { "op": "graphic.add", "ref": "logo", "box": [62, 3, 18, 8], "asset": "file_…" },
+      { "op": "text.add", "ref": "name", "box": [6, 22, 73, 10], "content": "Ada Lovelace",
+        "font": "open sans", "size": 14, "weight": 700, "align": "left", "color": "#1f2a44",
+        "field": { "title": "Name", "maxTextCount": 30 } },
+      { "op": "text.add", "ref": "role", "box": [6, 32, 73, 6], "content": "Analyst",
+        "font": "open sans", "size": 9, "align": "left", "color": "#4b5563",
+        "field": { "title": "Job title" } }
+    ]
+  }'
+```
+
+- Colours are hex values. Fonts are family names your account has: list them with [`GET /v2/fonts`](/api-reference/v2/fonts/list-fonts), or import one with [`POST /v2/fonts`](/api-reference/v2/fonts/create-font).
+- A `field` makes the item a field customers fill in the editor's form. Items without one are locked as decoration by default; set `lock` to change that.
+- The batch is all or nothing. A malformed operation refuses the whole batch with `400` before anything runs; one that fails while running answers `422 ops_failed`, and nothing is saved. Either way `details` gives every operation's result.
+- Add `"dryRun": true` to see the results and the resulting content without saving.
+
+The answer lists each operation's result, with the `id` of every item added, plus the design and its content now. The full list of operations and their properties is in the `OpsBatch` schema on that endpoint's page: text, shapes, graphics, photo frames, patterns, borders, QR codes, calendars, curved text, pages and design settings.
+
+## 4. Read and change what is on the pages
+
+[`GET /v2/designs/{id}/content`](/api-reference/v2/designs/get-design-content) describes every item on every page: its `id`, `ref`, type, box, text, font and colour. Change an item with `item.update`, targeting its `ref` or `id`, and send only what changes:
+
+```json
+{ "ops": [ { "op": "item.update", "target": "role", "content": "Head of Analysis" } ] }
+```
+
+Items a person added in the editor have no `ref`; target them by `id`.
+
+## 5. Sell it
+
+Assign the design to a store product with [`PUT /v2/products/{productId}`](/api-reference/v2/products/set-product):
+
+```bash
+curl -X PUT https://api.print.app/v2/products/8812001 \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -d '{ "designIds": ["design_…"] }'
+```
+
+Without a store, [`POST /v2/links`](/api-reference/v2/links/create-link) gives you a `create.print.app` link that opens the design for a customer to fill in.

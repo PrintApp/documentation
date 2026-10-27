@@ -258,6 +258,7 @@
             "group": "Guides",
             "pages": [
               "api-reference/v2/verify-a-project",
+              "api-reference/v2/create-a-design",
               "api-reference/guides/woocommerce-fulfilment"
             ]
           },
@@ -271,17 +272,99 @@
                 ]
               },
               {
-                "group": "Projects",
-                "pages": [
-                  "api-reference/v2/projects/list",
-                  "api-reference/v2/projects/get"
-                ]
-              },
-              {
                 "group": "Designs",
                 "pages": [
                   "api-reference/v2/designs/list",
-                  "api-reference/v2/designs/get"
+                  "api-reference/v2/designs/create-design",
+                  "api-reference/v2/designs/get",
+                  "api-reference/v2/designs/update-design",
+                  "api-reference/v2/designs/delete-design",
+                  "api-reference/v2/designs/duplicate-design",
+                  "api-reference/v2/designs/get-design-content",
+                  "api-reference/v2/designs/apply-ops",
+                  "api-reference/v2/designs/add-pages",
+                  "api-reference/v2/designs/update-page",
+                  "api-reference/v2/designs/delete-page"
+                ]
+              },
+              {
+                "group": "Design folders",
+                "pages": [
+                  "api-reference/v2/design-folders/list-design-folders",
+                  "api-reference/v2/design-folders/create-design-folder",
+                  "api-reference/v2/design-folders/get-design-folder",
+                  "api-reference/v2/design-folders/update-design-folder",
+                  "api-reference/v2/design-folders/delete-design-folder",
+                  "api-reference/v2/design-folders/add-design-to-folder",
+                  "api-reference/v2/design-folders/remove-design-from-folder"
+                ]
+              },
+              {
+                "group": "Files",
+                "pages": [
+                  "api-reference/v2/files/list-files",
+                  "api-reference/v2/files/create-file",
+                  "api-reference/v2/files/create-file-upload",
+                  "api-reference/v2/files/get-file",
+                  "api-reference/v2/files/update-file",
+                  "api-reference/v2/files/delete-file"
+                ]
+              },
+              {
+                "group": "Graphic folders",
+                "pages": [
+                  "api-reference/v2/graphic-folders/list-graphic-folders",
+                  "api-reference/v2/graphic-folders/create-graphic-folder",
+                  "api-reference/v2/graphic-folders/get-graphic-folder",
+                  "api-reference/v2/graphic-folders/update-graphic-folder",
+                  "api-reference/v2/graphic-folders/delete-graphic-folder",
+                  "api-reference/v2/graphic-folders/add-file-to-folder",
+                  "api-reference/v2/graphic-folders/remove-file-from-folder"
+                ]
+              },
+              {
+                "group": "Fonts",
+                "pages": [
+                  "api-reference/v2/fonts/list-fonts",
+                  "api-reference/v2/fonts/create-font",
+                  "api-reference/v2/fonts/get-font",
+                  "api-reference/v2/fonts/delete-font"
+                ]
+              },
+              {
+                "group": "Palettes",
+                "pages": [
+                  "api-reference/v2/palettes/list-palettes",
+                  "api-reference/v2/palettes/create-palette",
+                  "api-reference/v2/palettes/get-palette",
+                  "api-reference/v2/palettes/update-palette",
+                  "api-reference/v2/palettes/delete-palette"
+                ]
+              },
+              {
+                "group": "Products",
+                "pages": [
+                  "api-reference/v2/products/list-products",
+                  "api-reference/v2/products/get-product",
+                  "api-reference/v2/products/set-product",
+                  "api-reference/v2/products/delete-product"
+                ]
+              },
+              {
+                "group": "Projects",
+                "pages": [
+                  "api-reference/v2/projects/list",
+                  "api-reference/v2/projects/get",
+                  "api-reference/v2/projects/update-project",
+                  "api-reference/v2/projects/delete-project"
+                ]
+              },
+              {
+                "group": "Links",
+                "pages": [
+                  "api-reference/v2/links/create-link",
+                  "api-reference/v2/links/get-link",
+                  "api-reference/v2/links/delete-link"
                 ]
               }
             ]

@@ -19,21 +19,48 @@ Every error the API returns has the same body:
 | --- | --- |
 | `code` | Stable and machine-readable. **Match on this.** |
 | `message` | For people. It may be reworded at any time. |
-| `param` | Only for `invalid_request`: the parameter at fault. |
+| `param` | The parameter or body field at fault, as a path such as `pages[0].title` or `ops[2].box`. |
+| `details` | When there was more than one problem, every one of them (`invalid_request`), or every operation's result (`ops_failed`). |
 | `requestId` | Also sent as the `x-request-id` header. Quote it when you contact support. |
 
 ## Error codes
 
 | Status | `code` | Meaning | What to do |
 | --- | --- | --- | --- |
-| 400 | `invalid_request` | A parameter is malformed. | Fix the parameter named in `param`. Don't retry unchanged. |
+| 400 | `invalid_request` | A parameter or body field is malformed. | Fix what `param` and `details` name. Don't retry unchanged. |
 | 401 | `unauthorized` | The secret key is missing, unknown, revoked or expired. | Check the `Authorization: Bearer sk_…` header and the key in the admin. |
 | 403 | `account_suspended` | The account has an unpaid invoice. | Settle it in the Print.App admin. |
-| 404 | `not_found` | No such resource **in your account**. | Another account's project also answers `404`. |
+| 404 | `not_found` | No such resource **in your account**. | Another account's resources also answer `404`. |
 | 404 | `route_not_found` | No such endpoint. | Check the method and path. |
+| 409 | `folder_not_empty` | The folder still holds designs or folders. | Move or remove them first. |
+| 409 | `builtin_folder`, `builtin_palette` | Folders and palettes Print.App provides can't be changed. | Create your own. Deleting a built-in one hides it from your editor. |
+| 409 | `editor_not_supported` | Page content can only be edited on accounts that use the new editor. | Turn on the new editor in the dashboard (Settings → Designer). |
+| 409 | `design_changed` | The design was saved elsewhere while your batch ran. Nothing was saved. | Read the content again and retry. |
+| 409 | `idempotency_key_reused` | The `Idempotency-Key` was already used for a different request. | Send a new key with each new request. |
+| 409 | `idempotency_in_progress` | The first request with this key is still running. | Retry in a few seconds. |
+| 413 | `payload_too_large` | The body is over 1 MB, or a file to download is over its limit. | Send files by URL or with a direct upload. |
+| 415 | `unsupported_media_type` | The body isn't JSON. | Send `Content-Type: application/json`. |
+| 422 | `ops_failed` | An operation in a batch failed. Nothing was saved. | Fix the failing operation (see `details`) and send the batch again. |
 | 500 | `internal_error` | Something failed on our side. | Retry with backoff. If it keeps failing, contact support with the `requestId`. |
+| 503 | `service_unavailable` | Part of the API is busy, or editing a large design took too long. | Retry after a few seconds, or with fewer operations. |
 
 New codes may be added. Treat an unknown `code` by its HTTP status.
+
+## Retrying safely
+
+A `POST` that creates something accepts an `Idempotency-Key` header. Send a new random value (a UUID) with each request you mean to make once, and the same value when you retry it:
+
+```bash
+curl https://api.print.app/v2/designs \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: 6f1c2b9e-3d4a-4f5b-8c7d-0e1f2a3b4c5d" \
+  -d '{"title":"Business card","unit":"mm","width":85,"height":55,"bleed":3}'
+```
+
+For 24 hours, a retry with the same key and the same body gets the first response back, with the header `idempotent-replayed: true`, instead of creating a second design. The same key with a different body answers `409 idempotency_key_reused`. A `5xx` isn't kept, so retrying after one runs the request again.
+
+`PUT`, `PATCH` and `DELETE` are safe to retry as they are.
 
 ## A 403 with an HTML page
 

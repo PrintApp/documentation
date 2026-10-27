@@ -3,7 +3,7 @@ title: "API overview"
 description: "Base URL, authentication and conventions of the Print.App REST API."
 ---
 
-The Print.App REST API lets your **server** read your account's data, for example to check that a project a customer is ordering really belongs to your store before you fulfil it.
+The Print.App REST API lets your **server** manage your account: create designs at a size and place text, images and shapes on them, organise them in folders, upload graphics and fonts, set up palettes, choose which designs each product opens, and read and manage your customers' projects. It also answers simpler questions, such as whether a project a customer is ordering really belongs to your store.
 
 <Note>
 The API is server-to-server. Call it from your backend with a [secret key](/api-reference/v2/authentication), never from browser code. In the browser, the editor runs with your public Domain Key as before.
@@ -28,15 +28,20 @@ Create secret keys in the [Print.App admin](https://admin.print.app/api-keys). S
 
 ## Endpoints
 
-| Endpoint | What it does |
+| Resource | What you can do |
 | --- | --- |
-| [`GET /v2/account`](/api-reference/v2/account/get) | The account a key belongs to. The quickest way to check a key works. |
-| [`GET /v2/projects`](/api-reference/v2/projects/list) | Your customers' projects, most recently modified first. |
-| [`GET /v2/projects/{id}`](/api-reference/v2/projects/get) | One project. Another account's project answers `404`, so a `200` proves the project is yours. |
-| [`GET /v2/designs`](/api-reference/v2/designs/list) | Your designs (templates), to map your products to the `designId` you open the editor with. |
-| [`GET /v2/designs/{id}`](/api-reference/v2/designs/get) | One design. |
+| [Account](/api-reference/v2/account/get) | Read the account a key belongs to. The quickest way to check a key works. |
+| [Designs](/api-reference/v2/designs/list) | List, create (blank pages at a trim size, with bleed and safe margin), rename, duplicate and delete designs; add, rename, reorder and remove pages; [read](/api-reference/v2/designs/get-design-content) and [edit](/api-reference/v2/designs/apply-ops) what is on the pages. |
+| [Design folders](/api-reference/v2/design-folders/list-design-folders) | Organise designs in folders. |
+| [Files](/api-reference/v2/files/list-files) | Upload images and graphics from a URL or straight from your server, then use them in designs. |
+| [Graphic folders](/api-reference/v2/graphic-folders/list-graphic-folders) | Choose the graphics your editor offers customers, panel by panel. |
+| [Fonts](/api-reference/v2/fonts/list-fonts) | Import Google fonts or upload your own. |
+| [Palettes](/api-reference/v2/palettes/list-palettes) | Offer your brand's colours, with CMYK and spot values for print. |
+| [Products](/api-reference/v2/products/list-products) | Choose which designs each store product, or variant, opens. |
+| [Projects](/api-reference/v2/projects/list) | Read your customers' projects (another account's project answers `404`, so a `200` proves it is yours), add your own details to them, or delete them. |
+| [Links](/api-reference/v2/links/create-link) | Make a create.print.app link that opens a design or project in the editor, without a store. |
 
-To put these together into an order check, follow [Verify a project before fulfilling](/api-reference/v2/verify-a-project).
+To check orders against projects, follow [Verify a project before fulfilling](/api-reference/v2/verify-a-project). To build a design from scratch, follow [Create a design through the API](/api-reference/v2/create-a-design).
 
 To be told when a project is created or a file is uploaded rather than asking, use [webhooks](/configuration/webhooks). Turn on [signing](/configuration/webhooks#verify-a-signature) so your server can check that each one comes from Print.App.
 
@@ -50,6 +55,8 @@ To be told when a project is created or a file is uploaded rather than asking, u
 - **Send a `User-Agent` header** that names your integration, for example `User-Agent: MyStore-Integration/1.0`. It isn't required, but it lets us identify your traffic if you need help.
 - **Errors** share one shape: see [Errors & rate limits](/api-reference/v2/errors).
 - **Lists** are paged with a cursor: see [Pagination](/api-reference/v2/pagination).
+- **Writes** take a JSON body (`Content-Type: application/json`). `POST` creates and answers `201`, `PATCH` changes only the fields you send, `PUT` replaces, and `DELETE` answers `{ "object": …, "id": …, "deleted": true }`. Unknown fields are refused, so typos don't go unnoticed.
+- **Retries:** send an `Idempotency-Key` header with a `POST`, so retrying it can't create a duplicate. See [Retrying safely](/api-reference/v2/errors#retrying-safely).
 
 ## Versioning
 
