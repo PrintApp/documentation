@@ -79,6 +79,39 @@ for (const op of operations) {
   if (!nameOf[op.response]) throw new Error(`${op.id}: response schema ${op.response} missing`);
 }
 
+// Responses grow within v2 (new fields are additive), so the published response schemas
+// allow fields they don't list: a client validating against today's spec must not break
+// when one is added. The source schemas stay strict (`additionalProperties: false`), and
+// printapp-api's tests hold the handlers to them. Request schemas stay strict here too,
+// so a misspelt field is refused.
+const responseNames = new Set();
+const collectResponse = name => {
+  if (responseNames.has(name) || !schemas[name]) return;
+  responseNames.add(name);
+  const walk = node => {
+    if (Array.isArray(node)) return node.forEach(walk);
+    if (!node || typeof node !== 'object') return;
+    const target = typeof node.$ref === 'string' && /^#\/components\/schemas\/(.+)$/.exec(node.$ref);
+    if (target) collectResponse(target[1]);
+    Object.values(node).forEach(walk);
+  };
+  walk(schemas[name]);
+};
+operations.forEach(op => collectResponse(nameOf[op.response]));
+collectResponse('Error');
+
+const requestNames = new Set([...operations.filter(op => op.body).map(op => nameOf[op.body]), ...Object.keys(schemas).filter(n => n.startsWith('DesignOp'))]);
+const overlap = [...responseNames].filter(name => requestNames.has(name));
+if (overlap.length) throw new Error(`schemas used by both requests and responses: ${overlap.join(', ')}`);
+
+const openUp = node => {
+  if (Array.isArray(node)) return node.forEach(openUp);
+  if (!node || typeof node !== 'object') return;
+  if (node.additionalProperties === false) delete node.additionalProperties;
+  for (const [key, value] of Object.entries(node)) if (key !== 'examples') openUp(value);
+};
+responseNames.forEach(name => openUp(schemas[name]));
+
 // ---- responses -------------------------------------------------------------
 
 const ref = name => ({ $ref: `#/components/schemas/${name}` });

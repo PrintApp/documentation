@@ -1,0 +1,21 @@
+---
+title: "OpenAPI spec"
+description: "The whole REST API in one OpenAPI 3.1 file, for generating clients and checking requests."
+---
+
+Download the spec: [`https://print.app/docs/openapi.json`](https://print.app/docs/openapi.json)
+
+It describes every endpoint, request body, response, error and design operation in this reference, and it is regenerated from the API's own schemas whenever the API changes.
+
+## What to use it for
+
+- **Generate a client** in your language with an OpenAPI generator, such as [openapi-generator](https://openapi-generator.tech) or [openapi-typescript](https://openapi-ts.dev).
+- **Try the API** by importing the file into Postman, Insomnia or Bruno. Set the bearer token to a [secret key](/api-reference/v2/authentication).
+- **Check requests before you send them** with any JSON Schema validator: the request bodies are under `components.schemas` (`DesignCreate`, `OpsBatch`, `DesignOpTextAdd`, …).
+
+## Things to know
+
+- Request schemas refuse fields they don't list, as the API does, so a misspelt field is caught on your side too.
+- Response schemas allow fields they don't list. Within v2, responses gain fields, and a client that refuses unknown fields would break when one is added.
+- A schema can't check everything. The API also checks that the designs, files, fonts and folders you name exist in your account, and a [dry run](/api-reference/v2/designs/apply-ops) of a batch of design operations reports what would happen without saving.
+- The file follows the API, so fetch it again when you update your client.

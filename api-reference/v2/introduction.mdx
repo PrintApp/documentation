@@ -62,6 +62,10 @@ To be told when a project is created or a file is uploaded rather than asking, u
 
 The version is in the path (`/v2`). Within v2, changes are additive only: new endpoints, new optional parameters, new fields in responses and new error codes. Write your client to ignore fields it doesn't know.
 
+## OpenAPI spec
+
+The whole API is described in one [OpenAPI 3.1 file](https://print.app/docs/openapi.json): every endpoint, request body, response and design operation. Use it to generate a client, or to check requests before you send them. See [OpenAPI spec](/api-reference/v2/openapi) for what it covers and what to watch for.
+
 <Tip>
 The older v1 endpoints that the store plugins use, authenticated with the Auth Key, keep working unchanged. New integrations should use v2.
 </Tip>

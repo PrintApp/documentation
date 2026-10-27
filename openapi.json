@@ -9410,7 +9410,6 @@
           "hostnames",
           "created"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -9456,7 +9455,6 @@
           "box",
           "lock"
         ],
-        "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string"
@@ -9560,7 +9558,6 @@
           },
           "field": {
             "type": "object",
-            "additionalProperties": false,
             "required": [
               "title"
             ],
@@ -9597,7 +9594,6 @@
         "title": "Deleted",
         "description": "Confirms a deletion.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -9634,7 +9630,6 @@
           "unit",
           "pages"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -9663,7 +9658,6 @@
                 "safeMargin",
                 "items"
               ],
-              "additionalProperties": false,
               "properties": {
                 "index": {
                   "type": "integer",
@@ -9719,7 +9713,6 @@
                       "n",
                       "box"
                     ],
-                    "additionalProperties": false,
                     "properties": {
                       "n": {
                         "type": "integer"
@@ -9958,7 +9951,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10008,7 +10000,6 @@
         "title": "DesignFolder",
         "description": "A folder of designs. The top level is the folder `root`.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -10074,7 +10065,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10138,7 +10128,6 @@
           "created",
           "modified"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10170,7 +10159,6 @@
                 "title",
                 "previewUrl"
               ],
-              "additionalProperties": false,
               "properties": {
                 "index": {
                   "type": "integer",
@@ -10250,7 +10238,6 @@
           "message",
           "requestId"
         ],
-        "additionalProperties": false,
         "properties": {
           "error": {
             "type": "boolean",
@@ -10364,7 +10351,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10461,7 +10447,6 @@
         "title": "FileUpload",
         "description": "A presigned form for one direct upload.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "fileId",
@@ -10480,7 +10465,6 @@
           },
           "upload": {
             "type": "object",
-            "additionalProperties": false,
             "required": [
               "method",
               "url",
@@ -10519,7 +10503,6 @@
         "title": "File",
         "description": "An image or graphic in your account.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -10703,7 +10686,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10732,7 +10714,6 @@
         "title": "Font",
         "description": "A font family.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "family",
@@ -10760,7 +10741,6 @@
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": false,
               "required": [
                 "weight",
                 "style"
@@ -10840,7 +10820,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -10893,7 +10872,6 @@
         "title": "GraphicFolder",
         "description": "A folder of graphics in one of the editor's panels.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -11025,7 +11003,6 @@
         "title": "Link",
         "description": "An editor link at create.print.app.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -11106,7 +11083,6 @@
           "op",
           "ok"
         ],
-        "additionalProperties": false,
         "properties": {
           "index": {
             "type": [
@@ -11314,7 +11290,6 @@
           "design",
           "content"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -11464,7 +11439,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -11542,7 +11516,6 @@
         "title": "Palette",
         "description": "A colour palette.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -11570,7 +11543,6 @@
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": false,
               "required": [
                 "name",
                 "type",
@@ -11665,7 +11637,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -11769,7 +11740,6 @@
         "title": "Product",
         "description": "The designs one store product opens.",
         "type": "object",
-        "additionalProperties": false,
         "required": [
           "object",
           "id",
@@ -11803,7 +11773,6 @@
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": false,
               "required": [
                 "id",
                 "title",
@@ -11860,7 +11829,6 @@
           "hasMore",
           "nextCursor"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -11922,7 +11890,6 @@
           "pages",
           "exports"
         ],
-        "additionalProperties": false,
         "properties": {
           "object": {
             "type": "string",
@@ -12021,7 +11988,6 @@
                 "index",
                 "previewUrl"
               ],
-              "additionalProperties": false,
               "properties": {
                 "index": {
                   "type": "integer",
@@ -12045,7 +12011,6 @@
               "jpeg",
               "tiff"
             ],
-            "additionalProperties": false,
             "description": "Print files, rendered on request from the project's current state.",
             "properties": {
               "pdf": {
