@@ -3,21 +3,32 @@ title: "MCP server"
 description: "Let AI agents manage your Print.App account: create designs and lay them out, upload graphics, set up fonts and colours, and assign designs to products."
 ---
 
-Print.App runs a remote [Model Context Protocol](https://modelcontextprotocol.io) server, so AI agents such as Claude, Cursor or your own can work in your account through the [REST API](/api-reference/v2/introduction): build a design from a brief, look at it and fix it, then put it on a product.
+Print.App runs a remote [Model Context Protocol](https://modelcontextprotocol.io) server, so AI agents such as ChatGPT, Claude, Cursor or your own can work in your account through the [REST API](/api-reference/v2/introduction): build a design from a brief, look at it and fix it, then put it on a product.
 
 ```
 https://api.print.app/mcp
 ```
 
-It authenticates with a [secret key](/api-reference/v2/authentication), sent as `Authorization: Bearer sk_…`.
+A client connects one of two ways, both with a [secret key](/api-reference/v2/authentication) of your store:
+
+- **Sign in (OAuth):** apps such as ChatGPT and Claude open a Print.App page where you paste the key and allow access. The app never sees the key: it gets its own access, tied to that key.
+- **Send the key:** developer tools and your own code send `Authorization: Bearer sk_…` with every request.
 
 <Warning>
-An agent with your key can change and delete anything in your account that the API can. Create a separate key for each agent, labelled so you recognise it, and revoke it in the admin when you no longer need it.
+An agent connected with your key can change and delete anything in your account that the API can. Create a separate key for each app or agent, labelled so you recognise it. Revoking the key in the admin disconnects it, including apps that signed in with it.
 </Warning>
 
 ## Connect a client
 
 <Tabs>
+  <Tab title="ChatGPT">
+    1. In ChatGPT, add a custom MCP server (it is in developer mode; see OpenAI's [Connecting custom MCP servers in ChatGPT](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) for where it is on your plan).
+    2. Name it Print.App, enter the URL `https://api.print.app/mcp`, and choose **OAuth** as the authentication.
+    3. ChatGPT opens the Print.App connect page. Paste a secret key of your store and click **Allow access**.
+  </Tab>
+  <Tab title="Claude">
+    In Claude (claude.ai or the desktop app), add a custom connector with the URL `https://api.print.app/mcp`, then click **Connect**. Claude opens the Print.App connect page: paste a secret key of your store and click **Allow access**.
+  </Tab>
   <Tab title="Claude Code">
     ```bash
     claude mcp add --transport http printapp https://api.print.app/mcp \
@@ -99,11 +110,13 @@ An agent with your key can change and delete anything in your account that the A
   </Tab>
 </Tabs>
 
-Any MCP client that speaks Streamable HTTP and can send an `Authorization` header works the same way. The server is stateless: it answers JSON over `POST` and keeps no sessions.
+Any MCP client that speaks Streamable HTTP works the same way, sending a key or signing in. The server is stateless: it answers JSON over `POST` and keeps no sessions.
 
-<Note>
-**ChatGPT** connects only to MCP servers that sign in with OAuth, or that need no sign-in at all. It can't send a secret key, so it can't connect to the Print.App MCP server today. From OpenAI, use the **OpenAI API** or **Codex** above.
-</Note>
+### How signing in works
+
+Clients find the sign-in on their own: a request without credentials gets a `401` that points to `https://api.print.app/.well-known/oauth-protected-resource/mcp`, and from there to the authorization server's metadata at `https://api.print.app/.well-known/oauth-authorization-server`. It supports dynamic client registration and client ID metadata documents, PKCE (S256) and refresh tokens. Access lasts an hour and the client renews it on its own; it stops within a minute of the key it was approved with being revoked.
+
+Redirect URIs must be `https` addresses, as ChatGPT's and Claude's are. Apps that sign in through a local address (`http://localhost:…`) can't register; send the key as a header from those instead.
 
 ## What an agent can do
 
