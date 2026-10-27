@@ -68,6 +68,10 @@
     {
       "name": "PDF profiles",
       "description": "The settings print PDFs are made with: colour conversion, PDF standard, cut lines, image resolution, fonts."
+    },
+    {
+      "name": "Settings",
+      "description": "The account's editor and product page settings: how the editor opens and behaves, and the selectors Print.App uses on your product pages. Settings that run code in your store, send data elsewhere or delete projects are kept to the dashboard."
     }
   ],
   "paths": {
@@ -289,6 +293,7 @@
                       "connectorIds": [],
                       "resourceProfileIds": [],
                       "pdfProfileId": null,
+                      "settings": {},
                       "created": "2026-09-02T14:05:11Z",
                       "modified": "2026-10-11T08:40:27Z"
                     }
@@ -473,6 +478,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -677,6 +683,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -788,7 +795,7 @@
         ],
         "operationId": "updateDesign",
         "summary": "Update a design",
-        "description": "Changes a design's title or tags, or the connectors, resource profiles and PDF profile it uses. Only the fields you send change.",
+        "description": "Changes a design's title or tags, the connectors, resource profiles and PDF profile it uses, or its own settings over the store's (`settings`: send `null` for one to follow the store again). Only the fields you send change.",
         "parameters": [
           {
             "name": "id",
@@ -846,6 +853,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -1204,6 +1212,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -1920,6 +1929,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2144,6 +2154,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2356,6 +2367,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2549,6 +2561,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2762,6 +2775,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "settings": {},
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -11007,6 +11021,373 @@
         }
       }
     },
+    "/v2/settings": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "operationId": "getSettings",
+        "summary": "Get the settings",
+        "description": "Returns the account's editor and product page settings, and the editor in use. A design's own settings, over these, are on the design (`settings`).",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Settings"
+                },
+                "example": {
+                  "object": "settings",
+                  "editor": "new",
+                  "autoSaveProjects": false,
+                  "autoSaveDuration": 8,
+                  "autoExpireProjects": false,
+                  "projectLifetime": 1,
+                  "skipPreview": false,
+                  "expandThumbNav": true,
+                  "showTabTitle": true,
+                  "enableSaveLater": false,
+                  "defaultLayout": "",
+                  "layout": "",
+                  "displayMode": "modal",
+                  "showGraphicsTitle": false,
+                  "graphicsSearchCustomers": false,
+                  "graphicsSearchScope": "store",
+                  "enableColorProofing": false,
+                  "bleedLineColor": "#F3343C",
+                  "marginLineColor": "#84cc16",
+                  "trimLineColor": "#8b5cf6",
+                  "foldLineColor": "#fde047",
+                  "borderColor": "#2563eb",
+                  "decimalPointTextSize": true,
+                  "autoPlaceNewText": true,
+                  "autoTextSize": true,
+                  "newTextSize": 40,
+                  "defaultTextType": "Textbox",
+                  "defaultNewTextString": "Type into your new\ntext",
+                  "defaultNewHeadingString": "Add a heading",
+                  "hoverShow": true,
+                  "enableSnapping": true,
+                  "snapRange": 5,
+                  "gridLinesInterval": 20,
+                  "bleedLineMessage": "Bleed line",
+                  "marginLineMessage": "Margin line",
+                  "trimLineMessage": "Trim line",
+                  "retainProductImages": false,
+                  "forceCustomization": false,
+                  "disableCustomization": false,
+                  "customPreviewSelector": "",
+                  "cartButtonSelector": "",
+                  "customVariantSelector": "",
+                  "inlineSelector": "",
+                  "miniSelector": "",
+                  "moveButtonsBefore": "",
+                  "buttonsClass": "",
+                  "observeFormRerenders": false,
+                  "collectionButtons": false,
+                  "sideBarColor": "#FFFFFF",
+                  "editorTheme": "system"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Settings"
+        ],
+        "operationId": "updateSettings",
+        "summary": "Update the settings",
+        "description": "Changes the settings you send. Selectors are checked as CSS first; `GET /v2/product-page` shows whether they find their element on a product page. Product pages pick the change up within a few minutes. The editor in use and the settings that delete projects are read-only here; custom JS and CSS, webhook addresses and the guide book can only be set in the dashboard.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsUpdate"
+              },
+              "example": {
+                "cartButtonSelector": "button[name=\"add\"]",
+                "displayMode": "dialog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Settings"
+                },
+                "example": {
+                  "object": "settings",
+                  "editor": "new",
+                  "autoSaveProjects": false,
+                  "autoSaveDuration": 8,
+                  "autoExpireProjects": false,
+                  "projectLifetime": 1,
+                  "skipPreview": false,
+                  "expandThumbNav": true,
+                  "showTabTitle": true,
+                  "enableSaveLater": false,
+                  "defaultLayout": "",
+                  "layout": "",
+                  "displayMode": "modal",
+                  "showGraphicsTitle": false,
+                  "graphicsSearchCustomers": false,
+                  "graphicsSearchScope": "store",
+                  "enableColorProofing": false,
+                  "bleedLineColor": "#F3343C",
+                  "marginLineColor": "#84cc16",
+                  "trimLineColor": "#8b5cf6",
+                  "foldLineColor": "#fde047",
+                  "borderColor": "#2563eb",
+                  "decimalPointTextSize": true,
+                  "autoPlaceNewText": true,
+                  "autoTextSize": true,
+                  "newTextSize": 40,
+                  "defaultTextType": "Textbox",
+                  "defaultNewTextString": "Type into your new\ntext",
+                  "defaultNewHeadingString": "Add a heading",
+                  "hoverShow": true,
+                  "enableSnapping": true,
+                  "snapRange": 5,
+                  "gridLinesInterval": 20,
+                  "bleedLineMessage": "Bleed line",
+                  "marginLineMessage": "Margin line",
+                  "trimLineMessage": "Trim line",
+                  "retainProductImages": false,
+                  "forceCustomization": false,
+                  "disableCustomization": false,
+                  "customPreviewSelector": "",
+                  "cartButtonSelector": "",
+                  "customVariantSelector": "",
+                  "inlineSelector": "",
+                  "miniSelector": "",
+                  "moveButtonsBefore": "",
+                  "buttonsClass": "",
+                  "observeFormRerenders": false,
+                  "collectionButtons": false,
+                  "sideBarColor": "#FFFFFF",
+                  "editorTheme": "system"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/resource-profiles": {
       "get": {
         "tags": [
@@ -14679,6 +15060,181 @@
             "minLength": 1,
             "maxLength": 120,
             "description": "The PDF profile its print PDF is made with; `null` for the design's own PDF settings."
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "description": "This design's own settings, over the store's. Only the ones you send change; `null` (or `\"\"` on a choice) goes back to the store's.",
+            "properties": {
+              "welcomeMsg": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 2000,
+                "description": "A message shown when the editor opens."
+              },
+              "lockBackground": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers cannot change the background."
+              },
+              "pdfVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "1.4",
+                  "1.5",
+                  "1.6",
+                  "1.7",
+                  "2.0",
+                  "PDF/A-3a",
+                  "PDF/UA-1",
+                  "PDF/X-5n",
+                  null
+                ],
+                "description": "The PDF version of the print file, when the design has no PDF profile."
+              },
+              "renderCutLines": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Cut marks in the print PDF, from the bleed."
+              },
+              "displayMode": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "",
+                  "modal",
+                  "dialog",
+                  "inline",
+                  "mini",
+                  null
+                ],
+                "description": "How the editor opens for this design (`\"\"` the store's setting)."
+              },
+              "enablePageSorting": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers can reorder pages."
+              },
+              "enableSaveLater": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers can save and finish later. Only adds: the store's setting, when on, wins."
+              },
+              "graphicsSearchCustomers": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "A graphics search box for this design's customers. Only adds to the store's setting."
+              },
+              "graphicsSearchScope": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  "",
+                  "store",
+                  "mine",
+                  "both",
+                  null
+                ],
+                "description": "What the graphics search covers on this design (`\"\"` the store's setting)."
+              },
+              "addToCartOnSave": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Finishing the design adds the product to the cart."
+              },
+              "hideCustomColor": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers cannot add colours of their own."
+              },
+              "hideUploads": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the Uploads tab."
+              },
+              "hideGraphics": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the Graphics tab."
+              },
+              "hideBackgrounds": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the Backgrounds tab."
+              },
+              "hideTypography": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the Text tab."
+              },
+              "hideColorButton": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers cannot change an item's colour."
+              },
+              "hideMenubar": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the top menu bar."
+              },
+              "hideContextbar": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Hide the bar beside a selected item."
+              },
+              "showItemTabInProject": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Show the selected item's tab to customers."
+              },
+              "disableCanvas": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Customers cannot select items on the canvas (fields only)."
+              }
+            }
           }
         }
       },
@@ -14696,6 +15252,7 @@
           "connectorIds",
           "resourceProfileIds",
           "pdfProfileId",
+          "settings",
           "created",
           "modified"
         ],
@@ -14779,6 +15336,116 @@
             ],
             "description": "The PDF profile its print PDF is made with; `null`: its own settings."
           },
+          "settings": {
+            "type": "object",
+            "description": "The settings this design sets for itself, over the store's (see `GET /v2/settings`). Settings it doesn't set follow the store.",
+            "properties": {
+              "welcomeMsg": {
+                "type": "string",
+                "maxLength": 2000,
+                "description": "A message shown when the editor opens."
+              },
+              "lockBackground": {
+                "type": "boolean",
+                "description": "Customers cannot change the background."
+              },
+              "pdfVersion": {
+                "type": "string",
+                "enum": [
+                  "1.4",
+                  "1.5",
+                  "1.6",
+                  "1.7",
+                  "2.0",
+                  "PDF/A-3a",
+                  "PDF/UA-1",
+                  "PDF/X-5n"
+                ],
+                "description": "The PDF version of the print file, when the design has no PDF profile."
+              },
+              "renderCutLines": {
+                "type": "boolean",
+                "description": "Cut marks in the print PDF, from the bleed."
+              },
+              "displayMode": {
+                "type": "string",
+                "enum": [
+                  "",
+                  "modal",
+                  "dialog",
+                  "inline",
+                  "mini"
+                ],
+                "description": "How the editor opens for this design (`\"\"` the store's setting)."
+              },
+              "enablePageSorting": {
+                "type": "boolean",
+                "description": "Customers can reorder pages."
+              },
+              "enableSaveLater": {
+                "type": "boolean",
+                "description": "Customers can save and finish later. Only adds: the store's setting, when on, wins."
+              },
+              "graphicsSearchCustomers": {
+                "type": "boolean",
+                "description": "A graphics search box for this design's customers. Only adds to the store's setting."
+              },
+              "graphicsSearchScope": {
+                "type": "string",
+                "enum": [
+                  "",
+                  "store",
+                  "mine",
+                  "both"
+                ],
+                "description": "What the graphics search covers on this design (`\"\"` the store's setting)."
+              },
+              "addToCartOnSave": {
+                "type": "boolean",
+                "description": "Finishing the design adds the product to the cart."
+              },
+              "hideCustomColor": {
+                "type": "boolean",
+                "description": "Customers cannot add colours of their own."
+              },
+              "hideUploads": {
+                "type": "boolean",
+                "description": "Hide the Uploads tab."
+              },
+              "hideGraphics": {
+                "type": "boolean",
+                "description": "Hide the Graphics tab."
+              },
+              "hideBackgrounds": {
+                "type": "boolean",
+                "description": "Hide the Backgrounds tab."
+              },
+              "hideTypography": {
+                "type": "boolean",
+                "description": "Hide the Text tab."
+              },
+              "hideColorButton": {
+                "type": "boolean",
+                "description": "Customers cannot change an item's colour."
+              },
+              "hideMenubar": {
+                "type": "boolean",
+                "description": "Hide the top menu bar."
+              },
+              "hideContextbar": {
+                "type": "boolean",
+                "description": "Hide the bar beside a selected item."
+              },
+              "showItemTabInProject": {
+                "type": "boolean",
+                "description": "Show the selected item's tab to customers."
+              },
+              "disableCanvas": {
+                "type": "boolean",
+                "description": "Customers cannot select items on the canvas (fields only)."
+              }
+            }
+          },
           "created": {
             "type": [
               "string",
@@ -14818,6 +15485,7 @@
             "connectorIds": [],
             "resourceProfileIds": [],
             "pdfProfileId": null,
+            "settings": {},
             "created": "2026-09-02T14:05:11Z",
             "modified": "2026-10-11T08:40:27Z"
           }
@@ -16840,6 +17508,7 @@
           "designIds",
           "controls",
           "printOptions",
+          "store",
           "notes"
         ],
         "properties": {
@@ -17094,6 +17763,96 @@
                   "string",
                   "null"
                 ]
+              }
+            }
+          },
+          "store": {
+            "type": "object",
+            "required": [
+              "displayMode",
+              "checks"
+            ],
+            "description": "The store's product page settings checked against this page.",
+            "properties": {
+              "displayMode": {
+                "type": "string"
+              },
+              "checks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "setting",
+                    "purpose",
+                    "value",
+                    "uses",
+                    "source",
+                    "matches",
+                    "status",
+                    "suggestion",
+                    "note"
+                  ],
+                  "properties": {
+                    "setting": {
+                      "type": "string",
+                      "description": "The setting (GET /v2/settings)."
+                    },
+                    "purpose": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "The store's value, or null when empty."
+                    },
+                    "uses": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "The selector the client uses: the setting, or its default when the setting is empty."
+                    },
+                    "source": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "setting",
+                        "default",
+                        null
+                      ]
+                    },
+                    "matches": {
+                      "type": "integer",
+                      "description": "Elements it finds as the page loads."
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok",
+                        "missing",
+                        "unused"
+                      ],
+                      "description": "ok: it finds its element. missing: it finds nothing. unused: the store does not use it."
+                    },
+                    "suggestion": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "A selector that finds exactly one such element on this page, when the current one finds nothing. Set it with PATCH /v2/settings."
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -17806,6 +18565,795 @@
             ],
             "created": "2026-10-27T10:00:00Z",
             "modified": "2026-10-27T10:00:00Z"
+          }
+        ]
+      },
+      "SettingsUpdate": {
+        "title": "SettingsUpdate",
+        "description": "The settings to change. Only the ones you send change. Product page changes reach the store within a few minutes.",
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
+        "properties": {
+          "skipPreview": {
+            "type": "boolean",
+            "description": "The Submit button skips the preview step."
+          },
+          "expandThumbNav": {
+            "type": "boolean",
+            "description": "Page thumbnails instead of arrows to move between pages."
+          },
+          "showTabTitle": {
+            "type": "boolean",
+            "description": "Labels on the editor's tabs."
+          },
+          "enableSaveLater": {
+            "type": "boolean",
+            "description": "Customers can save a design and finish it later. On here, it is on for every design."
+          },
+          "defaultLayout": {
+            "type": "string",
+            "enum": [
+              "",
+              "default-right"
+            ],
+            "description": "Classic editor only: the sidebar on the left (`\"\"`) or the right (`default-right`)."
+          },
+          "layout": {
+            "type": "string",
+            "enum": [
+              "",
+              "default-right",
+              "product",
+              "steps",
+              "approve"
+            ],
+            "description": "New editor only: the layout customers get. `\"\"` default, `default-right` sidebar on the right, `product` product designer, `steps` one step at a time, `approve` view and approve. Designs can override it in the editor."
+          },
+          "displayMode": {
+            "type": "string",
+            "enum": [
+              "modal",
+              "dialog",
+              "inline",
+              "mini"
+            ],
+            "description": "How the editor opens on the product page: `modal` full window, `dialog` a dialog, `inline` inside the page at `inlineSelector`, `mini` beside the product images at `miniSelector`."
+          },
+          "showGraphicsTitle": {
+            "type": "boolean",
+            "description": "Show the titles of graphics that have one."
+          },
+          "graphicsSearchCustomers": {
+            "type": "boolean",
+            "description": "A search box in the Graphics panel for customers, on every design."
+          },
+          "graphicsSearchScope": {
+            "type": "string",
+            "enum": [
+              "store",
+              "mine",
+              "both"
+            ],
+            "description": "What the graphics search covers: `store` the print.app store, `mine` your own graphics, `both`."
+          },
+          "enableColorProofing": {
+            "type": "boolean",
+            "description": "A colour proof (ICC soft proof) when customers preview their designs, on every design."
+          },
+          "bleedLineColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of the bleed line on the canvas."
+          },
+          "marginLineColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of the safe margin line on the canvas."
+          },
+          "trimLineColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of the trim line on the canvas."
+          },
+          "foldLineColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of fold lines on the canvas."
+          },
+          "borderColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of the border around a selected item."
+          },
+          "decimalPointTextSize": {
+            "type": "boolean",
+            "description": "Font sizes with decimals (10.5 pt)."
+          },
+          "autoPlaceNewText": {
+            "type": "boolean",
+            "description": "New text goes straight onto the canvas, without clicking the canvas first."
+          },
+          "autoTextSize": {
+            "type": "boolean",
+            "description": "Size new text to fit the screen."
+          },
+          "newTextSize": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 100,
+            "description": "Size of new text, when it is not sized to fit."
+          },
+          "defaultTextType": {
+            "type": "string",
+            "enum": [
+              "IText",
+              "Textbox"
+            ],
+            "description": "What new text is: `Textbox` wrapping text box, `IText` a text area."
+          },
+          "defaultNewTextString": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Content of a new body text item."
+          },
+          "defaultNewHeadingString": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Content of a new heading."
+          },
+          "hoverShow": {
+            "type": "boolean",
+            "description": "Highlight the item under the mouse."
+          },
+          "enableSnapping": {
+            "type": "boolean",
+            "description": "Snap items while dragging them."
+          },
+          "snapRange": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 20,
+            "description": "How close, in pixels, an item snaps."
+          },
+          "gridLinesInterval": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 100,
+            "description": "Gap between grid lines."
+          },
+          "bleedLineMessage": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Label on the bleed line."
+          },
+          "marginLineMessage": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Label on the safe margin line."
+          },
+          "trimLineMessage": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Label on the trim line."
+          },
+          "retainProductImages": {
+            "type": "boolean",
+            "description": "Keep the product photos: the customer's design does not replace them after saving."
+          },
+          "forceCustomization": {
+            "type": "boolean",
+            "description": "Customers must customize before they can add the product to the cart."
+          },
+          "disableCustomization": {
+            "type": "boolean",
+            "description": "Hide the Customize button on every product page, so no one can customize. Only for a store that sells without the editor for a while."
+          },
+          "customPreviewSelector": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector for the product images the design previews replace, when the theme's differ from what Print.App looks for."
+          },
+          "cartButtonSelector": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector for the add-to-cart button, when the theme's differs from what Print.App looks for."
+          },
+          "customVariantSelector": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector for the field holding the chosen variant's id, when the theme's differs."
+          },
+          "inlineSelector": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector for where the editor sits with displayMode `inline`."
+          },
+          "miniSelector": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector for where the editor sits with displayMode `mini`."
+          },
+          "moveButtonsBefore": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "CSS selector: the Customize button goes just before this element."
+          },
+          "buttonsClass": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "CSS classes for the Customize button, to match the theme's buttons (default `button`)."
+          },
+          "observeFormRerenders": {
+            "type": "boolean",
+            "description": "Remount the editor when the product form changes, for themes that redraw it."
+          },
+          "collectionButtons": {
+            "type": "boolean",
+            "description": "Shopify: a Customize button on every customizable product in collection and search grids."
+          },
+          "sideBarColor": {
+            "type": "string",
+            "format": "color",
+            "description": "Colour of the editor's side bar."
+          },
+          "editorTheme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark",
+              "system"
+            ],
+            "description": "The editor's theme: `light`, `dark` or `system`."
+          }
+        },
+        "x-notWritable": {
+          "usePrintFxEditor": "is read-only here: change it in the dashboard",
+          "autoSaveProjects": "is read-only here: change it in the dashboard",
+          "autoSaveDuration": "is read-only here: change it in the dashboard",
+          "autoExpireProjects": "is read-only here: change it in the dashboard",
+          "projectLifetime": "is read-only here: change it in the dashboard",
+          "customJs": "cannot be set through the API: code there runs in every visitor's browser. Set it in the dashboard",
+          "customCss": "cannot be set through the API. Set it in the dashboard",
+          "projectCreated": "cannot be set through the API: a webhook address receives customers' projects. Set it in the dashboard",
+          "fileUploaded": "cannot be set through the API: a webhook address receives customers' files. Set it in the dashboard",
+          "guideBook": "cannot be set through the API. Set it in the dashboard"
+        },
+        "examples": [
+          {
+            "cartButtonSelector": "button[name=\"add\"]",
+            "displayMode": "dialog"
+          }
+        ]
+      },
+      "Settings": {
+        "title": "Settings",
+        "description": "The account's editor and product page settings that the API manages. Settings that run code in the store (custom JS and CSS), send data elsewhere (webhooks) or are files are left out; manage them in the dashboard.",
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "settings"
+          },
+          "editor": {
+            "type": "string",
+            "enum": [
+              "new",
+              "classic"
+            ],
+            "readOnly": true,
+            "description": "The editor the account uses. Read-only: switch editors in the dashboard."
+          },
+          "autoSaveProjects": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Projects save in the background before the customer submits.",
+            "readOnly": true
+          },
+          "autoSaveDuration": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 2,
+            "maximum": 366,
+            "description": "Days after which an auto-saved project that was never submitted is deleted.",
+            "readOnly": true
+          },
+          "autoExpireProjects": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Every project is deleted after projectLifetime days.",
+            "readOnly": true
+          },
+          "projectLifetime": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 120,
+            "description": "Days a project is kept, when autoExpireProjects is on.",
+            "readOnly": true
+          },
+          "skipPreview": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "The Submit button skips the preview step."
+          },
+          "expandThumbNav": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Page thumbnails instead of arrows to move between pages."
+          },
+          "showTabTitle": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Labels on the editor's tabs."
+          },
+          "enableSaveLater": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Customers can save a design and finish it later. On here, it is on for every design."
+          },
+          "defaultLayout": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "",
+              "default-right",
+              null
+            ],
+            "description": "Classic editor only: the sidebar on the left (`\"\"`) or the right (`default-right`)."
+          },
+          "layout": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "",
+              "default-right",
+              "product",
+              "steps",
+              "approve",
+              null
+            ],
+            "description": "New editor only: the layout customers get. `\"\"` default, `default-right` sidebar on the right, `product` product designer, `steps` one step at a time, `approve` view and approve. Designs can override it in the editor."
+          },
+          "displayMode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "modal",
+              "dialog",
+              "inline",
+              "mini",
+              null
+            ],
+            "description": "How the editor opens on the product page: `modal` full window, `dialog` a dialog, `inline` inside the page at `inlineSelector`, `mini` beside the product images at `miniSelector`."
+          },
+          "showGraphicsTitle": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Show the titles of graphics that have one."
+          },
+          "graphicsSearchCustomers": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "A search box in the Graphics panel for customers, on every design."
+          },
+          "graphicsSearchScope": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "store",
+              "mine",
+              "both",
+              null
+            ],
+            "description": "What the graphics search covers: `store` the print.app store, `mine` your own graphics, `both`."
+          },
+          "enableColorProofing": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "A colour proof (ICC soft proof) when customers preview their designs, on every design."
+          },
+          "bleedLineColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of the bleed line on the canvas."
+          },
+          "marginLineColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of the safe margin line on the canvas."
+          },
+          "trimLineColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of the trim line on the canvas."
+          },
+          "foldLineColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of fold lines on the canvas."
+          },
+          "borderColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of the border around a selected item."
+          },
+          "decimalPointTextSize": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Font sizes with decimals (10.5 pt)."
+          },
+          "autoPlaceNewText": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "New text goes straight onto the canvas, without clicking the canvas first."
+          },
+          "autoTextSize": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Size new text to fit the screen."
+          },
+          "newTextSize": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 10,
+            "maximum": 100,
+            "description": "Size of new text, when it is not sized to fit."
+          },
+          "defaultTextType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "IText",
+              "Textbox",
+              null
+            ],
+            "description": "What new text is: `Textbox` wrapping text box, `IText` a text area."
+          },
+          "defaultNewTextString": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "Content of a new body text item."
+          },
+          "defaultNewHeadingString": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 200,
+            "description": "Content of a new heading."
+          },
+          "hoverShow": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Highlight the item under the mouse."
+          },
+          "enableSnapping": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Snap items while dragging them."
+          },
+          "snapRange": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 3,
+            "maximum": 20,
+            "description": "How close, in pixels, an item snaps."
+          },
+          "gridLinesInterval": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 5,
+            "maximum": 100,
+            "description": "Gap between grid lines."
+          },
+          "bleedLineMessage": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "description": "Label on the bleed line."
+          },
+          "marginLineMessage": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "description": "Label on the safe margin line."
+          },
+          "trimLineMessage": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 100,
+            "description": "Label on the trim line."
+          },
+          "retainProductImages": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Keep the product photos: the customer's design does not replace them after saving."
+          },
+          "forceCustomization": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Customers must customize before they can add the product to the cart."
+          },
+          "disableCustomization": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Hide the Customize button on every product page, so no one can customize. Only for a store that sells without the editor for a while."
+          },
+          "customPreviewSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector for the product images the design previews replace, when the theme's differ from what Print.App looks for."
+          },
+          "cartButtonSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector for the add-to-cart button, when the theme's differs from what Print.App looks for."
+          },
+          "customVariantSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector for the field holding the chosen variant's id, when the theme's differs."
+          },
+          "inlineSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector for where the editor sits with displayMode `inline`."
+          },
+          "miniSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector for where the editor sits with displayMode `mini`."
+          },
+          "moveButtonsBefore": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 500,
+            "description": "CSS selector: the Customize button goes just before this element."
+          },
+          "buttonsClass": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 200,
+            "description": "CSS classes for the Customize button, to match the theme's buttons (default `button`)."
+          },
+          "observeFormRerenders": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Remount the editor when the product form changes, for themes that redraw it."
+          },
+          "collectionButtons": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Shopify: a Customize button on every customizable product in collection and search grids."
+          },
+          "sideBarColor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "color",
+            "description": "Colour of the editor's side bar."
+          },
+          "editorTheme": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "light",
+              "dark",
+              "system",
+              null
+            ],
+            "description": "The editor's theme: `light`, `dark` or `system`."
+          }
+        },
+        "required": [
+          "object",
+          "editor",
+          "autoSaveProjects",
+          "autoSaveDuration",
+          "autoExpireProjects",
+          "projectLifetime",
+          "skipPreview",
+          "expandThumbNav",
+          "showTabTitle",
+          "enableSaveLater",
+          "defaultLayout",
+          "layout",
+          "displayMode",
+          "showGraphicsTitle",
+          "graphicsSearchCustomers",
+          "graphicsSearchScope",
+          "enableColorProofing",
+          "bleedLineColor",
+          "marginLineColor",
+          "trimLineColor",
+          "foldLineColor",
+          "borderColor",
+          "decimalPointTextSize",
+          "autoPlaceNewText",
+          "autoTextSize",
+          "newTextSize",
+          "defaultTextType",
+          "defaultNewTextString",
+          "defaultNewHeadingString",
+          "hoverShow",
+          "enableSnapping",
+          "snapRange",
+          "gridLinesInterval",
+          "bleedLineMessage",
+          "marginLineMessage",
+          "trimLineMessage",
+          "retainProductImages",
+          "forceCustomization",
+          "disableCustomization",
+          "customPreviewSelector",
+          "cartButtonSelector",
+          "customVariantSelector",
+          "inlineSelector",
+          "miniSelector",
+          "moveButtonsBefore",
+          "buttonsClass",
+          "observeFormRerenders",
+          "collectionButtons",
+          "sideBarColor",
+          "editorTheme"
+        ],
+        "examples": [
+          {
+            "object": "settings",
+            "editor": "new",
+            "autoSaveProjects": false,
+            "autoSaveDuration": 8,
+            "autoExpireProjects": false,
+            "projectLifetime": 1,
+            "skipPreview": false,
+            "expandThumbNav": true,
+            "showTabTitle": true,
+            "enableSaveLater": false,
+            "defaultLayout": "",
+            "layout": "",
+            "displayMode": "modal",
+            "showGraphicsTitle": false,
+            "graphicsSearchCustomers": false,
+            "graphicsSearchScope": "store",
+            "enableColorProofing": false,
+            "bleedLineColor": "#F3343C",
+            "marginLineColor": "#84cc16",
+            "trimLineColor": "#8b5cf6",
+            "foldLineColor": "#fde047",
+            "borderColor": "#2563eb",
+            "decimalPointTextSize": true,
+            "autoPlaceNewText": true,
+            "autoTextSize": true,
+            "newTextSize": 40,
+            "defaultTextType": "Textbox",
+            "defaultNewTextString": "Type into your new\ntext",
+            "defaultNewHeadingString": "Add a heading",
+            "hoverShow": true,
+            "enableSnapping": true,
+            "snapRange": 5,
+            "gridLinesInterval": 20,
+            "bleedLineMessage": "Bleed line",
+            "marginLineMessage": "Margin line",
+            "trimLineMessage": "Trim line",
+            "retainProductImages": false,
+            "forceCustomization": false,
+            "disableCustomization": false,
+            "customPreviewSelector": "",
+            "cartButtonSelector": "",
+            "customVariantSelector": "",
+            "inlineSelector": "",
+            "miniSelector": "",
+            "moveButtonsBefore": "",
+            "buttonsClass": "",
+            "observeFormRerenders": false,
+            "collectionButtons": false,
+            "sideBarColor": "#FFFFFF",
+            "editorTheme": "system"
           }
         ]
       },

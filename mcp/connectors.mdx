@@ -62,6 +62,16 @@ Then open your product page and try the options once yourself.
 
 The classic editor applies a Page Index connector when it opens: changing the option while the editor is open does nothing. The new editor follows every change. The test tells you which one your design uses.
 
+## When the Customize button or previews don't show
+
+The same reading of your product page checks the selectors Print.App uses there: the add-to-cart button, the product images your customers' designs replace, the variant field, and where the editor or the Customize button goes. When one finds nothing, the assistant suggests a selector that does, and changes the setting once you agree. Ask it, for example:
+
+- *"The Customize button doesn't show on https://mystore.com/products/tee. Can you find out why?"*
+- *"After customers design, the product photo doesn't change to their design on https://mystore.com/products/mug."*
+- *"Open the editor inline on the product page, under the product description, instead of full screen."*
+
+Changes reach your product pages within a few minutes. Custom JavaScript and CSS, webhook addresses and the settings that delete customers' projects stay in the dashboard: the assistant can't change them.
+
 ## Profiles, too
 
 The assistant can also set up the two kinds of profile customers ask about most:
@@ -71,4 +81,4 @@ The assistant can also set up the two kinds of profile customers ask about most:
 
 ## For developers
 
-The same features are in the [REST API](/api-reference/v2/introduction): [read a product page](/api-reference/v2/connectors/inspect-product-page), [test a connector](/api-reference/v2/connectors/test-connector), [create one](/api-reference/v2/connectors/create-connector) and [attach it](/api-reference/v2/designs/attach-connector), and manage [resource profiles](/api-reference/v2/resource-profiles/list-resource-profiles) and [PDF profiles](/api-reference/v2/pdf-profiles/list-pdf-profiles). The tools are listed in the [MCP reference](/api-reference/v2/mcp).
+The same features are in the [REST API](/api-reference/v2/introduction): [read a product page](/api-reference/v2/connectors/inspect-product-page), [test a connector](/api-reference/v2/connectors/test-connector), [create one](/api-reference/v2/connectors/create-connector) and [attach it](/api-reference/v2/designs/attach-connector), change the [settings](/api-reference/v2/settings/update-settings), and manage [resource profiles](/api-reference/v2/resource-profiles/list-resource-profiles) and [PDF profiles](/api-reference/v2/pdf-profiles/list-pdf-profiles). The tools are listed in the [MCP reference](/api-reference/v2/mcp).

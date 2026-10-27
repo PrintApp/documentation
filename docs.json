@@ -410,6 +410,13 @@
                   "api-reference/v2/pdf-profiles/update-pdf-profile",
                   "api-reference/v2/pdf-profiles/delete-pdf-profile"
                 ]
+              },
+              {
+                "group": "Settings",
+                "pages": [
+                  "api-reference/v2/settings/get-settings",
+                  "api-reference/v2/settings/update-settings"
+                ]
               }
             ]
           },

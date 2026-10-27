@@ -137,12 +137,13 @@ Redirect URIs must be `https` addresses, as ChatGPT's and Claude's are. Apps tha
 | Products | `list_products`, `get_product`, `set_product_designs` |
 | Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
 | Profiles | `list_profiles`, `manage_profile` (resource and PDF profiles) |
+| Settings | `get_settings`, `update_settings` |
 | Projects | `list_projects`, `get_project`, `manage_project` |
 | Editor links | `create_editor_link`, `manage_editor_link` |
 
 Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; tools that can delete are marked destructive, so clients that ask before running those will ask.
 
-`update_design` also sets what a design uses: its connectors, resource profiles and PDF profile.
+`update_design` also sets what a design uses (its connectors, resource profiles and PDF profile) and its own settings over the store's.
 
 The server also offers one prompt, `set_up_connector` (*Set up a connector*), for clients that list MCP prompts: it takes a product page and a goal, and writes out the steps below for the agent.
 
@@ -171,4 +172,5 @@ The walk-through for store owners is [Set up connectors with AI](/mcp/connectors
 - **SVG graphics go in as files.** The firewall in front of the API refuses requests that carry markup, so an agent should upload an SVG with `upload_file` and place it as an `asset`, not write SVG into an operation. It stays vector in print. A tool call with SVG or HTML in its arguments fails with an HTTP `403` before it reaches the server, so the client reports a connection error rather than a tool error.
 - **Fonts** must be families your account has. `list_fonts` lists them; `manage_font` imports any Google font.
 - **Previews** are redrawn each time a design is saved. They are for checking a layout; the PDF is made from the design itself.
+- **Settings** that run code in your store (custom JS and CSS), send data elsewhere (webhook addresses) or delete customers' projects can't be changed through the MCP or the API, and the editor in use is read-only: change those in the dashboard. `update_settings` is marked destructive, so clients ask before running it.
 - **Product pages** are read as your server sends them, and only pages of your own store. Options a theme builds in JavaScript after the page loads aren't seen; a store behind a password answers with its password page (give `test_connector` the choices as `values` instead).
