@@ -41,6 +41,8 @@ curl https://api.print.app/v2/files \
 
 The file's `id` is what you place on a page as `asset`.
 
+Vector graphics go in the same way: upload the `.svg` file, then place it with `asset`, and it stays vector in print. Don't send SVG markup inline in an operation's `svg` property: the firewall in front of the API refuses request bodies that carry markup, with an HTML `403`. For an SVG your server generates, start a [direct upload](/api-reference/v2/files/create-file-upload) with `"contentType": "image/svg+xml"`, post the file to the form it returns, then wait for `GET /v2/files/{id}` to answer `200` (a few seconds) before placing it.
+
 ## 3. Put content on the front
 
 [`POST /v2/designs/{id}/ops`](/api-reference/v2/designs/apply-ops) runs a batch of operations. Boxes are `[x, y, width, height]` from the top-left of the trim, in `units`; text sizes are in points. Each item you add gets a `ref`, a name you choose, so later operations can target it.

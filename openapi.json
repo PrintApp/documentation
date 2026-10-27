@@ -1514,7 +1514,7 @@
         ],
         "operationId": "applyOps",
         "summary": "Edit page content",
-        "description": "Adds, changes and removes text, images, shapes, frames, QR codes and other items on a design's pages, as one batch of operations. The batch is checked against the operation schemas first and refused as a whole if any operation is malformed (400). It then runs in order; if any operation fails, nothing is saved (422). With `dryRun: true` it runs without saving.",
+        "description": "Adds, changes and removes text, images, shapes, frames, QR codes and other items on a design's pages, as one batch of operations. The batch is checked against the operation schemas first and refused as a whole if any operation is malformed (400). It then runs in order; if any operation fails, nothing is saved (422). With `dryRun: true` it runs without saving.\n\nPlace images and SVG graphics as files: upload them with `POST /v2/files` (from a URL) or `POST /v2/files/uploads`, then give the file id as `asset`. An SVG file stays vector in print. Don't send SVG markup inline (`svg`): the firewall in front of the API refuses request bodies that carry markup, with an HTML 403.",
         "parameters": [
           {
             "name": "id",
@@ -12174,12 +12174,13 @@
       "DesignOpPartAsset": {
         "type": "string",
         "pattern": "^[A-Za-z0-9_.:-]{1,200}$",
-        "description": "One of your file ids (file_…) or a print.app library graphic id (c_…)."
+        "description": "One of your file ids (file_…) or a print.app library graphic id (c_…). An SVG file stays vector in print."
       },
       "DesignOpPartSvg": {
         "type": "string",
         "minLength": 10,
-        "maxLength": 12000
+        "maxLength": 12000,
+        "description": "SVG markup, inline. Through the API, upload SVGs as files instead (POST /v2/files or /v2/files/uploads) and place them with `asset`: the firewall in front of api.print.app refuses request bodies that carry markup, with an HTML 403."
       },
       "DesignOpPartSvgPath": {
         "type": "string",

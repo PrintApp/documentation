@@ -64,7 +64,9 @@ For 24 hours, a retry with the same key and the same body gets the first respons
 
 ## A 403 with an HTML page
 
-A `403` whose body is an HTML page, with no `code` and no `requestId`, didn't come from the API. Our firewall stopped the request before it reached the API, because it matched a common attack pattern: for example a path-traversal sequence such as `../` in the URL, or traffic from an IP address on a known-abuse list.
+A `403` whose body is an HTML page, with no `code` and no `requestId`, didn't come from the API. Our firewall stopped the request before it reached the API, because it matched a common attack pattern: for example a path-traversal sequence such as `../` in the URL, markup such as SVG or HTML in a request body, a URL with a bare IP address in a request body, or traffic from an IP address on a known-abuse list.
+
+To put an SVG on a design, upload it as a file and place it with `asset`, rather than sending the markup inline: see [Create a design through the API](/api-reference/v2/create-a-design#2-upload-your-logo).
 
 Check the request for anything unusual in its URL or body. If it looks normal, contact support with the time of the request (in UTC) and the IP address it came from, so we can find it.
 
