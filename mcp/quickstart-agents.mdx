@@ -1,0 +1,67 @@
+---
+title: "Quickstart for agents"
+description: "Hand this page to your AI agent. It connects the Print.App MCP server to the tool it runs in, so it can work in your Print.App account."
+---
+
+<Note>
+For agents: the full documentation index is at [https://print.app/docs/llms.txt](https://print.app/docs/llms.txt). Fetch it to find any other page.
+</Note>
+
+This page is written for AI agents. Give it to Claude Code, Codex, Cursor, VS Code or any agent that can run commands and edit its own settings, and it connects Print.App for you. For ChatGPT and Claude, the agent tells you the two clicks to make yourself. Prefer to do it by hand? See [MCP server](/mcp/server).
+
+## Give your agent this prompt
+
+```
+Follow https://print.app/docs/mcp/quickstart-agents and connect the Print.App MCP server to this agent.
+Keep my secret key out of any file I commit, and tell me what you changed.
+```
+
+## Steps for the agent
+
+1. **Get a secret key.** Ask the user for a Print.App secret key (`sk_…`). If they have none, they create one in the admin under [Secret keys](https://admin.print.app/api-keys), labelled for you. Never repeat the key back in chat.
+2. **Add the server** for the tool you run in, at user level, never in a project file that gets committed:
+
+    | Tool | What to do |
+    | --- | --- |
+    | Claude Code | `claude mcp add --transport http --scope user printapp https://api.print.app/mcp --header "Authorization: Bearer <key>"` |
+    | Codex | Add `[mcp_servers.printapp]` with `url = "https://api.print.app/mcp"` and `bearer_token_env_var = "PRINTAPP_SECRET_KEY"` to `~/.codex/config.toml`, and `export PRINTAPP_SECRET_KEY=<key>` in the user's shell profile. |
+    | Cursor | Add `"printapp": { "url": "https://api.print.app/mcp", "headers": { "Authorization": "Bearer <key>" } }` under `mcpServers` in `~/.cursor/mcp.json`. |
+    | VS Code | Add the server with a `promptString` input (`password: true`) to `.vscode/mcp.json`, as in [MCP server → VS Code](/mcp/server#vs-code); VS Code asks the user for the key. |
+    | ChatGPT, Claude | You can't add these yourself. Tell the user to add a custom connector with the URL `https://api.print.app/mcp` (OAuth), then paste their key on the Print.App page that opens. Steps: [MCP server](/mcp/server#chatgpt). |
+    | Anything else | A remote MCP server over Streamable HTTP at `https://api.print.app/mcp`, with the header `Authorization: Bearer <key>`. |
+
+3. **Load it.** Reload or restart the MCP servers if your tool needs it (Claude Code: start a new session; Cursor: refresh in MCP settings; VS Code: **MCP: List Servers**, then start `printapp`).
+4. **Check it.** Call the `get_account` tool and show the user the store hostname it returns.
+5. **Report.** Tell the user which file or setting you changed, and that revoking the key in the admin disconnects you.
+
+## Rules for the agent
+
+- Keep the key out of project files, scripts and commits. User-level settings or environment variables only.
+- A secret key can change anything in the store the API can. Use one key per agent.
+- Upload images and SVGs with `upload_file`, then place them with `asset`. Never send SVG markup inline: the API's firewall refuses it.
+- Look at your work with `preview_design` after editing a design, and fix what looks wrong.
+
+## What you can do next
+
+- Build a print-ready template from a brief: `create_design`, then `edit_design`, then `preview_design`.
+- Upload a logo and add it to the editor's graphics.
+- Import a Google font and set up a brand palette.
+- Put a design on a store product with `set_product_designs`, or share it with `create_editor_link`.
+- Find customers' submitted projects and their PDF links.
+
+## Go deeper
+
+<CardGroup cols={2}>
+  <Card title="MCP server" icon="plug" href="/mcp/server">
+    Connect by hand, client by client.
+  </Card>
+  <Card title="MCP reference" icon="book" href="/api-reference/v2/mcp">
+    Every tool, and how signing in works.
+  </Card>
+  <Card title="Create a design" icon="pen-ruler" href="/api-reference/v2/create-a-design">
+    The design flow, step by step.
+  </Card>
+  <Card title="REST API" icon="code" href="/api-reference/v2/introduction">
+    The same features for your own code.
+  </Card>
+</CardGroup>

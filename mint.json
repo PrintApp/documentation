@@ -42,6 +42,13 @@
       ]
     },
     {
+      "group": "AI agents",
+      "pages": [
+        "mcp/server",
+        "mcp/quickstart-agents"
+      ]
+    },
+    {
       "group": "Configuration",
       "pages": [
         "configuration/editor/editor",

@@ -1,0 +1,125 @@
+---
+title: "MCP server"
+description: "Connect ChatGPT, Claude and other AI tools to your Print.App account to build designs, manage graphics and fonts, and set up products."
+---
+
+<Tip>
+Using an AI agent? Give it the [Quickstart for agents](/mcp/quickstart-agents) and it sets this up for you.
+</Tip>
+
+The Print.App MCP server lets AI tools work in your Print.App account.
+
+```
+https://api.print.app/mcp
+```
+
+## What you can do
+
+- **Designs:** create templates at a print size with bleed and a safe area, add text, images, shapes, QR codes and calendars, and look at the result.
+- **Graphics, fonts and colours:** upload images and SVGs, import Google fonts, and set up palettes.
+- **Products:** choose which designs each store product opens, and make editor links to share a design.
+- **Projects:** find your customers' saved designs and their print files.
+
+## Before you start
+
+Create a secret key in your admin under [Secret keys](https://admin.print.app/api-keys), labelled for the tool you connect. Revoking it later disconnects that tool.
+
+## ChatGPT
+
+1. **Add the server:** turn on developer mode and add a custom MCP server ([OpenAI's guide](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) shows where, for your plan). Name it Print.App, use the URL `https://api.print.app/mcp` and choose **OAuth** authentication.
+2. **Connect:** ChatGPT opens a Print.App page. Paste your secret key and click **Allow access**.
+3. **Test:** ask *"Which Print.App store am I connected to?"*
+
+## Claude
+
+1. **Add the server:** in Claude (web or desktop), open **Settings → Connectors** and click **Add custom connector**. Name it Print.App and use the URL `https://api.print.app/mcp`.
+2. **Connect:** click **Connect**. Paste your secret key on the Print.App page and click **Allow access**.
+3. **Test:** ask *"Which Print.App store am I connected to?"*
+
+## Claude Code
+
+1. **Add the server:**
+
+    ```bash
+    claude mcp add --transport http --scope user printapp https://api.print.app/mcp \
+      --header "Authorization: Bearer sk_…"
+    ```
+
+2. **Check it:** run `/mcp` in Claude Code; `printapp` shows as connected.
+3. **Test:** ask *"Which Print.App store am I connected to?"*
+
+## Codex
+
+1. **Add the server** to `~/.codex/config.toml`:
+
+    ```toml
+    [mcp_servers.printapp]
+    url = "https://api.print.app/mcp"
+    bearer_token_env_var = "PRINTAPP_SECRET_KEY"
+    ```
+
+2. **Set the key** in your shell profile: `export PRINTAPP_SECRET_KEY=sk_…`
+3. **Test:** start Codex and ask *"Which Print.App store am I connected to?"*
+
+## Cursor
+
+1. **Add the server** to `~/.cursor/mcp.json` (your global settings, so the key never lands in a project):
+
+    ```json
+    {
+      "mcpServers": {
+        "printapp": {
+          "url": "https://api.print.app/mcp",
+          "headers": { "Authorization": "Bearer sk_…" }
+        }
+      }
+    }
+    ```
+
+2. **Check it** in Cursor's MCP settings: `printapp` shows its tools.
+3. **Test:** ask *"Which Print.App store am I connected to?"*
+
+## VS Code
+
+1. **Add the server** to `.vscode/mcp.json`. VS Code asks for the key when it starts the server, so the file holds no secret:
+
+    ```json
+    {
+      "inputs": [
+        { "type": "promptString", "id": "printapp-key", "description": "Print.App secret key", "password": true }
+      ],
+      "servers": {
+        "printapp": {
+          "type": "http",
+          "url": "https://api.print.app/mcp",
+          "headers": { "Authorization": "Bearer ${input:printapp-key}" }
+        }
+      }
+    }
+    ```
+
+2. **Start it:** run **MCP: List Servers**, choose `printapp`, start it and paste your key.
+3. **Test:** in chat (agent mode), ask *"Which Print.App store am I connected to?"*
+
+## Other MCP clients
+
+Any client that supports remote MCP servers over Streamable HTTP can connect, either way:
+
+- **Sign in (OAuth):** the client finds the sign-in on its own. Its redirect URI must be an `https` address.
+- **Send the key:** as the header `Authorization: Bearer sk_…`.
+
+Details for developers, including the OpenAI and Claude APIs, are in the [MCP reference](/api-reference/v2/mcp).
+
+## Try these prompts
+
+- *"Create an 85 × 55 mm business card template for a bakery with 3 mm bleed, with the name and phone as fields customers fill in. Show me the front."*
+- *"Upload the logo at https://… and add it to a new graphics folder called Logos."*
+- *"Which of my products have no design assigned?"*
+- *"Find last week's submitted projects and give me their PDF links."*
+
+## Related
+
+- [Quickstart for agents](/mcp/quickstart-agents)
+- [MCP reference](/api-reference/v2/mcp): every tool, and how signing in works
+- [Create a design through the API](/api-reference/v2/create-a-design)
+- [REST API](/api-reference/v2/introduction)
