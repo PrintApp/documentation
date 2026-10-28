@@ -107,10 +107,12 @@
                 },
                 "example": {
                   "object": "account",
-                  "id": "dom_01KA1WFS6BSCBQQV1H3EVTAXEA",
+                  "id": "dom_sp_01KA1WFS6BSCBQQV1H3EVTAXEA",
                   "hostnames": [
                     "shop.example.com"
                   ],
+                  "platform": "shopify",
+                  "storeProducts": true,
                   "created": "2026-03-02T10:15:00Z"
                 }
               }
@@ -8111,6 +8113,212 @@
         }
       }
     },
+    "/v2/store-products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "listStoreProducts",
+        "summary": "List your store's products",
+        "description": "Lists the products in your store's own catalogue, read from Shopify or BigCommerce: title, page link, image, options, and whether each already opens a design. Only stores that installed Print.App as a Shopify or BigCommerce app have one to read (`storeProducts` on `GET /v2/account`); others answer `409 store_products_unavailable`, and a product page can be read with `GET /v2/product-page` instead.",
+        "parameters": [
+          {
+            "required": false,
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Only products whose title, handle or type contains this."
+          },
+          {
+            "required": false,
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Items per page."
+          },
+          {
+            "required": false,
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page. Keep the other parameters the same between pages."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoreProductList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/products/{productId}": {
       "get": {
         "tags": [
@@ -14910,6 +15118,8 @@
           "object",
           "id",
           "hostnames",
+          "platform",
+          "storeProducts",
           "created"
         ],
         "properties": {
@@ -14928,6 +15138,22 @@
             },
             "description": "The store hostnames registered for this account."
           },
+          "platform": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "shopify",
+              "bigcommerce",
+              null
+            ],
+            "description": "The platform Print.App is installed on as an app. `null` for stores that run Print.App through a plugin or script (WordPress/WooCommerce, OpenCart, PrestaShop, Odoo, Shopware or your own site)."
+          },
+          "storeProducts": {
+            "type": "boolean",
+            "description": "Whether `GET /v2/store-products` can list your store's products. When it can't, read a product page with `GET /v2/product-page` instead."
+          },
           "created": {
             "type": [
               "string",
@@ -14939,10 +15165,12 @@
         "examples": [
           {
             "object": "account",
-            "id": "dom_01KA1WFS6BSCBQQV1H3EVTAXEA",
+            "id": "dom_sp_01KA1WFS6BSCBQQV1H3EVTAXEA",
             "hostnames": [
               "shop.example.com"
             ],
+            "platform": "shopify",
+            "storeProducts": true,
             "created": "2026-03-02T10:15:00Z"
           }
         ]
@@ -22076,6 +22304,142 @@
             "editorTheme": "system"
           }
         ]
+      },
+      "StoreProductList": {
+        "title": "StoreProductList",
+        "description": "Your store's products, recently changed first (up to 250).",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StoreProduct"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "StoreProduct": {
+        "title": "StoreProduct",
+        "description": "A product in your store's own catalogue, as Shopify or BigCommerce lists it.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "handle",
+          "url",
+          "imageUrl",
+          "productType",
+          "options",
+          "variantCount",
+          "designIds",
+          "opensDesign"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "store_product"
+          },
+          "id": {
+            "type": "string",
+            "description": "The platform's product id: the productId of `PUT /v2/products/{productId}`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "handle": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Its Shopify handle."
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Its product page, for `GET /v2/product-page` and for testing it as a customer. null when it is not on the online store."
+          },
+          "imageUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "productType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "options": {
+            "type": "array",
+            "description": "Its options and their values (size, colour, sides…).",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "values"
+              ],
+              "properties": {
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "variantCount": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "designIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The designs it opens (not counting its variants')."
+          },
+          "opensDesign": {
+            "type": "boolean",
+            "description": "Whether it, or any of its variants, already opens a design."
+          }
+        }
       },
       "DesignOpPartRef": {
         "type": "string",

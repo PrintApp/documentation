@@ -134,7 +134,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | Graphic folders | `list_graphic_folders`, `manage_graphic_folder` |
 | Fonts | `list_fonts`, `manage_font` |
 | Palettes | `list_palettes`, `manage_palette` |
-| Products | `list_products`, `get_product`, `set_product_designs` |
+| Products | `list_store_products`, `list_products`, `get_product`, `set_product_designs` |
 | Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
 | Profiles | `list_profiles`, `get_profile`, `manage_profile` (resource and PDF profiles) |
 | 3D scenes | `list_scenes` |
@@ -147,7 +147,25 @@ Each tool calls the REST API with your key, so the same rules, limits and errors
 
 `update_design` also sets what a design uses (its connectors, resource profiles, PDF profile and 3D scene) and its own settings over the store's. Given a scene, it says whether the scene suits the design.
 
-The server also offers one prompt, `set_up_connector` (*Set up a connector*), for clients that list MCP prompts: it takes a product page and a goal, and writes out the steps below for the agent.
+The server also offers two prompts, for clients that list MCP prompts:
+
+- `set_up_store` (*Set up my store*): a first product from start to finish, as described below.
+- `set_up_connector` (*Set up a connector*): it takes a product page and a goal, and writes out the connector steps below for the agent.
+
+Clients that don't show prompts, such as ChatGPT, get the same steps from the server's instructions.
+
+## How an agent sets up a new store
+
+Ask your assistant to *"use Print.App to set up my store"* (in Claude, the `set_up_store` prompt). It checks in with you at each step:
+
+1. `get_account` says which platform your store is on. On Shopify and BigCommerce, `list_store_products` lists your products to choose from; on other platforms the agent asks for the product page link.
+2. `inspect_product_page` reads the product's size, sides and options.
+3. `search_library_designs` finds design templates at that size; the agent shows you two or three and imports the one you pick with `import_library_design`, or makes one with `create_design` if none fits.
+4. `preview_design` shows it, with one round of changes if you ask.
+5. After asking you, `set_product_designs` links it to the product, and connectors follow the product's size or sides options.
+6. You get the product page link to test it as a customer.
+
+It never needs your secret key in the chat: the key goes into your assistant's settings or Print.App's sign-in page.
 
 ## How an agent builds a design
 

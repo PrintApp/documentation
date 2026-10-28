@@ -330,6 +330,7 @@
           "group": "Products",
           "pages": [
             "api-reference/v2/products/list-products",
+            "api-reference/v2/products/list-store-products",
             "api-reference/v2/products/get-product",
             "api-reference/v2/products/set-product",
             "api-reference/v2/products/delete-product"
