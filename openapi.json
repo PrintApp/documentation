@@ -74,6 +74,10 @@
       "description": "The 3D scenes the editor previews designs on: models with print areas, folds, flipbooks and sheets, yours and the Print.App library's. A design picks one with `sceneId`."
     },
     {
+      "name": "Library",
+      "description": "The Print.App library, the store catalogue the dashboard's Import Designs and Import from Library open: ready-made designs, and themed kits of graphics. Find what suits a product, then bring it into your account: a design as your own copy, a kit as a folder that follows it, single graphics into a folder."
+    },
+    {
       "name": "Settings",
       "description": "The account's editor and product page settings: how the editor opens and behaves, and the selectors Print.App uses on your product pages. Settings that run code in your store, send data elsewhere or delete projects are kept to the dashboard."
     }
@@ -11398,6 +11402,1494 @@
         }
       }
     },
+    "/v2/library/designs": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "listLibraryDesigns",
+        "summary": "Search library designs",
+        "description": "Finds ready-made designs in the Print.App library, best match first when you give `q`. Each says what it is for, its pages and size, and whether your account already has a copy (`importedDesignId`). Bring one into your account with `POST /v2/library/designs/{id}/import`.",
+        "parameters": [
+          {
+            "required": false,
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "What the design is for, in words (\"wedding invitation\", \"bakery business card\"). Without it, the library newest first."
+          },
+          {
+            "required": false,
+            "name": "product",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cards",
+                "invitations",
+                "business",
+                "labels",
+                "apparel",
+                "gifts",
+                "signage",
+                "print"
+              ]
+            },
+            "description": "Only designs for this kind of product: `business` is business cards and stationery, `print` flyers, menus and brochures, `signage` banners, signs and posters."
+          },
+          {
+            "required": false,
+            "name": "occasion",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "holidays",
+                "life",
+                "kids",
+                "business",
+                "food"
+              ]
+            },
+            "description": "Only designs for this kind of occasion: `life` is weddings, babies, graduations and memorials."
+          },
+          {
+            "required": false,
+            "name": "collectionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Only the designs of one collection (`collectionId` of a result)."
+          },
+          {
+            "required": false,
+            "name": "pages",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Only designs with this many pages (2 for a double-sided card)."
+          },
+          {
+            "required": false,
+            "name": "width",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "description": "The trim width of your product, with `height`: each result then says how its size compares (`sizeMatch`). With `q`, designs of another shape go last; without, the same size comes first."
+          },
+          {
+            "required": false,
+            "name": "height",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "description": "The trim height of your product, with `width`."
+          },
+          {
+            "required": false,
+            "name": "unit",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "mm",
+                "cm",
+                "in"
+              ],
+              "default": "mm"
+            },
+            "description": "The unit of `width` and `height`."
+          },
+          {
+            "required": false,
+            "name": "sameSize",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Only designs at the size given by `width` and `height`, within 2%, either way round."
+          },
+          {
+            "required": false,
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            },
+            "description": "Items per page."
+          },
+          {
+            "required": false,
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page. Keep the other parameters the same between pages."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryDesignList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/designs/{id}": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "getLibraryDesign",
+        "summary": "Get a library design",
+        "description": "Returns one library design with a preview image of every page.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The library design id (`design_…`)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryDesign"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/designs/{id}/import": {
+      "post": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "importLibraryDesign",
+        "summary": "Import a library design",
+        "description": "Copies a library design into your account, as a design of your own in `folderId` (the top level by default), with its pages, settings and 3D scene. It is complete when this answers: edit it, preview it or put it on a product straight away. The dashboard's Import Designs panel shows it as imported.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The library design id (`design_…`)."
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibraryDesignImport"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Design"
+                },
+                "example": {
+                  "object": "design",
+                  "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "title": "Business Card",
+                  "unit": "mm",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "title": "Front",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_f1.png&size=1000"
+                    },
+                    {
+                      "index": 1,
+                      "title": "Back",
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b1.png&size=1000"
+                    }
+                  ],
+                  "tags": [
+                    "cards"
+                  ],
+                  "connectorIds": [],
+                  "resourceProfileIds": [],
+                  "pdfProfileId": null,
+                  "settings": {},
+                  "sceneId": null,
+                  "created": "2026-09-02T14:05:11Z",
+                  "modified": "2026-10-11T08:40:27Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/kits": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "listLibraryKits",
+        "summary": "List library kits",
+        "description": "Lists the themed kits of graphics in the Print.App library: each a set of matching graphics in one style and palette. List a kit's graphics with `GET /v2/library/graphics?kitId=`; bring a kit into your account with `POST /v2/library/kits/{id}/import`.",
+        "parameters": [
+          {
+            "required": false,
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "What the kit is for (\"christmas\", \"bakery\", \"baby shower\"). The closest kits: a clear winner stands alone, close ones come together. Without it, every kit, newest first."
+          },
+          {
+            "required": false,
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "holidays",
+                "life",
+                "kids",
+                "business",
+                "lifestyle",
+                "wall",
+                "emblems",
+                "photos",
+                "mockups",
+                "flags"
+              ]
+            },
+            "description": "Only kits in this category."
+          },
+          {
+            "required": false,
+            "name": "style",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "illustrated",
+                "flat",
+                "watercolour",
+                "line",
+                "cartoon",
+                "photo"
+              ]
+            },
+            "description": "Only kits drawn in this style."
+          },
+          {
+            "required": false,
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Items per page."
+          },
+          {
+            "required": false,
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page. Keep the other parameters the same between pages."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryKitList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/graphics": {
+      "get": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "listLibraryGraphics",
+        "summary": "Search library graphics",
+        "description": "Finds graphics in the Print.App library's kits, best match first, or lists one kit's. Put them in your account with `POST /v2/library/graphics/import`; once there, designs can use them as an `asset`.",
+        "parameters": [
+          {
+            "required": false,
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "What to look for (\"pine branch\", \"coffee cup\"). Give `q` or `kitId`."
+          },
+          {
+            "required": false,
+            "name": "kitId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A kit's graphics, in the kit's order."
+          },
+          {
+            "required": false,
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "vector",
+                "image"
+              ],
+              "default": "all"
+            },
+            "description": "`vector` for graphics with an SVG (they stay sharp at any size), `image` for the others."
+          },
+          {
+            "required": false,
+            "name": "style",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "illustrated",
+                "flat",
+                "watercolour",
+                "line",
+                "cartoon",
+                "photo"
+              ]
+            },
+            "description": "Only graphics drawn in this style."
+          },
+          {
+            "required": false,
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Items per page."
+          },
+          {
+            "required": false,
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `nextCursor` of the previous page. Keep the other parameters the same between pages."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryGraphicList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/kits/{id}/import": {
+      "post": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "importLibraryKit",
+        "summary": "Import a library kit",
+        "description": "Adds a kit to your editor's Pictures panel as a folder that follows it: graphics the library adds to the kit appear there too. Changing the folder's files makes it your own copy, which stops following. A kit you already follow answers with its folder.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The kit id (`c_…`)."
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphicFolder"
+                },
+                "example": {
+                  "object": "graphic_folder",
+                  "id": "folder:19d51ae0-0bbd-43c9-b3d1-8aedc4e112b3",
+                  "title": "Logos",
+                  "panel": "pictures",
+                  "fileIds": [
+                    "file_01JB2W3X4Y5Z6A7B8C9D0E1F2G.png"
+                  ],
+                  "builtIn": false,
+                  "created": "2026-10-27T10:00:00Z",
+                  "modified": "2026-10-27T10:05:00Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/library/graphics/import": {
+      "post": {
+        "tags": [
+          "Library"
+        ],
+        "operationId": "importLibraryGraphics",
+        "summary": "Import library graphics",
+        "description": "Puts library graphics in one of your graphic folders (`folderId`, first, in the order given), or in a new folder in Pictures (`title`). The folder links to them: they are not copied, and designs and the editor use them like your own files.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibraryGraphicsImport"
+              },
+              "example": {
+                "graphicIds": [
+                  "c_01c288d3-14a1-4c78-8a78-db112025c0e9-borders-1"
+                ],
+                "title": "Bakery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphicFolder"
+                },
+                "example": {
+                  "object": "graphic_folder",
+                  "id": "folder:19d51ae0-0bbd-43c9-b3d1-8aedc4e112b3",
+                  "title": "Logos",
+                  "panel": "pictures",
+                  "fileIds": [
+                    "file_01JB2W3X4Y5Z6A7B8C9D0E1F2G.png"
+                  ],
+                  "builtIn": false,
+                  "created": "2026-10-27T10:00:00Z",
+                  "modified": "2026-10-27T10:05:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/settings": {
       "get": {
         "tags": [
@@ -16607,6 +18099,579 @@
             "modified": "2026-10-27T10:05:00Z"
           }
         ]
+      },
+      "LibraryDesignImport": {
+        "title": "LibraryDesignImport",
+        "description": "Where the copy goes.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "folderId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The design folder to put it in. Default `root`."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Its name in your account. Default: the library design's."
+          }
+        }
+      },
+      "LibraryDesignList": {
+        "title": "LibraryDesignList",
+        "description": "Library designs, best match first.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibraryDesign"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "LibraryDesign": {
+        "title": "LibraryDesign",
+        "description": "A ready-made design in the Print.App library.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "collectionId",
+          "collectionTitle",
+          "product",
+          "occasion",
+          "inSeason",
+          "pages",
+          "sizeMm",
+          "sizeMatch",
+          "thumbnailUrl",
+          "imageUrl",
+          "importedDesignId",
+          "created"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "library_design"
+          },
+          "id": {
+            "type": "string",
+            "description": "The library design id: import it with `POST /v2/library/designs/{id}/import`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "collectionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The collection it belongs to: designs made together, in one style. Pass as `collectionId` to list them."
+          },
+          "collectionTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "product": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "cards",
+              "invitations",
+              "business",
+              "labels",
+              "apparel",
+              "gifts",
+              "signage",
+              "print",
+              null
+            ],
+            "description": "What it prints on: `business` is business cards and stationery, `print` flyers, menus and brochures, `signage` banners, signs and posters. Read from its title and tags; null when they don't say."
+          },
+          "occasion": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "holidays",
+              "life",
+              "kids",
+              "business",
+              "food",
+              null
+            ],
+            "description": "What it is for: `life` is weddings, babies, graduations and memorials. null when its title and tags don't say."
+          },
+          "inSeason": {
+            "type": "boolean",
+            "description": "Whether it is for the next occasion coming up, or the one after."
+          },
+          "pages": {
+            "type": "integer",
+            "description": "How many pages it has (2 for a double-sided card)."
+          },
+          "sizeMm": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "width",
+              "height"
+            ],
+            "properties": {
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "description": "Its trim size in mm. null when the library has no size for it."
+          },
+          "sizeMatch": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "same",
+              "rotated",
+              "aspect",
+              "different",
+              "unknown",
+              null
+            ],
+            "description": "With `width` and `height` in the search: `same` within 2%, `rotated` the same size turned, `aspect` the same shape at another size (it scales without cropping), `different` another shape, `unknown` no size known. null without them."
+          },
+          "thumbnailUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Its first page, 400 px."
+          },
+          "imageUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Its first page, 1000 px."
+          },
+          "importedDesignId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Your copy of it, when your account has imported it and still has the copy."
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When it was added to the library (ISO 8601)."
+          },
+          "pagePreviews": {
+            "type": "array",
+            "description": "Every page with its preview image (only when getting one design).",
+            "items": {
+              "type": "object",
+              "required": [
+                "index",
+                "title",
+                "previewUrl"
+              ],
+              "properties": {
+                "index": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "previewUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "LibraryGraphicList": {
+        "title": "LibraryGraphicList",
+        "description": "Library graphics, best match first, or in kit order.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibraryGraphic"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "LibraryGraphic": {
+        "title": "LibraryGraphic",
+        "description": "A graphic from a Print.App library kit.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "kitId",
+          "kitTitle",
+          "role",
+          "vector",
+          "width",
+          "height",
+          "previewUrl",
+          "tags"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "library_graphic"
+          },
+          "id": {
+            "type": "string",
+            "description": "The graphic id: put it in a folder with `POST /v2/library/graphics/import`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kitId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The kit it belongs to."
+          },
+          "kitTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "hero",
+              "frame",
+              "border",
+              "object",
+              "filler",
+              null
+            ],
+            "description": "Its part in the kit: a main illustration, a frame, a border, an object or a small filler."
+          },
+          "vector": {
+            "type": "boolean",
+            "description": "Whether it is an SVG (placed as vector, sharp at any size)."
+          },
+          "width": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "In pixels."
+          },
+          "height": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "In pixels."
+          },
+          "previewUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A 400 px preview."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "LibraryGraphicsImport": {
+        "title": "LibraryGraphicsImport",
+        "description": "Library graphics, and the folder to put them in.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "graphicIds"
+        ],
+        "properties": {
+          "graphicIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 60,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "description": "Library graphic ids, from `GET /v2/library/graphics`."
+          },
+          "folderId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "One of your graphic folders: they go first in it. Without it, a new folder in Pictures."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "The new folder's name, without `folderId`. Default *Library picks*."
+          }
+        },
+        "examples": [
+          {
+            "graphicIds": [
+              "c_01c288d3-14a1-4c78-8a78-db112025c0e9-borders-1"
+            ],
+            "title": "Bakery"
+          }
+        ]
+      },
+      "LibraryKitList": {
+        "title": "LibraryKitList",
+        "description": "Library kits.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibraryKit"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "LibraryKit": {
+        "title": "LibraryKit",
+        "description": "A themed kit of graphics in the Print.App library: matching graphics in one style and palette.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "description",
+          "theme",
+          "category",
+          "style",
+          "vector",
+          "elementCount",
+          "palette",
+          "coverUrl",
+          "inSeason",
+          "published"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "library_kit"
+          },
+          "id": {
+            "type": "string",
+            "description": "The kit id: list its graphics with `GET /v2/library/graphics?kitId=`, import it with `POST /v2/library/kits/{id}/import`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "theme": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What it is about (\"Christmas\", \"Safari & Jungle\")."
+          },
+          "category": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "holidays",
+              "life",
+              "kids",
+              "business",
+              "lifestyle",
+              "wall",
+              "emblems",
+              "photos",
+              "mockups",
+              "flags",
+              null
+            ],
+            "description": "Its category."
+          },
+          "style": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "illustrated",
+              "flat",
+              "watercolour",
+              "line",
+              "cartoon",
+              "photo",
+              null
+            ],
+            "description": "How it is drawn."
+          },
+          "vector": {
+            "type": "boolean",
+            "description": "Whether its graphics are SVG (sharp at any size)."
+          },
+          "elementCount": {
+            "type": "integer",
+            "description": "How many graphics it has."
+          },
+          "palette": {
+            "type": "array",
+            "description": "The colours it is drawn in.",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "hex"
+              ],
+              "properties": {
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "hex": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "coverUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A picture of the kit."
+          },
+          "inSeason": {
+            "type": "boolean",
+            "description": "Whether it is for the next occasion coming up, or the one after."
+          },
+          "published": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "When it was added to the library (ISO 8601)."
+          }
+        }
       },
       "LinkCreate": {
         "title": "LinkCreate",

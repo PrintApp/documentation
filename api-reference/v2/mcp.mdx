@@ -138,6 +138,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
 | Profiles | `list_profiles`, `get_profile`, `manage_profile` (resource and PDF profiles) |
 | 3D scenes | `list_scenes` |
+| Library | `search_library_designs`, `import_library_design`, `search_library_graphics`, `import_library_graphics` |
 | Settings | `get_settings`, `update_settings` |
 | Projects | `list_projects`, `get_project`, `manage_project` |
 | Editor links | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
@@ -158,6 +159,16 @@ The server also offers one prompt, `set_up_connector` (*Set up a connector*), fo
 
 Try it with a prompt like *"Create a two-sided 85 × 55 mm business card for a bakery called Crumb & Co with 3 mm bleed: logo from https://…/logo.png, the name, job title and phone as fields customers fill in, and a warm palette. Show me both sides."*
 
+## How an agent starts from the library
+
+The Print.App library is the catalogue of ready-made designs and themed graphic kits that the dashboard's Import Designs and Import from Library open. An agent can start from it instead of a blank page:
+
+1. `search_library_designs` with what the product is for and its trim size. Each design says how its size compares (`sizeMatch`), and `sameSize` keeps only designs at the product's size. The agent can show you the thumbnails to choose from, or look at them itself with `showImages`.
+2. `import_library_design` copies your choice into your account, as a design of your own. It can then edit it, preview it and put it on a product like any other.
+3. `search_library_graphics` finds graphics and kits; `import_library_graphics` adds a whole kit to your editor's Pictures (it follows the kit, so new graphics in it appear too) or single graphics to a folder.
+
+Try it with *"Find me a few Christmas card designs at 5 × 7 inches, show them to me, and import the one I pick."*
+
 ## How an agent sets up a connector
 
 1. `inspect_product_page` reads the product page of your store: each option control with a selector that finds it and the choices it sends, the Print Options fields with their roles, and the designs the product opens.
@@ -173,6 +184,7 @@ The walk-through for store owners is [Set up connectors with AI](/mcp/connectors
 - **SVG graphics go in as files.** The firewall in front of the API refuses requests that carry markup, so an agent should upload an SVG with `upload_file` and place it as an `asset`, not write SVG into an operation. It stays vector in print. A tool call with SVG or HTML in its arguments fails with an HTTP `403` before it reaches the server, so the client reports a connection error rather than a tool error.
 - **Fonts** must be families your account has. `list_fonts` lists them; `manage_font` imports any Google font.
 - **Previews** are redrawn each time a design is saved. They are for checking a layout; the PDF is made from the design itself.
+- **Library** designs come into your account as copies: changing yours never changes the library's. Kits and graphics come in as links, so they don't use your storage.
 - **3D scenes** are made in the dashboard. `list_scenes` lists yours and the library's and, given a design, checks each against it: a print area showing a page the design doesn't have, a folded leaflet with no inside page, a fixed size that doesn't match. A scene that doesn't suit can still be set; the editor shows what it can.
 - **Settings** that run code in your store (custom JS and CSS), send data elsewhere (webhook addresses) or delete customers' projects can't be changed through the MCP or the API, and the editor in use is read-only: change those in the dashboard. `update_settings` is marked destructive, so clients ask before running it.
 - **Product pages** are read as your server sends them, and only pages of your own store. Options a theme builds in JavaScript after the page loads aren't seen; a store behind a password answers with its password page (give `test_connector` the choices as `values` instead).

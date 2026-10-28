@@ -136,6 +136,7 @@ const ERRORS = {
   409: () => fail('The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).', errorExample('folder_not_empty', 'The folder still holds designs. Remove them from it (or delete them) first.')),
   413: () => fail('A body or a downloaded file is over its size limit.', errorExample('payload_too_large', 'The file at url is larger than 50 MB.', 'url')),
   422: () => fail("An operation failed while the batch ran. Nothing was saved; `details` holds every operation's result.", { ...errorExample('ops_failed', "ops[1] (item.update) failed: no item 'logo'. Nothing was saved.", 'ops'), details: [{ index: 0, op: 'text.add', ok: true, id: 'itm_7f3b', ref: 'name' }, { index: 1, op: 'item.update', ok: false, error: "no item 'logo'" }] }),
+  503: () => fail('A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.', errorExample('service_unavailable', 'Searching the library is unavailable right now. Try again in a minute.')),
 };
 const common = {
   '401': fail('Missing, unknown, revoked or expired secret key.', errorExample('unauthorized', 'Missing or invalid secret key. Send it as "Authorization: Bearer sk_…".')),

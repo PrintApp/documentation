@@ -419,6 +419,18 @@
                 ]
               },
               {
+                "group": "Library",
+                "pages": [
+                  "api-reference/v2/library/list-library-designs",
+                  "api-reference/v2/library/get-library-design",
+                  "api-reference/v2/library/import-library-design",
+                  "api-reference/v2/library/list-library-kits",
+                  "api-reference/v2/library/list-library-graphics",
+                  "api-reference/v2/library/import-library-kit",
+                  "api-reference/v2/library/import-library-graphics"
+                ]
+              },
+              {
                 "group": "Settings",
                 "pages": [
                   "api-reference/v2/settings/get-settings",
