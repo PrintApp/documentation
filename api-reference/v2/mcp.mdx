@@ -118,7 +118,7 @@ Any MCP client that speaks Streamable HTTP works the same way, sending a key or 
 
 ### How signing in works
 
-Clients find the sign-in on their own: a request without credentials gets a `401` that points to `https://api.print.app/.well-known/oauth-protected-resource/mcp`, and from there to the authorization server, `https://auth.print.app`, and its metadata at `https://auth.print.app/.well-known/oauth-authorization-server`. It supports dynamic client registration and client ID metadata documents, PKCE (S256) and refresh tokens. Access lasts an hour and the client renews it on its own; it stops within a minute of the key it was approved with being revoked.
+Clients find the sign-in on their own: a request without credentials gets a `401` that points to `https://api.print.app/.well-known/oauth-protected-resource/mcp`, and from there to the authorization server, `https://auth.print.app`, and its metadata at `https://auth.print.app/.well-known/oauth-authorization-server`. It supports dynamic client registration and client ID metadata documents (for public clients, and for clients that sign with `private_key_jwt`, as ChatGPT does), PKCE (S256) and refresh tokens. Access lasts an hour and the client renews it on its own; it stops within a minute of the key it was approved with being revoked.
 
 Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local address for apps on your computer such as Claude Code (`http://localhost:…/callback` or `http://127.0.0.1:…/callback`, on any port).
 
