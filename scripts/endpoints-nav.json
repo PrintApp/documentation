@@ -136,6 +136,13 @@
     ]
   },
   {
+    "group": "3D scenes",
+    "pages": [
+      "api-reference/v2/3d-scenes/list-scenes",
+      "api-reference/v2/3d-scenes/get-scene"
+    ]
+  },
+  {
     "group": "Settings",
     "pages": [
       "api-reference/v2/settings/get-settings",

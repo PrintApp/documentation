@@ -70,6 +70,10 @@
       "description": "The settings print PDFs are made with: colour conversion, PDF standard, cut lines, image resolution, fonts."
     },
     {
+      "name": "3D scenes",
+      "description": "The 3D scenes the editor previews designs on: models with print areas, folds, flipbooks and sheets, yours and the Print.App library's. A design picks one with `sceneId`."
+    },
+    {
       "name": "Settings",
       "description": "The account's editor and product page settings: how the editor opens and behaves, and the selectors Print.App uses on your product pages. Settings that run code in your store, send data elsewhere or delete projects are kept to the dashboard."
     }
@@ -294,6 +298,7 @@
                       "resourceProfileIds": [],
                       "pdfProfileId": null,
                       "settings": {},
+                      "sceneId": null,
                       "created": "2026-09-02T14:05:11Z",
                       "modified": "2026-10-11T08:40:27Z"
                     }
@@ -479,6 +484,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -684,6 +690,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -795,7 +802,7 @@
         ],
         "operationId": "updateDesign",
         "summary": "Update a design",
-        "description": "Changes a design's title or tags, the connectors, resource profiles and PDF profile it uses, or its own settings over the store's (`settings`: send `null` for one to follow the store again). Only the fields you send change.",
+        "description": "Changes a design's title or tags, the connectors, resource profiles and PDF profile it uses, the 3D scene it previews on (`sceneId`), or its own settings over the store's (`settings`: send `null` for one to follow the store again). Only the fields you send change.",
         "parameters": [
           {
             "name": "id",
@@ -854,6 +861,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -1213,6 +1221,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -1930,6 +1939,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2155,6 +2165,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2368,6 +2379,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2562,6 +2574,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -2776,6 +2789,7 @@
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
                   "settings": {},
+                  "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
                   "modified": "2026-10-11T08:40:27Z"
                 }
@@ -11021,6 +11035,369 @@
         }
       }
     },
+    "/v2/scenes": {
+      "get": {
+        "tags": [
+          "3D scenes"
+        ],
+        "operationId": "listScenes",
+        "summary": "List 3D scenes",
+        "description": "Lists the 3D scenes your designs can preview on: yours first, then the Print.App library's. Give one to a design with `sceneId` on `PATCH /v2/designs/{id}`. Scenes are made and edited in the dashboard.",
+        "parameters": [
+          {
+            "required": false,
+            "name": "designId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Say for each scene whether it suits this design (`fit`)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SceneList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "scene",
+                      "id": "scene_01M3PBRXG4JFN6NZSXJVKHX68F",
+                      "title": "Tri-fold",
+                      "description": null,
+                      "kind": "fold",
+                      "source": "library",
+                      "thumbnailUrl": "https://cdn.print.app/scenes/tri-fold.webp",
+                      "printAreas": [],
+                      "fold": {
+                        "type": "roll",
+                        "panels": 3,
+                        "creaseAxis": "vertical"
+                      },
+                      "sizeMm": {
+                        "width": 297,
+                        "height": 210
+                      },
+                      "sizeFrom": "artwork",
+                      "pagesShown": 2,
+                      "fit": {
+                        "ok": true,
+                        "notes": []
+                      },
+                      "created": "2026-09-21T08:14:30Z",
+                      "modified": "2026-09-21T08:14:30Z"
+                    }
+                  ],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/scenes/{id}": {
+      "get": {
+        "tags": [
+          "3D scenes"
+        ],
+        "operationId": "getScene",
+        "summary": "Get a 3D scene",
+        "description": "Returns one scene: its kind, print areas or panels, size, and how many of a design's pages it shows. With `designId`, whether it suits that design: every print area has a page, a fold has its inside page, a fixed size matches.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The scene id (`scene_…`)."
+          },
+          {
+            "required": false,
+            "name": "designId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Say whether the scene suits this design (`fit`)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Scene"
+                },
+                "example": {
+                  "object": "scene",
+                  "id": "scene_01M3PBRXG4JFN6NZSXJVKHX68F",
+                  "title": "Tri-fold",
+                  "description": null,
+                  "kind": "fold",
+                  "source": "library",
+                  "thumbnailUrl": "https://cdn.print.app/scenes/tri-fold.webp",
+                  "printAreas": [],
+                  "fold": {
+                    "type": "roll",
+                    "panels": 3,
+                    "creaseAxis": "vertical"
+                  },
+                  "sizeMm": {
+                    "width": 297,
+                    "height": 210
+                  },
+                  "sizeFrom": "artwork",
+                  "pagesShown": 2,
+                  "fit": {
+                    "ok": true,
+                    "notes": []
+                  },
+                  "created": "2026-09-21T08:14:30Z",
+                  "modified": "2026-09-21T08:14:30Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/settings": {
       "get": {
         "tags": [
@@ -15235,6 +15612,15 @@
                 "description": "Customers cannot select items on the canvas (fields only)."
               }
             }
+          },
+          "sceneId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 120,
+            "description": "The 3D scene the editor previews the design on, from GET /v2/scenes (yours or the library's); `null` for none. GET /v2/scenes/{id}?designId= says whether a scene suits the design."
           }
         }
       },
@@ -15253,6 +15639,7 @@
           "resourceProfileIds",
           "pdfProfileId",
           "settings",
+          "sceneId",
           "created",
           "modified"
         ],
@@ -15446,6 +15833,13 @@
               }
             }
           },
+          "sceneId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The 3D scene the editor previews the design on (GET /v2/scenes); `null`: none."
+          },
           "created": {
             "type": [
               "string",
@@ -15486,6 +15880,7 @@
             "resourceProfileIds": [],
             "pdfProfileId": null,
             "settings": {},
+            "sceneId": null,
             "created": "2026-09-02T14:05:11Z",
             "modified": "2026-10-11T08:40:27Z"
           }
@@ -18566,6 +18961,266 @@
             "created": "2026-10-27T10:00:00Z",
             "modified": "2026-10-27T10:00:00Z"
           }
+        ]
+      },
+      "SceneList": {
+        "title": "SceneList",
+        "description": "3D scenes: yours first, then the library's.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Scene"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "Scene": {
+        "title": "Scene",
+        "description": "A 3D scene the editor can preview a design on: a 3D model with print areas (a mug, a T-shirt), a fold, a flipbook or a sheet. Yours, or from the Print.App library.",
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "scene"
+          },
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kind": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "model",
+              "fold",
+              "flipbook",
+              "sheet",
+              null
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "yours",
+              "library"
+            ],
+            "description": "One of your scenes, or from the Print.App library."
+          },
+          "thumbnailUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "printAreas": {
+            "type": "array",
+            "description": "A model's print areas, and the design page (from 1) each one shows.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "label",
+                "page"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "page": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "fold": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "type",
+              "panels",
+              "creaseAxis"
+            ],
+            "description": "A fold: page 1 is the outside, page 2 the inside.",
+            "properties": {
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "bi, roll, z, gate or custom."
+              },
+              "panels": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "creaseAxis": {
+                "type": "string"
+              }
+            }
+          },
+          "sizeMm": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "width",
+              "height"
+            ],
+            "description": "The flat size (a flipbook: one page).",
+            "properties": {
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            }
+          },
+          "sizeFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "artwork",
+              "fixed",
+              null
+            ],
+            "description": "artwork: the preview takes the design's size (the size above is only a preview size). fixed: the scene keeps its own size."
+          },
+          "pagesShown": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "How many of the design's pages the scene shows; `null`: all of them (a flipbook)."
+          },
+          "fit": {
+            "type": "object",
+            "required": [
+              "ok",
+              "notes"
+            ],
+            "description": "With ?designId=: whether the scene suits that design.",
+            "properties": {
+              "ok": {
+                "type": "boolean",
+                "description": "false when the preview would show the design wrongly (a blank print area, a stretched size)."
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "object": "scene",
+            "id": "scene_01M3PBRXG4JFN6NZSXJVKHX68F",
+            "title": "Tri-fold",
+            "description": null,
+            "kind": "fold",
+            "source": "library",
+            "thumbnailUrl": "https://cdn.print.app/scenes/tri-fold.webp",
+            "printAreas": [],
+            "fold": {
+              "type": "roll",
+              "panels": 3,
+              "creaseAxis": "vertical"
+            },
+            "sizeMm": {
+              "width": 297,
+              "height": 210
+            },
+            "sizeFrom": "artwork",
+            "pagesShown": 2,
+            "fit": {
+              "ok": true,
+              "notes": []
+            },
+            "created": "2026-09-21T08:14:30Z",
+            "modified": "2026-09-21T08:14:30Z"
+          }
+        ],
+        "required": [
+          "object",
+          "id",
+          "title",
+          "description",
+          "kind",
+          "source",
+          "thumbnailUrl",
+          "printAreas",
+          "fold",
+          "sizeMm",
+          "sizeFrom",
+          "pagesShown",
+          "created",
+          "modified"
         ]
       },
       "SettingsUpdate": {
