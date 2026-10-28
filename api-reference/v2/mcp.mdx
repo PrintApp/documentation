@@ -118,9 +118,9 @@ Any MCP client that speaks Streamable HTTP works the same way, sending a key or 
 
 ### How signing in works
 
-Clients find the sign-in on their own: a request without credentials gets a `401` that points to `https://api.print.app/.well-known/oauth-protected-resource/mcp`, and from there to the authorization server's metadata at `https://api.print.app/.well-known/oauth-authorization-server`. It supports dynamic client registration and client ID metadata documents, PKCE (S256) and refresh tokens. Access lasts an hour and the client renews it on its own; it stops within a minute of the key it was approved with being revoked.
+Clients find the sign-in on their own: a request without credentials gets a `401` that points to `https://api.print.app/.well-known/oauth-protected-resource/mcp`, and from there to the authorization server, `https://auth.print.app`, and its metadata at `https://auth.print.app/.well-known/oauth-authorization-server`. It supports dynamic client registration and client ID metadata documents, PKCE (S256) and refresh tokens. Access lasts an hour and the client renews it on its own; it stops within a minute of the key it was approved with being revoked.
 
-Redirect URIs must be `https` addresses, as ChatGPT's and Claude's are. Apps that sign in through a local address (`http://localhost:…`) can't register; send the key as a header from those instead.
+Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local address for apps on your computer such as Claude Code (`http://localhost:…/callback` or `http://127.0.0.1:…/callback`, on any port).
 
 ## What an agent can do
 
@@ -136,12 +136,12 @@ Redirect URIs must be `https` addresses, as ChatGPT's and Claude's are. Apps tha
 | Palettes | `list_palettes`, `manage_palette` |
 | Products | `list_products`, `get_product`, `set_product_designs` |
 | Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
-| Profiles | `list_profiles`, `manage_profile` (resource and PDF profiles) |
+| Profiles | `list_profiles`, `get_profile`, `manage_profile` (resource and PDF profiles) |
 | Settings | `get_settings`, `update_settings` |
 | Projects | `list_projects`, `get_project`, `manage_project` |
-| Editor links | `create_editor_link`, `manage_editor_link` |
+| Editor links | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
 
-Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; tools that can delete are marked destructive, so clients that ask before running those will ask.
+Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; every tool that creates, changes or deletes something is marked destructive, so clients that ask before running those will ask.
 
 `update_design` also sets what a design uses (its connectors, resource profiles and PDF profile) and its own settings over the store's.
 
