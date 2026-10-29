@@ -29,6 +29,8 @@ An agent connected with your key can change and delete anything in your account 
     1. In ChatGPT, add a custom MCP server (it is in developer mode; see OpenAI's [Connecting custom MCP servers in ChatGPT](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) for where it is on your plan).
     2. Name it Print.App, enter the URL `https://api.print.app/mcp`, and choose **OAuth** as the authentication.
     3. ChatGPT opens the Print.App connect page. Paste a secret key of your store and click **Allow access**.
+
+    ChatGPT keeps the tools it saw when you added the server. When Print.App adds tools, click **Refresh** on the connection at [chatgpt.com/plugins](https://chatgpt.com/plugins) and start a new chat.
   </Tab>
   <Tab title="Claude">
     In Claude (claude.ai or the desktop app), add a custom connector with the URL `https://api.print.app/mcp`, then click **Connect**. Claude opens the Print.App connect page: paste a secret key of your store and click **Allow access**.
@@ -198,6 +200,7 @@ The walk-through for store owners is [Set up connectors with AI](/mcp/connectors
 
 ## Things to know
 
+- **New tools** reach Claude and other clients when they reconnect. ChatGPT needs its connection refreshed (**Refresh** at [chatgpt.com/plugins](https://chatgpt.com/plugins)), then a new chat.
 - **Page content** can only be edited on accounts that use the new editor. Others get `editor_not_supported`.
 - **SVG graphics go in as files.** The firewall in front of the API refuses requests that carry markup, so an agent should upload an SVG with `upload_file` and place it as an `asset`, not write SVG into an operation. It stays vector in print. A tool call with SVG or HTML in its arguments fails with an HTTP `403` before it reaches the server, so the client reports a connection error rather than a tool error.
 - **Fonts** must be families your account has. `list_fonts` lists them; `manage_font` imports any Google font.
