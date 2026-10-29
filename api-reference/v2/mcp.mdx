@@ -151,21 +151,27 @@ Each tool calls the REST API with your key, so the same rules, limits and errors
 
 The server also offers two prompts, for clients that list MCP prompts:
 
-- `set_up_store` (*Set up my store*): a first product from start to finish, as described below.
+- `set_up_store` (*Set up my store*): a quick look with one product, or the whole store with `scope` set to `store`, as described below.
 - `set_up_connector` (*Set up a connector*): it takes a product page and a goal, and writes out the connector steps below for the agent.
 
 Clients that don't show prompts, such as ChatGPT, get the same steps from the server's instructions.
 
 ## How an agent sets up a new store
 
-Ask your assistant to *"use Print.App to set up my store"* (in Claude, the `set_up_store` prompt). It checks in with you at each step:
+There are two ways to start, and the agent checks in with you at each step of both. In Claude, the `set_up_store` prompt does the same: its `scope` is `product` (the default) or `store`.
+
+**A quick look** at one product needs only the Print.App connector. Ask *"Use Print.App to show me how it works on my store: help me pick one of my products, start from a Print.App design template that fits it, show it to me, then link it and give me the link to test it as a customer."* (or *"on this product"* with its page link):
 
 1. `get_account` says which platform your store is on. On Shopify and BigCommerce, `list_store_products` lists your products to choose from; on other platforms the agent asks for the product page link.
 2. `inspect_product_page` reads the product's size, sides and options.
 3. `search_library_designs` finds design templates at that size; the agent shows you two or three and imports the one you pick with `import_library_design`, or makes one with `create_design` if none fits.
 4. `preview_design` shows it, with one round of changes if you ask.
-5. After asking you, `set_product_designs` links it to the product, and connectors follow the product's size or sides options.
-6. You get the product page link to test it as a customer.
+5. After asking you, `set_product_designs` links it to the product.
+6. You get the product page link to test it as a customer, and the agent offers to set up the rest of your store.
+
+**The whole store**: ask *"Set up my Print.App store with me. Go through my products one by one…"*. The agent starts with the product you sell most, as in the quick look, and gives you its link to test straight away. Then it goes through your other products one at a time, sets up connectors for their size, page and sides options, adds your logo, fonts and colours, and changes editor settings or 3D scenes only where they help. It finishes with a summary of what is live.
+
+If your assistant also has your store's own connector (Shopify's, for example), the agent can use it to read your products and variants, and to create or fix them after asking you. It is never required, and prices stay with your store: Print.App never sets them.
 
 It never needs your secret key in the chat: the key goes into your assistant's settings or Print.App's sign-in page.
 
