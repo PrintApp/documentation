@@ -9562,6 +9562,455 @@
         }
       }
     },
+    "/v2/projects/{id}/content": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "getProjectContent",
+        "summary": "Get project page content",
+        "description": "Describes what is on each page of a customer's project, as `GET /v2/designs/{id}/content` does for a design: every item's id, type, box, text, font and colour. Use the item ids as `target` in `POST /v2/projects/{id}/ops`.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `projectId`."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectContent"
+                },
+                "example": {
+                  "object": "project_content",
+                  "projectId": "project_00507c69-a75c-45c9-875c-6e29a808b4af",
+                  "unit": "mm",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "id": "page_5b1e",
+                      "title": "Front",
+                      "width": 85,
+                      "height": 55,
+                      "bleed": 3,
+                      "safeMargin": 3,
+                      "items": [
+                        {
+                          "id": "itm_7f3b",
+                          "type": "text",
+                          "box": [
+                            6,
+                            22,
+                            73,
+                            10
+                          ],
+                          "text": "Ada Lovelace",
+                          "font": "open sans",
+                          "weight": 700,
+                          "size": 14,
+                          "align": "left",
+                          "color": "#1f2a44",
+                          "field": {
+                            "title": "Name"
+                          },
+                          "lock": "field"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/projects/{id}/ops": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "applyProjectOps",
+        "summary": "Edit project page content",
+        "description": "Changes what is on a customer's project's pages with a batch of design operations, as `POST /v2/designs/{id}/ops` does for a design: all or nothing, with `dryRun` to try it first. The project's PDF and image exports follow the edit; its order state, product and `userData` don't change.\n\nA submitted project (added to the cart or ordered) answers 409 `project_submitted` unless the batch sends `allowSubmitted: true`: an edit changes what is printed for that order, so check with the merchant first. A mail-merge project answers 409 `project_mail_merge`: it prints from its mail-merge pages, so open it in the editor with a project URL instead. Accounts on the classic editor answer 409 `editor_not_supported`.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `projectId`."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectOpsBatch"
+              },
+              "example": {
+                "ops": [
+                  {
+                    "op": "item.update",
+                    "target": "itm_7f3b",
+                    "content": "Ada King"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectOpsResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "An operation failed while the batch ran. Nothing was saved; `details` holds every operation's result.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "ops_failed",
+                  "message": "ops[1] (item.update) failed: no item 'logo'. Nothing was saved.",
+                  "param": "ops",
+                  "requestId": "FZn-uhymjoEEJow=",
+                  "details": [
+                    {
+                      "index": 0,
+                      "op": "text.add",
+                      "ok": true,
+                      "id": "itm_7f3b",
+                      "ref": "name"
+                    },
+                    {
+                      "index": 1,
+                      "op": "item.update",
+                      "ok": false,
+                      "error": "no item 'logo'"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/links": {
       "post": {
         "tags": [
@@ -16575,6 +17024,116 @@
           }
         }
       },
+      "ContentPage": {
+        "title": "ContentPage",
+        "description": "One page of a design or project: its size and what is on it.",
+        "type": "object",
+        "required": [
+          "index",
+          "id",
+          "title",
+          "width",
+          "height",
+          "bleed",
+          "safeMargin",
+          "items"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "width": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Trim width."
+          },
+          "height": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Trim height."
+          },
+          "bleed": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "safeMargin": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "How far inside the trim the safe zone starts; null without one."
+          },
+          "safeArea": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "minItems": 4,
+            "maxItems": 4,
+            "description": "The safe zone as [x, y, width, height] from the top-left of the trim: keep text and key artwork inside it."
+          },
+          "printArea": {
+            "type": "boolean",
+            "description": "The page is a garment mockup: boxes are measured from its print area."
+          },
+          "panels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "n",
+                "box"
+              ],
+              "properties": {
+                "n": {
+                  "type": "integer"
+                },
+                "box": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "The panels of a folded page."
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentItem"
+            }
+          }
+        }
+      },
       "Deleted": {
         "title": "Deleted",
         "description": "Confirms a deletion.",
@@ -16649,112 +17208,7 @@
           "pages": {
             "type": "array",
             "items": {
-              "type": "object",
-              "required": [
-                "index",
-                "id",
-                "title",
-                "width",
-                "height",
-                "bleed",
-                "safeMargin",
-                "items"
-              ],
-              "properties": {
-                "index": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "id": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "title": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "width": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "description": "Trim width."
-                },
-                "height": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "description": "Trim height."
-                },
-                "bleed": {
-                  "type": [
-                    "number",
-                    "null"
-                  ]
-                },
-                "safeMargin": {
-                  "type": [
-                    "number",
-                    "null"
-                  ],
-                  "description": "How far inside the trim the safe zone starts; null without one."
-                },
-                "safeArea": {
-                  "type": "array",
-                  "items": {
-                    "type": [
-                      "number",
-                      "null"
-                    ]
-                  },
-                  "minItems": 4,
-                  "maxItems": 4,
-                  "description": "The safe zone as [x, y, width, height] from the top-left of the trim: keep text and key artwork inside it."
-                },
-                "printArea": {
-                  "type": "boolean",
-                  "description": "The page is a garment mockup: boxes are measured from its print area."
-                },
-                "panels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": [
-                      "n",
-                      "box"
-                    ],
-                    "properties": {
-                      "n": {
-                        "type": "integer"
-                      },
-                      "box": {
-                        "type": [
-                          "array",
-                          "null"
-                        ],
-                        "items": {
-                          "type": [
-                            "number",
-                            "null"
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  "description": "The panels of a folded page."
-                },
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ContentItem"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/ContentPage"
             }
           }
         },
@@ -20710,6 +21164,78 @@
           }
         ]
       },
+      "ProjectContent": {
+        "title": "ProjectContent",
+        "description": "What is on each page of a customer's project, measured as in DesignContent: boxes are `[x, y, width, height]` in `unit` from the top-left of the trim; text sizes are in points.",
+        "type": "object",
+        "required": [
+          "object",
+          "projectId",
+          "unit",
+          "pages"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "project_content"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentPage"
+            }
+          }
+        },
+        "examples": [
+          {
+            "object": "project_content",
+            "projectId": "project_00507c69-a75c-45c9-875c-6e29a808b4af",
+            "unit": "mm",
+            "pages": [
+              {
+                "index": 0,
+                "id": "page_5b1e",
+                "title": "Front",
+                "width": 85,
+                "height": 55,
+                "bleed": 3,
+                "safeMargin": 3,
+                "items": [
+                  {
+                    "id": "itm_7f3b",
+                    "type": "text",
+                    "box": [
+                      6,
+                      22,
+                      73,
+                      10
+                    ],
+                    "text": "Ada Lovelace",
+                    "font": "open sans",
+                    "weight": 700,
+                    "size": 14,
+                    "align": "left",
+                    "color": "#1f2a44",
+                    "field": {
+                      "title": "Name"
+                    },
+                    "lock": "field"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "ProjectList": {
         "title": "ProjectList",
         "description": "A page of projects, most recently modified first.",
@@ -20741,6 +21267,114 @@
               "null"
             ],
             "description": "Pass as `cursor` to fetch the next page, with the same filters. `null` on the last page."
+          }
+        }
+      },
+      "ProjectOpsBatch": {
+        "title": "ProjectOpsBatch",
+        "description": "A batch of design operations on a customer's project, run in order as one change: either every operation succeeds and the project is saved, or nothing is. The same operations as a design's (the DesignOp schemas).",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ops"
+        ],
+        "properties": {
+          "units": {
+            "type": "string",
+            "enum": [
+              "mm",
+              "cm",
+              "in",
+              "pt",
+              "px"
+            ],
+            "description": "The unit of every box and length in the batch. Default: the project's unit (mm for projects measured in ft). Text sizes are always in points."
+          },
+          "page": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 500
+              },
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40
+              }
+            ],
+            "description": "The page item operations go on: a page number from 1, or a page's ref. An operation's own `page` wins. Default 1."
+          },
+          "ops": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The operations, run in order. Items added in the batch can be targeted by later operations through their `ref`."
+          },
+          "dryRun": {
+            "type": "boolean",
+            "default": false,
+            "description": "Run the batch and report every operation's result and the resulting content, without saving anything."
+          },
+          "allowSubmitted": {
+            "type": "boolean",
+            "default": false,
+            "description": "Edit a submitted project (added to the cart or ordered), which changes what is printed for that order. Without it such a project answers 409 project_submitted. Not needed for a dry run."
+          }
+        },
+        "examples": [
+          {
+            "ops": [
+              {
+                "op": "item.update",
+                "target": "itm_7f3b",
+                "content": "Ada King"
+              }
+            ]
+          }
+        ]
+      },
+      "ProjectOpsResult": {
+        "title": "ProjectOpsResult",
+        "description": "The outcome of a batch that ran on a project: every operation's result, the project as saved (unchanged on a dry run), and its content now.",
+        "type": "object",
+        "required": [
+          "object",
+          "dryRun",
+          "results",
+          "project",
+          "content"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "ops_result"
+          },
+          "dryRun": {
+            "type": "boolean"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OpResult"
+            }
+          },
+          "project": {
+            "$ref": "#/components/schemas/Project"
+          },
+          "content": {
+            "$ref": "#/components/schemas/ProjectContent"
           }
         }
       },

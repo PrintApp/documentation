@@ -53,7 +53,7 @@ Keep my secret key out of any file I commit, and tell me what you changed.
 - Start from a ready-made design: `search_library_designs` with what the product is for and its trim size (`sameSize` keeps only designs at that size), show the merchant the `thumbnailUrl` images, then `import_library_design` the one they pick. `search_library_graphics` and `import_library_graphics` do the same for graphics and kits.
 - Show a design in 3D: `list_scenes` with the design's id says which scenes suit it, then `update_design` with `sceneId`.
 - Fix a Customize button or design previews that don't show on a product page: `inspect_product_page` checks the store's selectors there, then `update_settings`.
-- Find customers' submitted projects and their PDF links.
+- Find customers' submitted projects and their PDF links. Fix a project's pages with `get_design_content`, `edit_design` and `preview_design` and its `projectId`; a submitted one needs `allowSubmitted: true`, so ask the merchant first.
 
 ## Go deeper
 
