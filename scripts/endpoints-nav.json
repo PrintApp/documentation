@@ -119,6 +119,20 @@
     ]
   },
   {
+    "group": "Print Options",
+    "pages": [
+      "api-reference/v2/print-options/get-print-options",
+      "api-reference/v2/print-options/list-option-set-templates",
+      "api-reference/v2/print-options/get-option-set-template",
+      "api-reference/v2/print-options/quote-option-set",
+      "api-reference/v2/print-options/list-option-sets",
+      "api-reference/v2/print-options/create-option-set",
+      "api-reference/v2/print-options/get-option-set",
+      "api-reference/v2/print-options/update-option-set",
+      "api-reference/v2/print-options/delete-option-set"
+    ]
+  },
+  {
     "group": "Resource profiles",
     "pages": [
       "api-reference/v2/resource-profiles/list-resource-profiles",

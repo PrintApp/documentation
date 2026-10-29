@@ -144,15 +144,17 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | Settings | `get_settings`, `update_settings` |
 | Projects | `list_projects`, `get_project`, `manage_project` |
 | Project URLs | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
+| Print Options | `list_option_sets`, `get_option_set`, `quote_option_set`, `manage_option_set`, `print_options_reference` |
 
 Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; every tool that creates, changes or deletes something is marked destructive, so clients that ask before running those will ask.
 
 `update_design` also sets what a design uses (its connectors, resource profiles, PDF profile and 3D scene) and its own settings over the store's. Given a scene, it says whether the scene suits the design.
 
-The server also offers two prompts, for clients that list MCP prompts:
+The server also offers three prompts, for clients that list MCP prompts:
 
 - `set_up_store` (*Set up my store*): a quick look with one product, or the whole store with `scope` set to `store`, as described below.
 - `set_up_connector` (*Set up a connector*): it takes a product page and a goal, and writes out the connector steps below for the agent.
+- `set_up_print_options` (*Set up product options and prices*): a product's options and prices with [Print Options](/print-options/introduction), as described below.
 
 Clients that don't show prompts, such as ChatGPT, get the same steps from the server's instructions.
 
@@ -214,6 +216,21 @@ Try it with *"Find me a few Christmas card designs at 5 × 7 inches, show them t
 
 The walk-through for store owners is [Set up connectors with AI](/mcp/connectors).
 
+## How an agent sets up Print Options
+
+[Print Options](/print-options/introduction) is Print.App's free product options app: the sizes, papers, sides, quantities and prices customers choose on a product page, priced again on our servers when they add to cart. On a Shopify store with both apps installed, the same agent sets up the options, the design and the link between them:
+
+1. `list_option_sets` says whether option sets can be managed for your store (and if not, why), your store's currency, and what is published on which products.
+2. `print_options_reference` explains how an option set is written and lists the templates (Business Cards, Flyers, Booklets, Stickers, Posters…); with a template, it returns one to adapt. The agent sets your currency, your choices and your prices, and gives the size, pages, material and orientation fields their role.
+3. `quote_option_set` prices typical orders with the engine that prices the cart, line by line. The agent shows you a price table and changes nothing until every price is right.
+4. After asking you, `manage_option_set` publishes the option set to your products. `dryRun` shows first what would change, including products that would move from another option set.
+5. `set_product_designs` links a design, and the Print.App editor fills the options' artwork step by itself.
+6. Connectors only where the design should follow an answer, by role: a field with role `orientation` sets the page orientation with no connector; a size choice can open another design (`designSelector`) or show other pages (`pageIndex`); a dimensions field can size the canvas (`pageWidth` and `pageHeight`); a pages field can set the page count (`pageCount`). `test_connector` checks each first.
+
+Try it with *"Set up flyer options on my Flyers product with Print Options: A5 and A4, 130 g or 300 g paper, 100 to 1000 copies. My prices are in this list: … Show me the prices before anything goes live, then link a flyer design."*
+
+Option sets an agent publishes are ordinary ones: open them in Print Options, under **Products**, to change them yourself. On WooCommerce, build option sets in WordPress for now; `quote_option_set` and the templates work for any store, so an agent can still write and price an option set for you to import (**More → Import JSON…** in the builder).
+
 ## Things to know
 
 - **New tools** reach Claude and other clients when they reconnect. ChatGPT needs its connection refreshed (**Refresh** at [chatgpt.com/plugins](https://chatgpt.com/plugins)), then a new chat.
@@ -224,4 +241,5 @@ The walk-through for store owners is [Set up connectors with AI](/mcp/connectors
 - **Library** designs come into your account as copies: changing yours never changes the library's. Kits and graphics come in as links, so they don't use your storage.
 - **3D scenes** are made in the dashboard. `list_scenes` lists yours and the library's and, given a design, checks each against it: a print area showing a page the design doesn't have, a folded leaflet with no inside page, a fixed size that doesn't match. A scene that doesn't suit can still be set; the editor shows what it can.
 - **Settings** that run code in your store (custom JS and CSS), send data elsewhere (webhook addresses) or delete customers' projects can't be changed through the MCP or the API, and the editor in use is read-only: change those in the dashboard. `update_settings` is marked destructive, so clients ask before running it.
+- **Print Options on Shopify** shows through the theme's **Print Configurator** block, added once per theme (Online Store → Themes → Customize → Add block → Apps). Until it is there, published options don't show; `inspect_product_page` lists a product's Print Options fields once they do. Option sets must be priced in the store's default currency, or the cart refuses them.
 - **Product pages** are read as your server sends them, and only pages of your own store. Options a theme builds in JavaScript after the page loads aren't seen; a store behind a password answers with its password page (give `test_connector` the choices as `values` instead).

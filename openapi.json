@@ -62,6 +62,10 @@
       "description": "Links between the options on a store's product page and the editor: the choice a customer makes shows the right pages, opens the right design, or sets the size, orientation or colour. Read a product page for what a connector can point at, and test one against a design before customers meet it."
     },
     {
+      "name": "Print Options",
+      "description": "Print Options is Print.App's free product options app (options.print.app): the sizes, papers, quantities and prices customers choose on a product page, priced on our servers when they add to cart. An option set is those questions and their prices; Print.App designs fill its artwork step, and connectors read its answers. Option sets are managed here for Shopify stores with both apps installed; templates and quotes work for any account."
+    },
+    {
       "name": "Resource profiles",
       "description": "Limits on the fonts, colour palettes and graphic folders the editor offers, for the designs that use them."
     },
@@ -1528,7 +1532,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -1764,7 +1768,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -3524,7 +3528,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -3704,7 +3708,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -5828,7 +5832,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -6008,7 +6012,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -6208,7 +6212,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -6406,7 +6410,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -7732,7 +7736,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -8241,7 +8245,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -9699,7 +9703,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -9896,7 +9900,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -13469,7 +13473,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -13906,6 +13910,1944 @@
                   "error": true,
                   "code": "internal_error",
                   "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/print-options": {
+      "get": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "getPrintOptions",
+        "summary": "Get Print Options for the store",
+        "description": "Says whether this account's store can have its option sets managed here, and if not why: they are managed for Shopify stores that installed both Print.App and Print Options. Also the store's currency, which every option set must be priced in, and how many option sets and products it has.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrintOptions"
+                },
+                "example": {
+                  "object": "print_options",
+                  "platform": "shopify",
+                  "shop": "acme-print.myshopify.com",
+                  "manageable": true,
+                  "installed": true,
+                  "ready": true,
+                  "currency": "USD",
+                  "optionSetCount": 3,
+                  "productCount": 7,
+                  "installUrl": null,
+                  "message": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/print-options/templates": {
+      "get": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "listOptionSetTemplates",
+        "summary": "List option set templates",
+        "description": "The builder's starting points: Business Cards, Flyers, Booklets, Stickers, Posters and more. Works for any account.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetTemplateSummaryList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "option_set_template",
+                      "key": "flyers",
+                      "name": "Flyers",
+                      "description": "Size, sides, tiered per-unit pricing."
+                    }
+                  ],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/print-options/templates/{key}": {
+      "get": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "getOptionSetTemplate",
+        "summary": "Get an option set template",
+        "description": "A template as a complete option set, to adapt and save with `POST /v2/option-sets`: its currency set to the store's, and its choices and prices to the merchant's.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The template key, such as `flyers`."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetTemplate"
+                },
+                "example": {
+                  "object": "option_set_template",
+                  "key": "flyers",
+                  "name": "Flyers",
+                  "description": "Size, sides, tiered per-unit pricing.",
+                  "currency": "USD",
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "config": {
+                    "version": "2.0",
+                    "productId": "flyers",
+                    "title": "Flyers",
+                    "layout": "stacked",
+                    "pricing": {
+                      "currency": "USD",
+                      "basePrice": {
+                        "amount": 10,
+                        "per": "order"
+                      }
+                    },
+                    "sections": [
+                      {
+                        "id": "main",
+                        "title": "Your flyer",
+                        "fields": [
+                          {
+                            "id": "size",
+                            "type": "select-one",
+                            "display": "pills",
+                            "label": "Size",
+                            "role": "size",
+                            "required": true,
+                            "options": [
+                              {
+                                "id": "a5",
+                                "label": "A5",
+                                "default": true,
+                                "priceModifiers": []
+                              },
+                              {
+                                "id": "a4",
+                                "label": "A4",
+                                "priceModifiers": [
+                                  {
+                                    "type": "fixed",
+                                    "amount": 5
+                                  }
+                                ]
+                              }
+                            ],
+                            "priceModifiers": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/print-options/quote": {
+      "post": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "quoteOptionSet",
+        "summary": "Price choices on an option set",
+        "description": "Checks an option set and prices up to 25 sets of choices on it, line by line, with the engine that prices the cart: an option set being built (`config`) or one of the store's (`optionSetId`). Choices left out take the set's defaults. Writes nothing. With `config` it works for any account.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionSetQuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetQuote"
+                },
+                "example": {
+                  "object": "option_set_quote",
+                  "currency": "USD",
+                  "quotes": [
+                    {
+                      "selections": {
+                        "size": "a4"
+                      },
+                      "quantity": 1,
+                      "total": 15,
+                      "unitPrice": 15,
+                      "unavailable": false,
+                      "unavailableReason": null,
+                      "sku": null,
+                      "lines": [
+                        {
+                          "label": "Base price",
+                          "amount": 10,
+                          "stage": "base",
+                          "source": "base"
+                        },
+                        {
+                          "label": "A4",
+                          "amount": 5,
+                          "stage": "additive",
+                          "source": "size:a4"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "warnings": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "A body or a downloaded file is over its size limit.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "payload_too_large",
+                  "message": "The file at url is larger than 50 MB.",
+                  "param": "url",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/option-sets": {
+      "get": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "listOptionSets",
+        "summary": "List option sets",
+        "description": "The store's option sets and the products each is on. A product carries one option set at a time.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetSummaryList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "option_set",
+                      "id": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+                      "title": "Flyers",
+                      "productCount": 1,
+                      "products": [
+                        {
+                          "productId": "8123456789",
+                          "title": "Flyers",
+                          "updated": "2026-10-29T10:00:00.000Z"
+                        }
+                      ],
+                      "updated": "2026-10-29T10:00:00.000Z"
+                    }
+                  ],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "createOptionSet",
+        "summary": "Create an option set",
+        "description": "Checks an option set and publishes it to Shopify products: their pages show it (once the store's theme has the Print Configurator block), and its prices apply at add-to-cart. It must be priced in the store's currency (409 `currency_mismatch`). A product already on another option set moves to this one. With `dryRun`, nothing is written and the answer (200) says what would change. The merchant can open and edit it in Print Options, under Products.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionSetCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetChange"
+                },
+                "example": {
+                  "object": "option_set_change",
+                  "dryRun": false,
+                  "optionSetId": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+                  "title": "Flyers",
+                  "currency": "USD",
+                  "created": true,
+                  "deleted": false,
+                  "changes": [
+                    {
+                      "productId": "8123456789",
+                      "title": "Flyers",
+                      "change": "added",
+                      "fromOptionSetId": null,
+                      "ok": true,
+                      "error": null
+                    }
+                  ],
+                  "failed": 0,
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "warnings": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "A body or a downloaded file is over its size limit.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "payload_too_large",
+                  "message": "The file at url is larger than 50 MB.",
+                  "param": "url",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/option-sets/{id}": {
+      "get": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "getOptionSet",
+        "summary": "Get an option set",
+        "description": "Returns an option set: its JSON (`config`, as published last), and its fields as connectors address them.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The option set id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSet"
+                },
+                "example": {
+                  "object": "option_set",
+                  "id": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+                  "title": "Flyers",
+                  "productCount": 1,
+                  "products": [
+                    {
+                      "productId": "8123456789",
+                      "title": "Flyers",
+                      "updated": "2026-10-29T10:00:00.000Z"
+                    }
+                  ],
+                  "updated": "2026-10-29T10:00:00.000Z",
+                  "currency": "USD",
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "config": {
+                    "version": "2.0",
+                    "productId": "8123456789",
+                    "title": "Flyers",
+                    "layout": "stacked",
+                    "pricing": {
+                      "currency": "USD",
+                      "basePrice": {
+                        "amount": 10,
+                        "per": "order"
+                      }
+                    },
+                    "sections": [
+                      {
+                        "id": "main",
+                        "title": "Your flyer",
+                        "fields": [
+                          {
+                            "id": "size",
+                            "type": "select-one",
+                            "display": "pills",
+                            "label": "Size",
+                            "role": "size",
+                            "required": true,
+                            "options": [
+                              {
+                                "id": "a5",
+                                "label": "A5",
+                                "default": true,
+                                "priceModifiers": []
+                              },
+                              {
+                                "id": "a4",
+                                "label": "A4",
+                                "priceModifiers": [
+                                  {
+                                    "type": "fixed",
+                                    "amount": 5
+                                  }
+                                ]
+                              }
+                            ],
+                            "priceModifiers": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "updateOptionSet",
+        "summary": "Update an option set",
+        "description": "Changes an option set's options and prices (`config`), its title, or the products it is on. The option set is republished to every product it stays on; `changes` lists each product. With `dryRun`, nothing is written.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The option set id."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionSetUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetChange"
+                },
+                "example": {
+                  "object": "option_set_change",
+                  "dryRun": false,
+                  "optionSetId": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+                  "title": "Flyers",
+                  "currency": "USD",
+                  "created": true,
+                  "deleted": false,
+                  "changes": [
+                    {
+                      "productId": "8123456789",
+                      "title": "Flyers",
+                      "change": "added",
+                      "fromOptionSetId": null,
+                      "ok": true,
+                      "error": null
+                    }
+                  ],
+                  "failed": 0,
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "warnings": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "A body or a downloaded file is over its size limit.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "payload_too_large",
+                  "message": "The file at url is larger than 50 MB.",
+                  "param": "url",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Print Options"
+        ],
+        "operationId": "deleteOptionSet",
+        "summary": "Delete an option set",
+        "description": "Takes the option set off every product it is on: their pages go back to the theme's own add-to-cart.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The option set id."
+          },
+          {
+            "required": false,
+            "name": "dryRun",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "List the products it would come off, changing nothing."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptionSetChange"
+                },
+                "example": {
+                  "object": "option_set_change",
+                  "dryRun": false,
+                  "optionSetId": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+                  "title": "Flyers",
+                  "currency": "USD",
+                  "created": true,
+                  "deleted": false,
+                  "changes": [
+                    {
+                      "productId": "8123456789",
+                      "title": "Flyers",
+                      "change": "added",
+                      "fromOptionSetId": null,
+                      "ok": true,
+                      "error": null
+                    }
+                  ],
+                  "failed": 0,
+                  "fields": [
+                    {
+                      "id": "size",
+                      "label": "Size",
+                      "type": "select-one",
+                      "role": "size",
+                      "source": {
+                        "role": "size"
+                      },
+                      "reference": "po:role/size",
+                      "sends": "choice id as value, label as text",
+                      "choices": [
+                        {
+                          "value": "a5",
+                          "label": "A5",
+                          "selected": true
+                        },
+                        {
+                          "value": "a4",
+                          "label": "A4",
+                          "selected": false
+                        }
+                      ]
+                    }
+                  ],
+                  "warnings": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "A service the request needs (such as library search) is busy or unavailable for a moment. Retry in a few seconds.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "service_unavailable",
+                  "message": "Searching the library is unavailable right now. Try again in a minute.",
                   "requestId": "FZn-uhymjoEEJow="
                 }
               }
@@ -15285,7 +17227,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -15465,7 +17407,7 @@
             }
           },
           "409": {
-            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`).",
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
             "headers": {
               "x-request-id": {
                 "$ref": "#/components/headers/RequestId"
@@ -19717,6 +21659,1058 @@
           }
         }
       },
+      "OptionSetChange": {
+        "title": "OptionSetChange",
+        "description": "What a create, update or delete did to each product, or would do (`dryRun`).",
+        "type": "object",
+        "required": [
+          "object",
+          "dryRun",
+          "optionSetId",
+          "title",
+          "currency",
+          "created",
+          "deleted",
+          "changes",
+          "failed",
+          "fields",
+          "warnings"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set_change"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "true when nothing was written."
+          },
+          "optionSetId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The option set. null for a dry-run create."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "title",
+                "change",
+                "fromOptionSetId",
+                "ok",
+                "error"
+              ],
+              "properties": {
+                "productId": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "change": {
+                  "type": "string",
+                  "enum": [
+                    "added",
+                    "updated",
+                    "moved",
+                    "removed"
+                  ],
+                  "description": "`moved`: it was on another option set (`fromOptionSetId`)."
+                },
+                "fromOptionSetId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "ok": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ],
+                  "description": "Whether this product changed. null on a dry run."
+                },
+                "error": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Why it did not. The other products still changed: retry this one."
+                }
+              }
+            }
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Products that did not change."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintOptionsField"
+            },
+            "description": "Its fields as connectors address them: give a field's `source` as a connector's `source`."
+          },
+          "warnings": {
+            "type": "array",
+            "description": "Things that will not stop it working but may not be meant.",
+            "items": {
+              "type": "object",
+              "required": [
+                "path",
+                "code",
+                "message"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set_change",
+            "dryRun": false,
+            "optionSetId": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+            "title": "Flyers",
+            "currency": "USD",
+            "created": true,
+            "deleted": false,
+            "changes": [
+              {
+                "productId": "8123456789",
+                "title": "Flyers",
+                "change": "added",
+                "fromOptionSetId": null,
+                "ok": true,
+                "error": null
+              }
+            ],
+            "failed": 0,
+            "fields": [
+              {
+                "id": "size",
+                "label": "Size",
+                "type": "select-one",
+                "role": "size",
+                "source": {
+                  "role": "size"
+                },
+                "reference": "po:role/size",
+                "sends": "choice id as value, label as text",
+                "choices": [
+                  {
+                    "value": "a5",
+                    "label": "A5",
+                    "selected": true
+                  },
+                  {
+                    "value": "a4",
+                    "label": "A4",
+                    "selected": false
+                  }
+                ]
+              }
+            ],
+            "warnings": []
+          }
+        ]
+      },
+      "OptionSetCreate": {
+        "title": "OptionSetCreate",
+        "description": "An option set and the Shopify products to publish it to.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "config",
+          "productIds"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Its name in Print Options. Default: the config's title."
+          },
+          "config": {
+            "type": "object",
+            "description": "The option set itself: Print Options' JSON (version \"2.0\"), as in the [option set JSON reference](https://print.app/docs/print-options/developers/option-set-json)."
+          },
+          "productIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true,
+            "description": "Shopify product ids (from `GET /v2/store-products`), up to 50.",
+            "items": {
+              "type": "string",
+              "pattern": "^(gid://shopify/Product/)?[0-9]{1,20}$"
+            }
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "Check everything and say what would change, writing nothing."
+          }
+        }
+      },
+      "OptionSetQuote": {
+        "title": "OptionSetQuote",
+        "description": "Prices for each set of choices, as the cart would charge them.",
+        "type": "object",
+        "required": [
+          "object",
+          "currency",
+          "quotes",
+          "fields",
+          "warnings"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set_quote"
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "selections",
+                "quantity",
+                "total",
+                "unitPrice",
+                "unavailable",
+                "unavailableReason",
+                "sku",
+                "lines",
+                "issues"
+              ],
+              "properties": {
+                "selections": {
+                  "type": "object",
+                  "description": "Every answer priced: the ones sent, and the defaults for the rest."
+                },
+                "quantity": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "description": "The price for the whole job."
+                },
+                "unitPrice": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "unavailable": {
+                  "type": "boolean",
+                  "description": "This combination cannot be ordered (the price matrix leaves it out, a choice is disabled, or a quantity is out of range)."
+                },
+                "unavailableReason": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sku": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "lines": {
+                  "type": "array",
+                  "description": "Each part of the price.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "label",
+                      "amount",
+                      "stage",
+                      "source"
+                    ],
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "number"
+                      },
+                      "stage": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Answers the set does not have (an unknown field or option), which the price ignores."
+                }
+              }
+            }
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintOptionsField"
+            },
+            "description": "Its fields as connectors address them: give a field's `source` as a connector's `source`."
+          },
+          "warnings": {
+            "type": "array",
+            "description": "Things that will not stop it working but may not be meant.",
+            "items": {
+              "type": "object",
+              "required": [
+                "path",
+                "code",
+                "message"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set_quote",
+            "currency": "USD",
+            "quotes": [
+              {
+                "selections": {
+                  "size": "a4"
+                },
+                "quantity": 1,
+                "total": 15,
+                "unitPrice": 15,
+                "unavailable": false,
+                "unavailableReason": null,
+                "sku": null,
+                "lines": [
+                  {
+                    "label": "Base price",
+                    "amount": 10,
+                    "stage": "base",
+                    "source": "base"
+                  },
+                  {
+                    "label": "A4",
+                    "amount": 5,
+                    "stage": "additive",
+                    "source": "size:a4"
+                  }
+                ],
+                "issues": []
+              }
+            ],
+            "fields": [
+              {
+                "id": "size",
+                "label": "Size",
+                "type": "select-one",
+                "role": "size",
+                "source": {
+                  "role": "size"
+                },
+                "reference": "po:role/size",
+                "sends": "choice id as value, label as text",
+                "choices": [
+                  {
+                    "value": "a5",
+                    "label": "A5",
+                    "selected": true
+                  },
+                  {
+                    "value": "a4",
+                    "label": "A4",
+                    "selected": false
+                  }
+                ]
+              }
+            ],
+            "warnings": []
+          }
+        ]
+      },
+      "OptionSetQuoteRequest": {
+        "title": "OptionSetQuoteRequest",
+        "description": "An option set, and the choices to price on it.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "config": {
+            "type": "object",
+            "description": "An option set to check and price (one being built). Or give `optionSetId`."
+          },
+          "optionSetId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "description": "One of the store's option sets."
+          },
+          "quotes": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 25,
+            "description": "Each set of choices to price. Default: one quote, of the defaults.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "selections": {
+                  "type": "object",
+                  "description": "Field id → answer: a choice id (`\"a4\"`), a list of choice ids, a number (a quantity), `{ \"w\": 210, \"h\": 297, \"unit\": \"mm\" }` for dimensions, or `{ \"s\": 5, \"m\": 3 }` for a quantity per option."
+                },
+                "file": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "description": "Facts about an uploaded file, for sets that price by its pages or size.",
+                  "properties": {
+                    "pages": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "colorPages": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "monoPages": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "canvas": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "w",
+                        "h"
+                      ],
+                      "properties": {
+                        "w": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "h": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "unit": {
+                          "type": "string",
+                          "enum": [
+                            "mm",
+                            "cm",
+                            "in",
+                            "pt",
+                            "px"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OptionSetSummaryList": {
+        "title": "OptionSetSummaryList",
+        "description": "Option sets.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OptionSetSummary"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "OptionSetSummary": {
+        "title": "OptionSetSummary",
+        "description": "An option set and the products it is on.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "productCount",
+          "products",
+          "updated"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set"
+          },
+          "id": {
+            "type": "string",
+            "description": "The option set id."
+          },
+          "title": {
+            "type": "string",
+            "description": "Its name in Print Options (Products)."
+          },
+          "productCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "products": {
+            "type": "array",
+            "description": "The Shopify products it is on, the one published last first.",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "title",
+                "updated"
+              ],
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "description": "The Shopify product id, as `GET /v2/store-products` lists it."
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "updated": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "When it was last published to this product."
+                }
+              }
+            }
+          },
+          "updated": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set",
+            "id": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+            "title": "Flyers",
+            "productCount": 1,
+            "products": [
+              {
+                "productId": "8123456789",
+                "title": "Flyers",
+                "updated": "2026-10-29T10:00:00.000Z"
+              }
+            ],
+            "updated": "2026-10-29T10:00:00.000Z"
+          }
+        ]
+      },
+      "OptionSetTemplateSummaryList": {
+        "title": "OptionSetTemplateSummaryList",
+        "description": "Option set templates.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OptionSetTemplateSummary"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "OptionSetTemplateSummary": {
+        "title": "OptionSetTemplateSummary",
+        "description": "A starting point for an option set.",
+        "type": "object",
+        "required": [
+          "object",
+          "key",
+          "name",
+          "description"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set_template"
+          },
+          "key": {
+            "type": "string",
+            "description": "For `GET /v2/print-options/templates/{key}`."
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set_template",
+            "key": "flyers",
+            "name": "Flyers",
+            "description": "Size, sides, tiered per-unit pricing."
+          }
+        ]
+      },
+      "OptionSetTemplate": {
+        "title": "OptionSetTemplate",
+        "description": "A template as a complete option set.",
+        "type": "object",
+        "required": [
+          "object",
+          "key",
+          "name",
+          "description",
+          "currency",
+          "fields",
+          "config"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set_template"
+          },
+          "key": {
+            "type": "string",
+            "description": "For `GET /v2/print-options/templates/{key}`."
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The template's currency: change it to the store's."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintOptionsField"
+            },
+            "description": "Its fields as connectors address them: give a field's `source` as a connector's `source`."
+          },
+          "config": {
+            "type": "object",
+            "description": "The option set itself: Print Options' JSON (version \"2.0\"), as in the [option set JSON reference](https://print.app/docs/print-options/developers/option-set-json)."
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set_template",
+            "key": "flyers",
+            "name": "Flyers",
+            "description": "Size, sides, tiered per-unit pricing.",
+            "currency": "USD",
+            "fields": [
+              {
+                "id": "size",
+                "label": "Size",
+                "type": "select-one",
+                "role": "size",
+                "source": {
+                  "role": "size"
+                },
+                "reference": "po:role/size",
+                "sends": "choice id as value, label as text",
+                "choices": [
+                  {
+                    "value": "a5",
+                    "label": "A5",
+                    "selected": true
+                  },
+                  {
+                    "value": "a4",
+                    "label": "A4",
+                    "selected": false
+                  }
+                ]
+              }
+            ],
+            "config": {
+              "version": "2.0",
+              "productId": "flyers",
+              "title": "Flyers",
+              "layout": "stacked",
+              "pricing": {
+                "currency": "USD",
+                "basePrice": {
+                  "amount": 10,
+                  "per": "order"
+                }
+              },
+              "sections": [
+                {
+                  "id": "main",
+                  "title": "Your flyer",
+                  "fields": [
+                    {
+                      "id": "size",
+                      "type": "select-one",
+                      "display": "pills",
+                      "label": "Size",
+                      "role": "size",
+                      "required": true,
+                      "options": [
+                        {
+                          "id": "a5",
+                          "label": "A5",
+                          "default": true,
+                          "priceModifiers": []
+                        },
+                        {
+                          "id": "a4",
+                          "label": "A4",
+                          "priceModifiers": [
+                            {
+                              "type": "fixed",
+                              "amount": 5
+                            }
+                          ]
+                        }
+                      ],
+                      "priceModifiers": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "OptionSetUpdate": {
+        "title": "OptionSetUpdate",
+        "description": "What to change. The option set is republished to every product it stays on.",
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Its name in Print Options. Default: the config's title."
+          },
+          "config": {
+            "type": "object",
+            "description": "The option set itself: Print Options' JSON (version \"2.0\"), as in the [option set JSON reference](https://print.app/docs/print-options/developers/option-set-json). Replaces the whole option set."
+          },
+          "addProductIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true,
+            "description": "Products to publish it to as well. A product on another option set moves to this one.",
+            "items": {
+              "type": "string",
+              "pattern": "^(gid://shopify/Product/)?[0-9]{1,20}$"
+            }
+          },
+          "removeProductIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true,
+            "description": "Products to take it off: their pages go back to the theme's own add-to-cart.",
+            "items": {
+              "type": "string",
+              "pattern": "^(gid://shopify/Product/)?[0-9]{1,20}$"
+            }
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "Check everything and say what would change, writing nothing."
+          }
+        }
+      },
+      "OptionSet": {
+        "title": "OptionSet",
+        "description": "An option set, with its JSON.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "productCount",
+          "products",
+          "updated",
+          "currency",
+          "fields",
+          "config"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "option_set"
+          },
+          "id": {
+            "type": "string",
+            "description": "The option set id."
+          },
+          "title": {
+            "type": "string",
+            "description": "Its name in Print Options (Products)."
+          },
+          "productCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "products": {
+            "type": "array",
+            "description": "The Shopify products it is on, the one published last first.",
+            "items": {
+              "type": "object",
+              "required": [
+                "productId",
+                "title",
+                "updated"
+              ],
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "description": "The Shopify product id, as `GET /v2/store-products` lists it."
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "updated": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "When it was last published to this product."
+                }
+              }
+            }
+          },
+          "updated": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintOptionsField"
+            },
+            "description": "Its fields as connectors address them: give a field's `source` as a connector's `source`."
+          },
+          "config": {
+            "type": "object",
+            "description": "The option set itself: Print Options' JSON (version \"2.0\"), as in the [option set JSON reference](https://print.app/docs/print-options/developers/option-set-json)."
+          }
+        },
+        "examples": [
+          {
+            "object": "option_set",
+            "id": "2f7c9e1a-4b8d-4e2f-9a61-0c3d5b7e8f10",
+            "title": "Flyers",
+            "productCount": 1,
+            "products": [
+              {
+                "productId": "8123456789",
+                "title": "Flyers",
+                "updated": "2026-10-29T10:00:00.000Z"
+              }
+            ],
+            "updated": "2026-10-29T10:00:00.000Z",
+            "currency": "USD",
+            "fields": [
+              {
+                "id": "size",
+                "label": "Size",
+                "type": "select-one",
+                "role": "size",
+                "source": {
+                  "role": "size"
+                },
+                "reference": "po:role/size",
+                "sends": "choice id as value, label as text",
+                "choices": [
+                  {
+                    "value": "a5",
+                    "label": "A5",
+                    "selected": true
+                  },
+                  {
+                    "value": "a4",
+                    "label": "A4",
+                    "selected": false
+                  }
+                ]
+              }
+            ],
+            "config": {
+              "version": "2.0",
+              "productId": "8123456789",
+              "title": "Flyers",
+              "layout": "stacked",
+              "pricing": {
+                "currency": "USD",
+                "basePrice": {
+                  "amount": 10,
+                  "per": "order"
+                }
+              },
+              "sections": [
+                {
+                  "id": "main",
+                  "title": "Your flyer",
+                  "fields": [
+                    {
+                      "id": "size",
+                      "type": "select-one",
+                      "display": "pills",
+                      "label": "Size",
+                      "role": "size",
+                      "required": true,
+                      "options": [
+                        {
+                          "id": "a5",
+                          "label": "A5",
+                          "default": true,
+                          "priceModifiers": []
+                        },
+                        {
+                          "id": "a4",
+                          "label": "A4",
+                          "priceModifiers": [
+                            {
+                              "type": "fixed",
+                              "amount": 5
+                            }
+                          ]
+                        }
+                      ],
+                      "priceModifiers": []
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
       "PageUpdate": {
         "title": "PageUpdate",
         "description": "The fields to change.",
@@ -20601,6 +23595,191 @@
           }
         }
       },
+      "PrintOptionsField": {
+        "title": "PrintOptionsField",
+        "description": "A Print Options field, as a connector points at it: by role when it has one, else by its id.",
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "type",
+          "role",
+          "source",
+          "reference",
+          "sends",
+          "choices"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "select-one, select-many, quantity, dimensions, number, text, file…"
+          },
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Its role, explicit or from its type (quantity, dimensions, file)."
+          },
+          "source": {
+            "type": "object",
+            "description": "What to give as `source`: `{ role }` when it has one, else `{ field }`.",
+            "properties": {
+              "role": {
+                "type": "string"
+              },
+              "field": {
+                "type": "string"
+              }
+            }
+          },
+          "reference": {
+            "type": "string",
+            "description": "The stored query: `po:role/<role>` or `po:field/<id>`."
+          },
+          "sends": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "value",
+                "label",
+                "selected"
+              ],
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "What the page sends for it."
+                },
+                "label": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "What the customer sees."
+                },
+                "selected": {
+                  "type": "boolean",
+                  "description": "Selected when the page loads."
+                }
+              }
+            }
+          }
+        }
+      },
+      "PrintOptions": {
+        "title": "PrintOptions",
+        "description": "Print Options on this account's store: whether its option sets can be managed here, and the currency they must be priced in.",
+        "type": "object",
+        "required": [
+          "object",
+          "platform",
+          "shop",
+          "manageable",
+          "installed",
+          "ready",
+          "currency",
+          "optionSetCount",
+          "productCount",
+          "installUrl",
+          "message"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "print_options"
+          },
+          "platform": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "`shopify`, `bigcommerce`, or null for a store on any other platform."
+          },
+          "shop": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The Shopify store (myshopify domain) option sets are managed on. null when the account is not a Shopify app install."
+          },
+          "manageable": {
+            "type": "boolean",
+            "description": "Whether option sets can be listed, created and changed here now."
+          },
+          "installed": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether Print Options is installed on the store. null when the account is not a Shopify store."
+          },
+          "ready": {
+            "type": "boolean",
+            "description": "Whether Print Options can publish to the store (it is installed and was opened in the last 90 days)."
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The store's default currency. Every option set must be priced in it."
+          },
+          "optionSetCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "productCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Products that carry an option set."
+          },
+          "installUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Where to install Print Options, when it is not installed."
+          },
+          "message": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What to do when `manageable` is false."
+          }
+        },
+        "examples": [
+          {
+            "object": "print_options",
+            "platform": "shopify",
+            "shop": "acme-print.myshopify.com",
+            "manageable": true,
+            "installed": true,
+            "ready": true,
+            "currency": "USD",
+            "optionSetCount": 3,
+            "productCount": 7,
+            "installUrl": null,
+            "message": null
+          }
+        ]
+      },
       "ProductList": {
         "title": "ProductList",
         "description": "A page of products, in id order.",
@@ -20815,89 +23994,7 @@
               "fields": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "required": [
-                    "id",
-                    "label",
-                    "type",
-                    "role",
-                    "source",
-                    "reference",
-                    "sends",
-                    "choices"
-                  ],
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "label": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "type": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "description": "select-one, select-many, quantity, dimensions, number, text, file…"
-                    },
-                    "role": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
-                      "description": "Its role, explicit or from its type (quantity, dimensions, file)."
-                    },
-                    "source": {
-                      "type": "object",
-                      "description": "What to give as `source`: `{ role }` when it has one, else `{ field }`.",
-                      "properties": {
-                        "role": {
-                          "type": "string"
-                        },
-                        "field": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "reference": {
-                      "type": "string",
-                      "description": "The stored query: `po:role/<role>` or `po:field/<id>`."
-                    },
-                    "sends": {
-                      "type": "string"
-                    },
-                    "choices": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "value",
-                          "label",
-                          "selected"
-                        ],
-                        "properties": {
-                          "value": {
-                            "type": "string",
-                            "description": "What the page sends for it."
-                          },
-                          "label": {
-                            "type": [
-                              "string",
-                              "null"
-                            ],
-                            "description": "What the customer sees."
-                          },
-                          "selected": {
-                            "type": "boolean",
-                            "description": "Selected when the page loads."
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/PrintOptionsField"
                 }
               },
               "error": {
