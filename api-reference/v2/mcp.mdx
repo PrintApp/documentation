@@ -143,7 +143,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | Library | `search_library_designs`, `import_library_design`, `search_library_graphics`, `import_library_graphics` |
 | Settings | `get_settings`, `update_settings` |
 | Projects | `list_projects`, `get_project`, `manage_project` |
-| Editor links | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
+| Project URLs | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
 
 Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; every tool that creates, changes or deletes something is marked destructive, so clients that ask before running those will ask.
 
@@ -167,7 +167,7 @@ There are two ways to start, and the agent checks in with you at each step of bo
 3. `search_library_designs` finds design templates at that size; the agent shows you two or three and imports the one you pick with `import_library_design`, or makes one with `create_design` if none fits.
 4. `preview_design` shows it, with one round of changes if you ask.
 5. After asking you, `set_product_designs` links it to the product.
-6. You get the product page link to test it as a customer, and the agent offers to set up the rest of your store.
+6. You get the product page link to test it as a customer, and the agent offers to set up the rest of your store. If the product page can't show the design yet (a password-protected store, a product you'd rather not link yet), you get a project URL to test it instead.
 
 **The whole store**: ask *"Set up my Print.App store with me. Go through my products one by one…"*. The agent starts with the product you sell most, as in the quick look, and gives you its link to test straight away. Then it goes through your other products one at a time, sets up connectors for their size, page and sides options, adds your logo, fonts and colours, and changes editor settings or 3D scenes only where they help. It finishes with a summary of what is live.
 
@@ -181,7 +181,7 @@ It never needs your secret key in the chat: the key goes into your assistant's s
 2. `upload_file` for logos, photos and SVG graphics.
 3. `get_design_content` to read the page size and safe area, then `edit_design` with a batch of operations: text, shapes, graphics, photo frames, QR codes, calendars. The batch saves as one change, or not at all.
 4. `preview_design` returns images of the pages, so the agent can look at its work and fix what it sees with another `edit_design`.
-5. `set_product_designs` to sell it on a store product, or `create_editor_link` to share it.
+5. `set_product_designs` to sell it on a store product, or `create_editor_link` for a project URL to share it or test it as a customer.
 
 Try it with a prompt like *"Create a two-sided 85 × 55 mm business card for a bakery called Crumb & Co with 3 mm bleed: logo from https://…/logo.png, the name, job title and phone as fields customers fill in, and a warm palette. Show me both sides."*
 

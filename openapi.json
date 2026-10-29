@@ -55,7 +55,7 @@
     },
     {
       "name": "Links",
-      "description": "Shareable editor links that open a design or project at create.print.app."
+      "description": "Project URLs (the dashboard's Create new Project URL): shareable links that open a design or project in the editor at create.print.app, to share with customers or to test a design."
     },
     {
       "name": "Connectors",
@@ -9568,8 +9568,8 @@
           "Links"
         ],
         "operationId": "createLink",
-        "summary": "Create an editor link",
-        "description": "Creates a link that opens a design (for a customer to start from) or a project (to carry on with) in the Print.App editor at create.print.app, without a store.",
+        "summary": "Create a project URL",
+        "description": "Creates a project URL, as the dashboard's Create new Project URL does: a link that opens a design (for a customer to start from) or a project (to carry on with) in the Print.App editor at create.print.app, without a store. It also serves as a test link, to try a design as a customer before it is on a product page.",
         "parameters": [
           {
             "$ref": "#/components/parameters/IdempotencyKey"
@@ -9771,8 +9771,8 @@
           "Links"
         ],
         "operationId": "getLink",
-        "summary": "Get an editor link",
-        "description": "Returns a link, with the project a customer saved through it.",
+        "summary": "Get a project URL",
+        "description": "Returns a project URL, with the project a customer saved through it.",
         "parameters": [
           {
             "name": "id",
@@ -9916,8 +9916,8 @@
           "Links"
         ],
         "operationId": "deleteLink",
-        "summary": "Expire an editor link",
-        "description": "Stops a link from working. Projects saved through it are kept.",
+        "summary": "Expire a project URL",
+        "description": "Stops a project URL from working. Projects saved through it are kept.",
         "parameters": [
           {
             "name": "id",
@@ -18952,7 +18952,7 @@
       },
       "Link": {
         "title": "Link",
-        "description": "An editor link at create.print.app.",
+        "description": "A project URL: an editor link at create.print.app.",
         "type": "object",
         "required": [
           "object",
