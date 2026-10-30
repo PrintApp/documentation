@@ -46,7 +46,8 @@
       "pages": [
         "mcp/server",
         "mcp/quickstart-agents",
-        "mcp/connectors"
+        "mcp/connectors",
+        "mcp/print-options"
       ]
     },
     {

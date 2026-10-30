@@ -1,0 +1,84 @@
+---
+title: "Set up Print Options with AI"
+description: "Let your AI assistant build your product options and prices with Print Options, check every price with you, publish them to your Shopify products, and link the designs your customers personalise."
+---
+
+[Print Options](/print-options/introduction) puts the choices of a print job on your product page (size, paper, sides, finish, quantity) and prices them live. Print.App's editor lets customers design the artwork for that job. Setting both up by hand means building an option set, entering every price, linking a design and connecting the two.
+
+Connected to the [Print.App MCP server](/mcp/server), your AI assistant does it with you. It starts from a Print Options template, fills in your choices and your prices, shows you what typical orders would cost, and publishes only once you agree. Then it links a design and connects it to the options where it should follow them.
+
+## What you need
+
+- A **Shopify** store with both **Print.App** and **Print Options** installed. Print Options is free: [install it from the Shopify App Store](https://apps.shopify.com/print-product-options).
+- Your AI assistant connected to the [Print.App MCP server](/mcp/server) with a secret key of that store.
+- The **Print Configurator** block in your theme, added once (see the [Shopify setup](/print-options/shopify)). The assistant tells you if it's missing.
+
+On WooCommerce, see [Other stores](#other-stores) below.
+
+## Ask for it
+
+Tell it the product, what customers choose and your prices:
+
+```
+Set up options on my Flyers product with Print Options: A5 or A4, 130 g or 300 g paper,
+single or double-sided, 100 to 1000 copies. My prices are in this list: …
+Show me the prices before anything goes live, then link a flyer design.
+```
+
+More examples:
+
+- *"Give my business cards a choice of three papers, a matt or gloss finish and rounded corners, with prices for 250, 500 and 1000 cards."*
+- *"My booklets should be priced per page, with a cover choice and a minimum order of $50."*
+- *"Which of my products have options, and which option set is on each?"*
+- *"Add an A3 size to the flyer options at $0.15 more per flyer, and show me what changes before you publish."*
+- *"Use the same options on my Posters and Large Posters products."*
+
+In Claude, Cursor and other apps that list MCP prompts, you can also pick **Set up product options and prices**.
+
+## What the assistant does
+
+<Steps>
+  <Step title="Checks your store">
+    It finds out whether option sets can be managed for your store, your store's currency (every price is in it), and which products already have options.
+  </Step>
+  <Step title="Starts from a template">
+    It picks the closest Print Options template (Business Cards, Flyers, Booklets, Stickers, Posters and more) and changes its choices and prices to yours. It marks the size, pages, paper and orientation choices so the editor can follow them later.
+  </Step>
+  <Step title="Shows you the prices">
+    Before anything goes live, it prices typical orders (the defaults, the cheapest, the dearest, a large quantity) with the same engine that prices your cart, and shows you a short table. It fixes the option set until every price is what you expect.
+  </Step>
+  <Step title="Publishes it">
+    When you agree, it publishes the option set to the product. If the product already has other options, it tells you first what changes.
+  </Step>
+  <Step title="Links a design">
+    If the product doesn't open a design yet, it finds one that fits (from the [Print.App library](/guides/designs/import-designs), or a new one) and links it after asking you. The editor then appears in the options' artwork step on its own: customers design right where they would upload a file.
+  </Step>
+  <Step title="Connects the design to the options">
+    Only where the design should follow an answer: each size opens its own design, a double-sided choice shows the back page, a custom size sizes the canvas, a page count sets the pages. It tests each [connector](/mcp/connectors) choice by choice before saving it. Portrait or landscape follows the options with no connector at all.
+  </Step>
+</Steps>
+
+Then open your product page, choose some options, design it, add it to the cart and check the price.
+
+## What it checks
+
+- **Every price, before you see it live.** The assistant prices orders with the engine your cart uses, line by line, so the table it shows you is what customers will pay.
+- **Your currency.** An option set priced in another currency than your store's is refused: the cart would refuse it too.
+- **The option set itself.** A problem (a choice without an id, a price tier out of order) comes back with where it is, and the assistant fixes it.
+- **Your products.** It publishes only to products of your store, and tells you when a product would move from another option set.
+- **Choices it doesn't recognise.** A price for a choice the option set doesn't have is flagged, not silently ignored.
+
+## Things to know
+
+- **What it publishes is yours to edit.** Option sets an assistant publishes show in Print Options under **Products**, like any other: open them there to change them yourself.
+- **One option set per product.** A set can be on many products; changing it updates all of them, and the assistant tells you how many first.
+- **Removing options** takes them off the product: its page goes back to your theme's own add-to-cart. The assistant asks before it does.
+- **It can't install apps or edit your theme.** It tells you when Print Options isn't installed, or when the Print Configurator block is missing from your theme.
+
+## Other stores
+
+On WooCommerce, the assistant can't publish to your store yet. It can still write an option set from your price list and check every price, starting from the same templates. Import the JSON it gives you in the builder (**More** → **Import JSON…**), check the preview, and save. See [Option set JSON](/print-options/developers/option-set-json).
+
+## For developers
+
+The same features are in the [REST API](/api-reference/v2/introduction): [the store's Print Options](/api-reference/v2/print-options/get-print-options), [templates](/api-reference/v2/print-options/list-option-set-templates), [quotes](/api-reference/v2/print-options/quote-option-set), and [option sets](/api-reference/v2/print-options/list-option-sets) to [create](/api-reference/v2/print-options/create-option-set), [update](/api-reference/v2/print-options/update-option-set) and [delete](/api-reference/v2/print-options/delete-option-set). The tools are in the [MCP reference](/api-reference/v2/mcp#how-an-agent-sets-up-print-options).
