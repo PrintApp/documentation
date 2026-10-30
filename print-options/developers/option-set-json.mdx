@@ -182,7 +182,7 @@ flyer with quantity breaks, plus a $5 setup fee and a $20 minimum:
 | `number` | `input`, `stepper`, `slider` | `min`, `max`, `step`, `defaultValue` |
 | `text` | `input`, `textarea` | `placeholder`, `maxLength` |
 | `dimensions` | `inputs` | `units` (`mm`, `cm`, `in`), `defaultUnit`, `minW`, `maxW`, `minH`, `maxH`, `defaultValue` (`{ "w": …, "h": … }`) |
-| `file` | `dropzone`, `producer` | `accept` (file types). `producer` shows only the Print.App designer, no upload. |
+| `file` | `dropzone`, `producer` | `accept`: the file types the field takes, as format names, extensions or MIME types (`["pdf", "zip"]`, `["application/pdf"]`); see [File types](/print-options/guides/uploads#file-types). `multiple: true` takes several files, up to `maxFiles` (2–10, default 5); see [Several files](/print-options/guides/uploads#several-files). `producer` shows only the Print.App designer, no upload. |
 | `info` | `note`, `summary` | `body` for a note; `summary` is a live recap |
 
 Every field has an `id` (unique across the whole option set) and may have
