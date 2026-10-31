@@ -40,6 +40,8 @@ const printAppInstance = new PrintAppClient({
 | `closeApp()`                                  | -            | Close and hide the Print.App Editor |
 | `addEventListener(eventType, function)`       | -            | Attaches an event listener to the Print.App Editor |
 | `removeEventListener(eventType, function)`    | -            | Removes an eventListener from the Editor |
+| `getBootStatus()`                             | -            | How far the editor got in loading. See [Checking how far the editor got](#checking-how-far-the-editor-got). |
+| `destroyApp()`                                | -            | Remove the editor from the page: its frame, its message listener and its scroll lock. |
 
 
 ### Event types
@@ -64,6 +66,7 @@ printAppInstance.addEventListener('app:ready', readyFunction);
 | `app:saved`       | -     | Dispatched when the customer has clicked the submit button and a project is saved.<br/>Your function receives the project's details, including its `projectId` and preview images: see [The app:saved payload](#the-appsaved-payload).<br/>`addToCart` is `true` when the design has **Add to Cart on Save** turned on. See [Adding to the cart on save](#adding-to-the-cart-on-save). |
 | `app:closed`       | -     | The editor is closed |
 | `app:display:changed`       | -     | Only in the Dialog [Display Mode](/configuration/display-modes): dispatched when the customer expands the editor to full window or shrinks it back.<br/>A data object of `{ expanded: Boolean }` is passed to your function. |
+| `app:boot:status`       | -     | Dispatched at each step of the editor loading, with the same object `getBootStatus()` returns. See [Checking how far the editor got](#checking-how-far-the-editor-got). |
 
 
 ## The app:saved payload
@@ -127,6 +130,56 @@ You can add this script to your store from the **Custom JavaScript** input in yo
 [store settings](/configuration/settings#store-settings).
 
 If the client cannot find your Add to Cart button, set the **Cart button selector** in your store settings.
+
+## Checking how far the editor got
+
+The editor loads in steps: the client fetches your store settings, adds the editor's frame to the page,
+the frame loads, the editor sends its first message to your page, the client sends it your parameters,
+the editor validates with our servers, and then it is ready. When `app:ready` doesn't arrive,
+`getBootStatus()` tells you which step it stopped at:
+
+```javascript
+printAppInstance.addEventListener('app:boot:status', ({ data }) => {
+    console.log(data.stage, data.stalled);
+});
+
+// or at any moment
+console.log(printAppInstance.getBootStatus());
+```
+
+The status holds counts and timings only, never your keys, settings or message contents, so you can log it
+or send it to us as it is.
+
+| `stage` | Meaning |
+| --- | --- |
+| `settings` | The client is fetching your store settings from `run.print.app`. |
+| `loading` | The frame is in the page; its editor page is loading. |
+| `loaded` | The frame has loaded; the editor has not sent its first message yet. |
+| `announced` | The editor reached your page and was sent your parameters; it is validating. |
+| `validated` | Validation succeeded. |
+| `ready` | The editor is ready to show. |
+| `failed` | Validation failed. `validationReason` says why, for example `domain mismatch`. |
+
+When a step takes longer than 10 seconds, `stalled` says which one, and the client logs a warning in the
+console:
+
+| `stalled` | What to check |
+| --- | --- |
+| `load` | The editor page never loaded. Check that `editor.print.app` resolves and is reachable from this network (DNS, a proxy or a content filter). |
+| `unreachable` | The frame shows the browser's own error page: `editor.print.app` did not answer this page. Check DNS, proxies, content filters and your page's Content-Security-Policy. |
+| `announce` | The editor page loaded but never reached your page. A browser setting or privacy extension that strips referrers stops it, as does anything blocking the editor's scripts. |
+| `validation` | The editor started but could not validate. It connects over a WebSocket to `*.execute-api.eu-west-1.amazonaws.com`: check for a blocked WebSocket in the editor frame's network requests. |
+
+The other fields:
+
+| Field | Description |
+| --- | --- |
+| `startedAt` | When the client was created (UTC). Send it to us with your IP address if you need us to look an attempt up. |
+| `settings` | `loaded`, `passed` (you gave `settings` yourself) or `unavailable` (the client carried on with defaults). |
+| `frame` | `inserted`, `src` and `referrerPolicy` of the editor's frame. |
+| `loads`, `announces`, `configsSent`, `validations`, `readies` | How many times each step happened. Each editor page counts once, and opening a design made in PrintFx switches the frame to a second page, so these can reach 2. `validations` counts successful validations. |
+| `validation`, `validationReason` | The last validation result (`success` or `failed`) and, for a failure, the editor's reason. |
+| `elapsed` | Milliseconds after `startedAt` at which each step last happened. |
 
 ## Loading the editor without a designId
 
