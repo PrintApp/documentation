@@ -26418,6 +26418,256 @@
           }
         ]
       },
+      "DesignOpPartCalendarParams": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "A calendar's params (module.add type calendar, and design.set modules.calendar: the defaults the customer's calendar panel starts from and new months take). Every style option defaults to the classic look: a filled grid with centred dates. The grid-only options are ignored by the strip and list layouts.",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "minimum": 1900,
+            "maximum": 2200
+          },
+          "month": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11,
+            "description": "0 = January. Items only."
+          },
+          "firstDay": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6,
+            "description": "The week's first day: 0 = Sunday, 1 = Monday."
+          },
+          "dayNames": {
+            "type": "array",
+            "minItems": 7,
+            "maxItems": 7,
+            "items": {
+              "type": "string",
+              "maxLength": 30
+            },
+            "description": "Always Sunday first; firstDay rotates them."
+          },
+          "events": {
+            "type": "array",
+            "maxItems": 400,
+            "items": {
+              "type": "object",
+              "required": [
+                "month",
+                "day",
+                "name"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "month": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 11
+                },
+                "day": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            }
+          },
+          "layout": {
+            "type": "string",
+            "enum": [
+              "grid",
+              "strip",
+              "list"
+            ],
+            "description": "grid (default): the month page; strip: the month in one row; list: one row per day with notes."
+          },
+          "dateFormat": {
+            "type": "string",
+            "enum": [
+              "d",
+              "dd"
+            ],
+            "description": "d: 1 (default); dd: 01."
+          },
+          "gap": {
+            "$ref": "#/components/schemas/DesignOpPartLength",
+            "description": "Between cells, in the batch's units. 0: the cells touch."
+          },
+          "cellRadius": {
+            "$ref": "#/components/schemas/DesignOpPartLength"
+          },
+          "headingFontFamily": {
+            "$ref": "#/components/schemas/DesignOpPartFont"
+          },
+          "headingFontWeight": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          },
+          "headingFontSize": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 500,
+            "description": "pt."
+          },
+          "headingFill": {
+            "$ref": "#/components/schemas/DesignOpPartSolidColor",
+            "description": "The day names' text colour."
+          },
+          "headingBackground": {
+            "$ref": "#/components/schemas/DesignOpPartColor",
+            "description": "The day names' background; none switches it off."
+          },
+          "headingBackgroundOn": {
+            "type": "boolean"
+          },
+          "bodyFontFamily": {
+            "$ref": "#/components/schemas/DesignOpPartFont"
+          },
+          "bodyFontWeight": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          },
+          "bodyFontSize": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 500,
+            "description": "pt."
+          },
+          "bodyFill": {
+            "$ref": "#/components/schemas/DesignOpPartSolidColor",
+            "description": "The dates' text colour."
+          },
+          "bodyBackground": {
+            "$ref": "#/components/schemas/DesignOpPartColor",
+            "description": "The date cells' background; none switches it off (a ruled look)."
+          },
+          "bodyBackgroundOn": {
+            "type": "boolean"
+          },
+          "weekendColor": {
+            "$ref": "#/components/schemas/DesignOpPartColor",
+            "description": "Weekend shading: the Saturday and Sunday cells' background."
+          },
+          "weekendBackgroundOn": {
+            "type": "boolean"
+          },
+          "weekendShadeHeading": {
+            "type": "boolean",
+            "description": "The shading covers the weekend day names too."
+          },
+          "weekendFill": {
+            "$ref": "#/components/schemas/DesignOpPartColor",
+            "description": "Weekend text colour: day names, dates and events (and, in the grid, the weekend's lines)."
+          },
+          "weekendFillOn": {
+            "type": "boolean"
+          },
+          "headingAlign": {
+            "type": "string",
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ],
+            "description": "Grid: the day names in their cells."
+          },
+          "headingHeight": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 1000,
+            "description": "Grid: the day-name row as % of a week row (100; about 30 for a slim header)."
+          },
+          "headingLineWidth": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Grid: pt; a line under each day name (0: none, the horizontal lines apply there)."
+          },
+          "headingLineColor": {
+            "$ref": "#/components/schemas/DesignOpPartSolidColor"
+          },
+          "datePosition": {
+            "type": "string",
+            "enum": [
+              "center",
+              "top-left",
+              "top-right",
+              "bottom-left",
+              "bottom-right"
+            ],
+            "description": "Grid: center (events under the date), or a corner (the day's events centred along the opposite edge)."
+          },
+          "cellPadding": {
+            "$ref": "#/components/schemas/DesignOpPartLength",
+            "description": "Grid: from the cell edge to a corner date, an event or a left/right day name, in the batch's units."
+          },
+          "eventSize": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 1000,
+            "description": "Grid, corner dates: event names as % of the date size (60)."
+          },
+          "hLines": {
+            "type": "string",
+            "enum": [
+              "none",
+              "rows",
+              "cells"
+            ],
+            "description": "Grid: rows: unbroken lines under the day names and between the weeks; cells: a line under each cell, broken at the gap."
+          },
+          "hLineWidth": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "pt."
+          },
+          "hLineColor": {
+            "$ref": "#/components/schemas/DesignOpPartSolidColor"
+          },
+          "vLines": {
+            "type": "string",
+            "enum": [
+              "none",
+              "columns"
+            ],
+            "description": "Grid: lines between the columns."
+          },
+          "vLineWidth": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "pt."
+          },
+          "vLineColor": {
+            "$ref": "#/components/schemas/DesignOpPartSolidColor"
+          },
+          "outerBorder": {
+            "type": "boolean",
+            "description": "Grid: a frame round the calendar, in the line settings."
+          },
+          "displayYearSelector": {
+            "type": "boolean",
+            "description": "design.set only: customers can change the year."
+          },
+          "displayEvents": {
+            "type": "boolean",
+            "description": "design.set only: customers can add events."
+          }
+        }
+      },
       "DesignOpTextAdd": {
         "title": "text.add",
         "type": "object",
@@ -26932,14 +27182,28 @@
           },
           "params": {
             "type": "object",
-            "maxProperties": 40,
-            "description": "Per type, as playbook/ops.md module.add (colours hex, fonts family names, sizes pt, lengths in the batch units, motifs as asset ids)."
+            "maxProperties": 60,
+            "description": "Per type, as playbook/ops.md module.add (colours hex, fonts family names, sizes pt, lengths in the batch units, motifs as asset ids). A calendar's: calendarParams."
           },
           "field": {
             "$ref": "#/components/schemas/DesignOpPartField"
           },
           "lock": {
             "$ref": "#/components/schemas/DesignOpPartLock"
+          }
+        },
+        "if": {
+          "properties": {
+            "type": {
+              "const": "calendar"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "params": {
+              "$ref": "#/components/schemas/DesignOpPartCalendarParams"
+            }
           }
         }
       },
@@ -27084,8 +27348,7 @@
                 }
               },
               "calendar": {
-                "type": "object",
-                "maxProperties": 30
+                "$ref": "#/components/schemas/DesignOpPartCalendarParams"
               },
               "stickers": {
                 "type": "object",
@@ -27180,7 +27443,7 @@
         ],
         "additionalProperties": false,
         "minProperties": 3,
-        "description": "Changes an item. Items added earlier in the same batch take any property of the op that added them. Items already on the saved design take: box, content, font, size, weight, style, color, leading, tracking, align, anchor, fill, stroke, opacity, rotate, lock, field, asset, svg, cornerRadius.",
+        "description": "Changes an item. Items added earlier in the same batch take any property of the op that added them. Items already on the saved design take: box, content, font, size, weight, style, color, leading, tracking, align, anchor, fill, stroke, opacity, rotate, lock, field, asset, svg, cornerRadius, and params on modules (merged into the stored params).",
         "properties": {
           "op": {
             "const": "item.update"
@@ -27409,7 +27672,8 @@
           },
           "params": {
             "type": "object",
-            "maxProperties": 40
+            "maxProperties": 60,
+            "description": "Merged into the item's params, as module.add takes them (a calendar's: calendarParams), on modules already on the saved design too."
           }
         }
       },
