@@ -107,8 +107,10 @@ Sends orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site
   <Step title="Get Lulu API keys">
     Generate an API key and secret at [developers.lulu.com](https://developers.lulu.com/user-profile/api-keys). To test first without printing or paying for anything, use Lulu's [sandbox](https://developers.sandbox.lulu.com/user-profile/api-keys), which has its own keys.
   </Step>
-  <Step title="Switch it on">
-    In your WordPress admin, open **PrintApp**, expand **Fulfilment providers**, then **Lulu**. Switch on **Send paid orders to Lulu**, choose the environment (**Sandbox** or **Production**), enter the API key and secret, and pick a shipping level. Lulu writes to the contact email if it has questions about a print job; it defaults to the site admin email.
+  <Step title="Connect Lulu">
+    In your WordPress admin, open **PrintApp**, expand **Fulfilment providers**, then **Lulu**. Enter the API key and secret, choose the environment (**Sandbox** or **Production**) and pick a shipping level, then save. Lulu writes to the contact email if it has questions about a print job; it defaults to the site admin email.
+
+    Once the key and secret are saved, products get a **Lulu** tab. Nothing is sent until you switch on **Send paid orders to Lulu**, so you can set up your products first.
   </Step>
   <Step title="Set up the product">
     On the WooCommerce product, open the **Lulu** tab under **Product data** and fill in:
@@ -117,7 +119,9 @@ Sends orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site
     - **Interior PDF URL**, a link Lulu can download your fixed interior PDF from
     - **Interior page count**
 
-    Save the product. The tab then shows the **Cover size** for that book and page count, such as `311.2 × 235 mm`.
+    Save the product. The tab then shows the **Cover size** for that book and page count, such as `311.2 × 235 mm`. If Lulu can't work it out, for example because of a mistyped product ID, the tab shows Lulu's reason instead.
+
+    For a **variable product** whose variations are different Lulu products, such as a glossy and a matte cover, open **Variations** and set each variation's own **Lulu product**. A variation left empty uses the product's. All variations share the product's interior PDF and page count.
   </Step>
   <Step title="Design the cover at that size">
     Lulu prints the cover from **one PDF page** that holds the back cover, spine and front cover. Make the Print.App design a single page at exactly the size the Lulu tab shows. That size already includes bleed, so don't add any on top.
@@ -125,7 +129,7 @@ Sends orders to the [Lulu Print API](https://www.lulu.com/sell/sell-on-your-site
     Lock the back cover and spine with the [object lock settings](/guides/designs/objects/settings), so customers personalise only the front. Assign a [PDF output profile](/guides/projects/pdf-output-profiles) that matches Lulu's file requirements.
   </Step>
   <Step title="Test in the sandbox">
-    With the **Sandbox** environment, place an order for the product and mark it **Processing**. Within a few minutes the order notes show the Lulu print job. Use the order action **Refresh Lulu print job status** to see whether Lulu accepted the files. Switch to **Production** once it does.
+    Switch on **Send paid orders to Lulu** with the **Sandbox** environment. Place an order for the product and mark it **Processing**. Within a few minutes the order notes show the Lulu print job. Use the order action **Refresh Lulu print job status** to see whether Lulu accepted the files. Switch to **Production** once it does.
   </Step>
 </Steps>
 
@@ -141,6 +145,8 @@ Lulu downloads the cover PDFs from your site's uploads folder, so your site must
 - **Temporary failures** are retried after 15 minutes and again after an hour. These include a network error, a cover PDF that couldn't be generated, or Lulu being busy.
 - **An order is never sent twice**, even if its status changes again.
 - **Every result is written to the order notes:** the print job number, its status, and Lulu's reasons if it refuses an address or rejects a file.
+- **The status is checked automatically** every few hours until the job ships, is rejected or is canceled (plugin 2.4.2 and later). A note is added only when something changes, with tracking links once it ships.
+- **Optionally, shipped orders are completed.** With **Complete shipped orders** on, an order Lulu has shipped is marked **Completed**, and WooCommerce's "order complete" email to the customer includes the tracking link. This applies only to orders where every item went to Lulu.
 
 Order actions, in the order's **Order actions** box:
 
