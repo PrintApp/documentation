@@ -63,15 +63,23 @@ real number of copies, open **Product** settings in the builder and, under
 | Line quantity | The cart line |
 | --- | --- |
 | **One line per job (quantity 1)** | Quantity 1, at the job's total. The default. |
-| **Real quantity (when the price divides evenly)** | Quantity = the copies, at the price per copy. |
+| **Real quantity** | Quantity = the copies, at the price per copy. |
 
-Real quantity only applies when the verified total divides into equal prices
-per copy, to the cent (to your store's price decimals on WooCommerce). A job
-of 250 flyers at $12.00 would be 250 × $0.048, which a cart can't charge, so
-that job stays one line at the same total. The customer never pays a different
-amount either way. On Shopify, real quantity
-also needs the customer to pay in your store's default currency, and allows at
-most 2,000 copies per line, Shopify's own limit for a bundle component.
+The customer always pays exactly the job's verified total, whichever mode you
+choose. What happens when the total doesn't divide evenly into a price per copy
+depends on your platform:
+
+- **Shopify:** the copies are carried in two rows a cent apart. A job of 250
+  flyers at $12.00 is 250 × $0.048, which a cart can't charge, so it becomes
+  50 × $0.04 and 200 × $0.05, still $12.00 for 250 copies. Shopify's quantity,
+  stock and shipping rates all count the 250. Set the product's weight in
+  Shopify to the weight of **one copy**. Real quantity needs the customer to
+  pay in your store's default currency, at least one cent per copy, and at most
+  2,000 copies per line (Shopify's own limit for a bundle component); otherwise
+  the job stays one line at the same total.
+- **WooCommerce:** a cart line has a single price, so real quantity only
+  applies when the total divides evenly, to your store's price decimals. The
+  $12.00 job of 250 flyers stays one line at the same total.
 
 <Note>
     On WooCommerce, a real-quantity line's quantity is fixed at the number of
