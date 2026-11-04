@@ -37,7 +37,16 @@ increment, customer nesting), and prices by area instead of length — see
 | **Film width** | The width of the film roll. Pieces nest across this. | 22 in |
 | **Max sheet length** | The longest sheet one order can use. A bigger order overflows onto a second sheet, which the customer sees as *Sheet 2*. | 120 in |
 | **Min billable length** | The shortest sheet a customer can order. A pack shorter than this is padded to it, and the summary shows the padding as free length. | 3 in |
-| **Bill per** | How the used length turns into the number sent to your store: per inch, per foot (or per centimeter for metric units), or fixed sheet lengths. The used length is rounded **up** to the next increment. | Inch |
+| **Bill per** | How the used length turns into the number sent to your store: per inch, per foot (or per centimeter for metric units), or fixed sheet lengths. The used length is rounded **up** to the next increment, or with fixed sheet lengths to the next of your **Sheet lengths**. | Inch |
+| **Sheet lengths** | Lengths the customer can pick in the builder's summary, separated by commas: `24, 36, 60, 120`. With *Fixed sheet lengths* these are the only lengths sold, and the longest one is the longest sheet: a bigger order starts another sheet. With any other **Bill per** they are quick picks. | — |
+| **Customer may enter a length** | Lets the customer type their own sheet length between the min and max length, rounded up to the billing increment. With it on, *Fixed sheet lengths* sells any whole inch or centimeter and the sheet lengths are only quick picks. | Off |
+
+A length the customer picks is a **minimum**. The sheet is drawn at that
+length and billed for it, and the summary shows the empty part as length
+they are already paying for. If the designs need more film, the sheet grows
+to what they need (the next sheet length on fixed sheet lengths) and the
+summary says so. Without sheet lengths or typed lengths, the builder has no
+length picker and the sheet always fits the designs.
 
 ## Nesting
 

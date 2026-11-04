@@ -17,8 +17,11 @@ save, the same facts ride the order line.
   film's top edge to the bottom of the lowest piece. Gaps and edge padding
   count; they are part of what the customer used.
 - **Billable length** — the used length rounded **up** to the billing
-  increment (inch, foot, centimeter) and never below the minimum billable
-  length. With fixed sheet lengths the value is the number of sheets.
+  increment (inch, foot, centimeter), or to the next of your sheet lengths
+  on fixed sheet lengths, and never below the minimum billable length nor
+  below a length the customer picked. With fixed sheet lengths a CSS
+  selector target receives the number of sheets; `po:dimensions` receives
+  the length.
 - **Sheets** — an order longer than the maximum sheet length overflows onto
   a second sheet; the billable total is the sum across sheets.
 

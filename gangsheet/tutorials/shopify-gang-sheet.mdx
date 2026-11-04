@@ -75,8 +75,12 @@ Editor** on in the Print.App dashboard settings.
 - **Bill per foot** rounds the used length up to whole feet — set it under
   Film and billing and the widget's tiers still apply.
 - **Fixed sheet sizes** (22" × 24", 22" × 48"…): set **Bill per** to *Fixed
-  sheet lengths*, list the sizes, and price the widget per sheet with a
-  quantity-based modifier instead of per length.
+  sheet lengths* and list the lengths under **Sheet lengths**. The builder
+  bills the smallest size that fits, and customers can pick a bigger one.
+  With `po:dimensions` the widget receives that length and prices it with
+  your per-length rate and tiers, as for any other length.
+- **Customer-chosen length:** turn on **Customer may enter a length** and
+  customers can type a length; it bills like any other length.
 - **Password-protected development store:** the storefront asks for the
   password; the product's *Preview* button in Shopify admin bypasses it
   for testing.
