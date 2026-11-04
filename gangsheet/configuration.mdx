@@ -37,7 +37,16 @@ increment, customer nesting), and prices by area instead of length — see
 | **Film width** | The width of the film roll. Pieces nest across this. | 22 in |
 | **Max sheet length** | The longest sheet one order can use. A bigger order overflows onto a second sheet, which the customer sees as *Sheet 2*. | 120 in |
 | **Min billable length** | The shortest sheet a customer can order. A pack shorter than this is padded to it, and the summary shows the padding as free length. | 3 in |
-| **Bill per** | How the used length turns into the number sent to your store: per inch, per foot (or per centimeter for metric units), or fixed sheet lengths. The used length is rounded **up** to the next increment. | Inch |
+| **Bill per** | How the used length turns into the number sent to your store: per inch, per foot (or per centimeter for metric units), or fixed sheet lengths. The used length is rounded **up** to the next increment, or with fixed sheet lengths to the next of your **Sheet lengths**. | Inch |
+| **Sheet lengths** | Lengths the customer can pick in the builder's summary, separated by commas: `24, 36, 60, 120`. With *Fixed sheet lengths* these are the only lengths sold, and the longest one is the longest sheet: a bigger order starts another sheet. With any other **Bill per** they are quick picks. | — |
+| **Customer may enter a length** | Lets the customer type their own sheet length between the min and max length, rounded up to the billing increment. With it on, *Fixed sheet lengths* sells any whole inch or centimeter and the sheet lengths are only quick picks. | Off |
+
+A length the customer picks is a **minimum**. The sheet is drawn at that
+length and billed for it, and the summary shows the empty part as length
+they are already paying for. If the designs need more film, the sheet grows
+to what they need (the next sheet length on fixed sheet lengths) and the
+summary says so. Without sheet lengths or typed lengths, the builder has no
+length picker and the sheet always fits the designs.
 
 ## Nesting
 
@@ -72,7 +81,6 @@ a DPI verdict.
 | --- | --- | --- |
 | **Remove background** | Shows a *Remove background* switch on each uploaded design. Uploads that are already transparent get the switch disabled — there is nothing to cut. | On |
 | **Allow image effects** | Shows a *Halftone* switch per design, which screens the piece at print resolution. | On |
-| **Upscale small images** | Upscales low-resolution uploads to help them meet the DPI floor. | Off |
 | **Welcome message** | The text shown in the empty design list before the first upload. Leave it blank for the default. | — |
 
 ## Design tools
@@ -83,10 +91,31 @@ Each switch adds a control to the builder. All four are on by default.
 | --- | --- |
 | **Add text** | An *Add Text* button: type text, pick a font from your typography catalog, set the height, colour and an optional outline. The text is placed as a vector and prints sharp at any size. |
 | **Gallery** | A *Gallery* button listing the graphics folders this design's profiles allow. Raster graphics behave like uploads; SVG graphics stay vector. |
+| **Search in the gallery** | A search box in the Gallery over the Print.App graphics library, and your own graphics when **Search covers** in your settings includes them. On by default; off leaves only your folders. See [Gallery](/gangsheet/design-tools#gallery). |
 | **Edit image** | An *Edit Image* button on uploaded and gallery rasters: rectangle or circle crop, brightness and contrast. |
 | **Outline** | An *Outline* button that adds a keyline around a design — a white outline for dark garments, for instance. |
 
 See [Design tools](/gangsheet/design-tools) for how each behaves.
+
+## Sticker sheet
+
+Turn a gang sheet into a print-and-cut sticker sheet: every design gets a
+cut line following its shape.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Cut lines** | *Contour cut* draws a cut line around every design, the border width outside its artwork. Holes are filled, and parts of one design that sit close together join into one sticker (the letters of a word, a logo and its tagline). | Off |
+| **Border width** | How far outside the artwork the cut line runs. | 0.125 in |
+| **Bleed past the cut** | The border colour prints this much beyond the cut line, so a slightly-off cut never shows a bare edge. | 0.04 in |
+| **Border colour** | The border's colour, as a hex value. White prints no ink on white vinyl. | `#ffffff` |
+| **Cut line separation** | The spot colour name your cutting software looks for. `CutContour` suits Roland VersaWorks and most RIPs. | `CutContour` |
+
+Each design's box on the sheet grows by the border and the bleed, so the
+**Gap between pieces** is the space between neighbouring cut lines' borders.
+Set it to what your cutter needs between stickers. The **Outline** tool is
+not offered on a sticker sheet: the border is the outline. Sticker sheets
+are view-only on the canvas, with sizes set in the design list. See
+[Sticker sheets](/gangsheet/output#sticker-sheets) for what the PDF holds.
 
 ## Pricing
 

@@ -49,6 +49,7 @@ Keep my secret key out of any file I commit, and tell me what you changed.
 - Import a Google font and set up a brand palette.
 - Put a design on a store product with `set_product_designs`, or share it with `create_editor_link` (a project URL, which is also a test link).
 - Make a design follow an option on the product page: `inspect_product_page`, `test_connector`, then `manage_connector` ([Set up connectors with AI](/mcp/connectors)).
+- Give a Shopify product its options and prices with Print Options: follow the `set_up_print_options` prompt. `list_option_sets` says whether the store can (both apps installed) and its currency; `print_options_reference` gives the format and the templates; `quote_option_set` prices typical orders to show the merchant before `manage_option_set` publishes anything ([Set up Print Options with AI](/mcp/print-options)).
 - Set a design's PDF to the printer's colour profile or add a cut line, with `manage_profile`.
 - Start from a ready-made design: `search_library_designs` with what the product is for and its trim size (`sameSize` keeps only designs at that size), show the merchant the `thumbnailUrl` images, then `import_library_design` the one they pick. `search_library_graphics` and `import_library_graphics` do the same for graphics and kits.
 - Show a design in 3D: `list_scenes` with the design's id says which scenes suit it, then `update_design` with `sceneId`.

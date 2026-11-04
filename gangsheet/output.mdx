@@ -25,6 +25,22 @@ render is available as a **300 dpi PNG with alpha**, which is what most DTF
 printers take. Both come from the project's *Download* actions and from
 the platform integrations below.
 
+## Sticker sheets
+
+With **Cut lines** set to *Contour cut* ([Sticker sheet](/gangsheet/configuration#sticker-sheet)),
+download the **PDF**. Next to the artwork and its border, it carries every
+sticker's cut line:
+
+| | |
+| --- | --- |
+| **Cut lines** | One closed vector path per sticker, stroked in a spot colour named after your **Cut line separation** (`CutContour` by default), with a magenta alternate. |
+| **Overprint** | Cut lines overprint, so they knock nothing out of the artwork beneath them. |
+| **Layer** | Cut lines sit on their own PDF layer, *CutContour*. |
+| **Registration** | Not added. Print-and-cut software (Roland VersaWorks, Onyx, Flexi, Caldera…) finds the separation and adds its own marks. |
+
+The PNG and TIFF downloads are flattened rasters: they carry the border but
+no cut lines.
+
 ## Where the files are
 
 <CardGroup cols={2}>

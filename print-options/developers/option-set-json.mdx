@@ -35,6 +35,15 @@ to:
 
 ## Working with an AI assistant
 
+<Note>
+    On Shopify with Print.App installed, an assistant connected to the
+    Print.App MCP server needs none of the steps below: it reads and publishes
+    option sets itself, and prices orders with the cart's own engine before
+    you agree. See [Set up Print Options with AI](/mcp/print-options). With
+    the MCP on any store, it can still check and price the JSON it writes
+    before you import it.
+</Note>
+
 An assistant that can read web pages can write option sets for you:
 
 1.  **Export** the set you want to change, or start from a template that is
@@ -182,7 +191,7 @@ flyer with quantity breaks, plus a $5 setup fee and a $20 minimum:
 | `number` | `input`, `stepper`, `slider` | `min`, `max`, `step`, `defaultValue` |
 | `text` | `input`, `textarea` | `placeholder`, `maxLength` |
 | `dimensions` | `inputs` | `units` (`mm`, `cm`, `in`), `defaultUnit`, `minW`, `maxW`, `minH`, `maxH`, `defaultValue` (`{ "w": …, "h": … }`) |
-| `file` | `dropzone`, `producer` | `accept` (file types). `producer` shows only the Print.App designer, no upload. |
+| `file` | `dropzone`, `producer` | `accept`: the file types the field takes, as format names, extensions or MIME types (`["pdf", "zip"]`, `["application/pdf"]`); see [File types](/print-options/guides/uploads#file-types). `multiple: true` takes several files, up to `maxFiles` (2–10, default 5); see [Several files](/print-options/guides/uploads#several-files). `producer` shows only the Print.App designer, no upload. |
 | `info` | `note`, `summary` | `body` for a note; `summary` is a live recap |
 
 Every field has an `id` (unique across the whole option set) and may have

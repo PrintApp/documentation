@@ -12,6 +12,72 @@ receives the specification and the artwork together.
 Out of the box, a file field accepts the file types you list (PDF by default),
 uploads it securely, and records the filename against the order.
 
+### File types
+
+Customers can upload these formats, up to **100 MB** per file:
+
+| Format | Extensions |
+| --- | --- |
+| PDF | `.pdf` |
+| JPEG | `.jpg`, `.jpeg` |
+| PNG | `.png` |
+| TIFF | `.tif`, `.tiff` |
+| SVG | `.svg` |
+| Illustrator | `.ai` |
+| EPS | `.eps` |
+| Photoshop | `.psd` |
+| ZIP | `.zip` |
+| Word | `.doc`, `.docx` |
+| Excel | `.xls`, `.xlsx` |
+| CSV | `.csv` |
+
+Choose what each file field takes in its **Accepted types**, separated by
+commas. Write them however is easiest: format names (`PDF, Word`),
+extensions (`.pdf, .zip`) or MIME types (`application/pdf`) all work. The
+builder shows what your entry allows as you type ("Customers can upload: PDF,
+ZIP").
+
+What your customers see:
+
+- **The file picker** offers only those types.
+- **A file of another type**, picked or dragged in, isn't uploaded. The field
+  shows *Accepted file types:* followed by the formats it takes, in the
+  customer's language.
+- **Your text** is shown under the dropzone as you wrote it, so you can phrase
+  it for your customers (`PDF, Word, JPG`).
+
+<Note>
+    If **Accepted types** names none of the formats above, the field takes any
+    of them. To limit a field, list the formats you want. With
+    [Filecheck](#filecheck-validated-uploads) connected, Filecheck's intake
+    decides which files it takes, because it checks their contents.
+</Note>
+
+### Several files
+
+To let customers attach more than one file, for example artwork plus
+fonts, a set of photos, or artwork and a mailing list, either:
+
+- **Allow multiple files on one field.** Select the File upload field and
+  turn on **Allow multiple files**, then set **Maximum files** (2 to 10,
+  5 by default). Customers can pick or drop several files at once; each one
+  is listed with **Remove**, and the field stops taking files at the
+  maximum.
+- **Add several File upload fields**, each with its own label, such as
+  *Artwork* and *Mailing list*. Each field keeps its own file.
+
+Every file reaches the order with its own **Download file** link. When an
+order has more than one file, each link names its file. Files are
+attachments: they don't change the price.
+
+<Note>
+    Multiple files apply to direct uploads. A field connected to
+    [Filecheck](#filecheck-validated-uploads), or set to **Designer only**,
+    holds one artwork.
+</Note>
+
+### Storage and downloads
+
 Uploaded files are stored for **30 days** and then removed automatically. Print
 Options is a configurator, not a file archive — download what you need into your
 production workflow.

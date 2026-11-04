@@ -41,10 +41,16 @@ description: "Answers to the questions gang sheet customers and shops ask most: 
         resolution check use the converted photo. A JPEG has no transparency,
         so switch on **Remove background** if you want it cut out.
     </Accordion>
+    <Accordion title="Can I fill the rest of my sheet?">
+        Yes. When part of the length you're paying for is still empty, the
+        summary offers **Fill with copies**: pick a design and the builder
+        adds as many copies as fit without making the sheet any longer.
+    </Accordion>
     <Accordion title="Can I move the pieces myself?">
         If the shop allows it, yes: select a piece on the sheet to move or
         resize it. Resizing updates the design's size and its resolution
-        check. Auto-nest re-packs everything at any time.
+        check. A move never re-packs on its own: **Re-pack** in the top bar
+        puts the sheet back into its packed layout.
     </Accordion>
 </AccordionGroup>
 
@@ -60,20 +66,40 @@ description: "Answers to the questions gang sheet customers and shops ask most: 
     </Accordion>
     <Accordion title="Customers see 'The nesting service is unreachable'">
         The packer runs on our servers and the builder could not reach it,
-        usually a network blip. The customer can retry with Auto-nest. If
+        usually a network blip. The customer can retry with **Re-pack** in
+        the top bar. If
         it persists on your store, contact support with the time and the
         store domain.
     </Accordion>
     <Accordion title="Can I bill fixed sheet sizes instead of length?">
         Yes. Set **Bill per** to *Fixed sheet lengths* and list the lengths
-        you sell. The builder rounds the used length up to the next listed
-        size and sends the sheet count as the billable value.
+        you sell under **Sheet lengths**. The builder rounds the used length
+        up to the next listed size, the customer can pick a longer one, and
+        an order longer than your longest size starts another sheet. A CSS
+        selector price target receives the sheet count; `po:dimensions`
+        receives the length.
+    </Accordion>
+    <Accordion title="Can customers choose their own sheet length?">
+        Yes. Turn on **Customer may enter a length** and the builder's
+        summary gets a *Custom length* box. The typed length is a minimum,
+        rounded up to your billing increment: the sheet is billed at that
+        length, and grows if the designs need more film.
+    </Accordion>
+    <Accordion title="Can I sell sticker sheets with cut lines?">
+        Yes. Set **Cut lines** to *Contour cut* under Sticker sheet. Every
+        design gets a border and a cut line following its shape, and the PDF
+        carries the cut lines as vectors in a `CutContour` spot colour, on
+        their own layer, which print-and-cut software reads directly. Download
+        sticker sheets as PDF: PNG and TIFF carry no cut lines. See
+        [Sticker sheets](/gangsheet/output#sticker-sheets).
     </Accordion>
     <Accordion title="The Gallery button shows no graphics">
         The gallery lists the graphics folders the design's **profiles**
         allow. Assign a profile with graphics folders to the design, or add
         folders to the profile it already has. See
-        [Assign resources](/guides/designs/assign-resources).
+        [Assign resources](/guides/designs/assign-resources). Customers can
+        still find library graphics with the gallery's search box unless
+        **Search in the gallery** is off.
     </Accordion>
     <Accordion title="Where is the customer's original upload?">
         The print file places the original at full resolution, so you do

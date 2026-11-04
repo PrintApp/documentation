@@ -1,6 +1,6 @@
 ---
 title: The customer flow
-description: "What your customers see in the Gang Sheet Builder, from the first upload to Preview & Save — the design list, sizes and quantities, the resolution check, auto-nesting and the order summary."
+description: "What your customers see in the Gang Sheet Builder, from the first upload to Preview & Save — the design list, sizes and quantities, the resolution check, automatic packing and the order summary."
 ---
 
 The builder has three areas: the **design list** on the left, the
@@ -19,7 +19,8 @@ The list starts with your welcome message and three ways in:
   thumbnail, its size at the shop's resolution floor, and a resolution
   verdict.
 - **Add Text** — types a text piece in your fonts. See [Design tools](/gangsheet/design-tools#add-text).
-- **Gallery** — picks a graphic from the folders you allow.
+- **Gallery** — picks a graphic from the folders you allow, or searches the
+  Print.App graphics library. See [Design tools](/gangsheet/design-tools#gallery).
 
 A new upload lands at the largest size that meets the DPI floor, so it
 starts out printable.
@@ -53,23 +54,41 @@ With **Low DPI blocks checkout** on, Preview & Save stays disabled until
 the design is shrunk or replaced. The sheet keeps packing meanwhile so the
 customer always sees the real layout.
 
+**Remove background** cuts the background out at up to 4096 pixels on the
+long side (16 megapixels), so a design with it on is judged by the
+cut-out's pixels: a 6000-pixel upload at 20 in drops to about 205 dpi when
+its background is removed.
+
 ## Auto-nesting
 
 Every change to the list re-packs the sheet on its own after a moment.
-**Auto-nest** in the top bar re-runs it on demand, and, when the shop
-allows, the customer can change the **gap** and switch **rotation** off for
-the whole sheet. An order longer than one sheet continues on *Sheet 2*;
-the tabs at the bottom switch between sheets.
+When the shop allows, the customer can change the **gap** and switch
+**rotation** off for the whole sheet. An order longer than one sheet
+continues on *Sheet 2*; the tabs at the bottom switch between sheets.
 
 If the shop allows it, pieces can also be selected, moved and resized on
-the sheet itself. A resize there changes the design's size in the list.
+the sheet itself. A resize there changes the design's size in the list and
+re-packs. A move stays where it was dropped, and a **Re-pack** button
+appears in the top bar to put the sheet back into its packed layout. The
+same button appears when a pack fails, as the retry.
+
+On a **sticker sheet** every design shows its border and a magenta cut line
+around it. A design's size in the list is its artwork's size; the sticker
+adds the border on every side. The sheet is view-only: sizes and copies
+are set in the list.
 
 ## The summary
 
 - **Length used** — the billed length of the sheet against the maximum.
+- **Sheet length** — shown when the shop lists sheet lengths or lets
+  customers enter one. *Auto* fits the sheet to the designs; a listed or
+  typed length makes the sheet at least that long. If the designs need
+  more, the sheet grows and the summary says so.
 - **Sheet space** — a bar of the film used, and how much of the length the
   customer is already paying for is still empty. Pieces added there cost
-  nothing more.
+  nothing more. When a copy of one of the designs fits in that space,
+  **Fill with copies** adds as many copies as fit without billing more
+  film (pick the design when there are several).
 - **Price** — the store's live price, when the shop has connected it.
 - **Blockers** — designs that stop checkout, with what to change.
 
