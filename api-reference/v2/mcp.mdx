@@ -225,7 +225,7 @@ The walk-through for store owners is [Set up connectors with AI](/mcp/connectors
 3. `quote_option_set` prices typical orders with the engine that prices the cart, line by line. The agent shows you a price table and changes nothing until every price is right.
 4. After asking you, `manage_option_set` publishes the option set to your products. `dryRun` shows first what would change, including products that would move from another option set.
 5. `set_product_designs` links a design, and the Print.App editor fills the options' artwork step by itself.
-6. Connectors only where the design should follow an answer, by role: a field with role `orientation` sets the page orientation with no connector; a size choice can open another design (`designSelector`) or show other pages (`pageIndex`); a dimensions field can size the canvas (`pageWidth` and `pageHeight`); a pages field can set the page count (`pageCount`). `test_connector` checks each first.
+6. Connectors only where the design should follow an answer, by role: a field with role `orientation` sets the page orientation with no connector; a size choice can open another design (`designSelector`) or show other pages (`pageIndex`); a dimensions field can size the canvas (`pageWidth` and `pageHeight`); a pages field can follow the design's page count (`pageCount`, sent from the editor to the product page). `test_connector` checks each first.
 
 Try it with *"Set up flyer options on my Flyers product with Print Options: A5 and A4, 130 g or 300 g paper, 100 to 1000 copies. My prices are in this list: … Show me the prices before anything goes live, then link a flyer design."*
 

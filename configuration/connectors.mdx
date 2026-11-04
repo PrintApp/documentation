@@ -17,7 +17,8 @@ For instance, if you have a TShirt color picker on your products page, you can h
 <AccordionGroup>
 
 <Accordion title="Page Width & Height">
-The Page Width & Height connector captures and sets the size (width / height) of the design canvas in the editor.<br/>When the editor loads, it will capture the set width and height from your input fields and adjust the canvas size accordingly. If the user changes the width and height in the editor, it will send the new values back to your input fields, which can be used to adjust pricing. This is useful for variable-canvas products like Banners, Verhicle Decals, Bill Boards, and other Large prints.
+The Page Width & Height connector captures and sets the size (width / height) of the design canvas in the editor.<br/>When the editor loads, it will capture the set width and height from your input fields and adjust the canvas size accordingly. If the user changes the width and height in the editor, it will send the new values back to your input fields, which can be used to adjust pricing. This is useful for variable-canvas products like Banners, Verhicle Decals, Bill Boards, and other Large prints.<br/>
+The value read from your field must be a plain number in the design's unit, such as `12`; a value like `12cm` is ignored. For a dropdown, that is the option's value, not the label the customer sees. A [Print Options](/print-options/introduction) size field works as it is, because it sends its unit along.
 </Accordion>
 
 <Accordion title="Text Value">
@@ -25,7 +26,8 @@ The Text Value connector captures text input from your product page and replaces
 </Accordion>
 
 <Accordion title="Page Count">
-The Page Count connector captures and sets the number of pages the editor will load with. This is useful for products that have multiple pages, like Booklets, Catalogs, and Magazines. The editor will load the number of pages set in your input field. If the user changes the number of pages in the editor, it will send the new value back to your input field.
+The Page Count connector sends the number of pages in the design to your input field whenever the customer adds or removes a page. This is useful for products priced by the page, like Booklets, Catalogs, and Magazines.<br/>
+This connector only sends data from the editor to your page; it does not change how many pages the editor opens with. To have the editor repeat a page as many times as the customer chose on your product page, use the **Page Clone** connector.
 </Accordion>
 
 <Accordion title="Printed Sides">
@@ -83,8 +85,6 @@ An Underlay color is used for products like TShirts and other apparelts where cu
         - **Query Selector**: All selectors are required to have a query selector. This is the selector that will be used to find the element on your web page. You can use any valid CSS / HTML selector here. If you are unsure what this is, you can use the **Inspect Element** tool in your browser to find the selector for the element you want to use or reach out to us to assist you.<br/>
 
         - **Target**: This is required for a Text Value connector. This is the title of the text object on the canvas you wish to target.
-
-        - **Filter In**: This is a regular expression value used to filter the values from your input field before passing it down to the editor. For instance, if you want to implement a Page Width selector and your dropdown selector has values of say: `8.6cm, 9cm, 12cm and 16cm` you will want to capture only the selected number value. You can use the filter in value of `\d+` to capture only the number value. You can reach out to us if you need help with this.<br/>
 
         - **Value Mappings**: This is used to map the values from your input field to the values in the editor.
         <br/>For instance, if you want to set the design underlay color using colors on your page, but on your page, you have color values in names like `Purple, Light Grey, Burnt Orange, and Mint Green`, the computer doesn't understand these color values.<br/>
