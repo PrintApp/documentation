@@ -138,7 +138,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | Palettes | `list_palettes`, `manage_palette` |
 | Products | `list_store_products`, `list_products`, `get_product`, `set_product_designs` |
 | Connectors | `inspect_product_page`, `test_connector`, `list_connectors`, `manage_connector` |
-| Profiles | `list_profiles`, `get_profile`, `manage_profile` (resource and PDF profiles) |
+| Profiles | `list_profiles`, `get_profile`, `manage_profile` (resource profiles, PDF profiles and imposition rules) |
 | 3D scenes | `list_scenes` |
 | Library | `search_library_designs`, `import_library_design`, `search_library_graphics`, `import_library_graphics` |
 | Settings | `get_settings`, `update_settings` |
@@ -148,7 +148,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 
 Each tool calls the REST API with your key, so the same rules, limits and errors apply. Tools that only read are marked read-only; every tool that creates, changes or deletes something is marked destructive, so clients that ask before running those will ask.
 
-`update_design` also sets what a design uses (its connectors, resource profiles, PDF profile and 3D scene) and its own settings over the store's. Given a scene, it says whether the scene suits the design.
+`update_design` also sets what a design uses (its connectors, resource profiles, PDF profile, imposition rule and 3D scene) and its own settings over the store's. Given a scene, it says whether the scene suits the design.
 
 The server also offers three prompts, for clients that list MCP prompts:
 
