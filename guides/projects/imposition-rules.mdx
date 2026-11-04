@@ -1,0 +1,186 @@
+---
+title: Imposition Rules
+description: "Join a design's pages into spreads, or place them on a fixed sheet, in its print PDF"
+---
+
+Imposition Rules decide how a design's pages are laid out in its print PDF. Your customers still edit the pages one by one: the front cover, the spine and the back cover of a book, or a calendar one month at a time. The PDF then puts those pages together the way your print process needs them, joined into one spread or placed on a fixed sheet such as A4.
+
+Like [PDF Output Profiles](/guides/projects/pdf-output-profiles), rules are kept at store level and assigned to designs, so one rule can serve many designs. Orders made from a design follow its rule.
+
+## Creating Imposition Rules
+To create a new rule, navigate to the [**Designs**](https://admin.print.app/designs/impositions) section in the admin panel and click the **More Actions** button on the top menu bar. From the dropdown, select **Imposition Rules**.
+
+This opens the Imposition Rules management panel on the sidebar. It lists your own rules and three built-in ones:
+
+| Built-in rule | What it does | Rule id |
+| --- | --- | --- |
+| **Book cover: back, spine and front as one spread** | Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are. | `_imposition_1` |
+| **Spreads: pages in pairs** | Joins pages 1 and 2, 3 and 4, and so on, side by side. For calendars and double-page layouts. | `_imposition_2` |
+| **Each page centred on an A4 sheet** | Puts every page in the middle of an A4 sheet. For products smaller than the sheet they are printed or stamped on. | `_imposition_3` |
+
+Built-in rules can't be edited. Click the **Clone** button next to one to create your own copy and change it from there. Alternatively, click the **Create New Rule** button at the top to start from scratch. Your own rules have **Edit** and delete buttons.
+
+### Rule Settings
+When creating or editing a rule, you can configure the following settings:
+
+- **Title** and **Description**: How the rule appears in the list and in the design settings. Describe what the rule is for, so you pick the right one later.
+
+- **Unit**: Sheet sizes and offsets are measured in this unit: `mm`, `cm`, `in` or `pt`. Switching the unit converts the values you entered, so every size stays the same on paper. `Default: mm`.
+
+#### Sections
+A rule is made of one or more sections. Each section takes some of the design's pages and lays them out. A page no section takes prints as it is. Click **Add section** when different pages need different treatment, for example a cover joined into a spread while the inner pages are placed on sheets.
+
+- **Pages**: The design pages this section takes, like `1-3`, `4-` (page 4 to the last page) or `1,3,5`. Leave it empty for every page. Page numbers are always the design's own page numbers, counted from 1. A page goes on one sheet only: once a section has placed it, later sections skip it.
+
+- **Pages per sheet**: How many pages go on one sheet. The section's pages are cut into groups of this size, in page order: with `2`, pages 1 and 2 share a sheet, then 3 and 4, and so on. One page per sheet only does something together with **Place on a fixed sheet**. `Default: 2`.
+
+- **Join**: **Side by side** places a group's pages from left to right. **Stacked** places them from top to bottom. `Default: Side by side`.
+
+- **Order on the sheet**: Each group's pages from left to right (top to bottom when stacked), counted within the group. `3, 2, 1` puts a book's back cover, spine and front cover in place. The order must name every page of the group once. Leave it empty to keep the pages in their order. The diagram next to these fields shows where each page of a group sits on the sheet.
+
+- **Place on a fixed sheet**: Off: each sheet is just big enough for its pages, their bleed and the printer's marks. On: the pages are placed on a sheet of the size you set. `Default: Off`.
+    - **Sheet width** and **Sheet height**: The size of the sheet, in the rule's unit. A new fixed sheet starts at A4.
+    - **Position**: Where the pages sit on the sheet: **Top left**, **Top**, **Top right**, **Left**, **Centre**, **Right**, **Bottom left**, **Bottom** or **Bottom right**. `Default: Centre`.
+    - **Offset across** and **Offset down**: How far the pages sit from the edges they are positioned against, measured inward. When centred, the offset moves them right or down. `Default: 0`.
+
+- **Crop marks**: **As the PDF profile** follows the **Render Marks** setting of the design's [PDF Output Profile](/guides/projects/pdf-output-profiles). **On** and **Off** override it for this section. `Default: As the PDF profile`.
+
+- **Fold marks**: **As the crop marks**, **On** or **Off**. Fold marks are only drawn where two pages are joined. `Default: As the crop marks`.
+
+Click **Save** at the bottom of the editor to save the rule. It needs a title before it can be saved.
+
+## How Pages Are Joined
+- **Pages join edge to edge at the trim.** Pages joined side by side must have the same height; stacked pages must have the same width (within about 0.2 mm). Their widths (or heights) can differ, which is what lets a spine sit between two covers.
+
+- **Only the outer edges keep their bleed.** Where two pages meet, the bleed of one would print over its neighbour, so it is cut off at the trim. Set up bleed on the design as usual: the outer edges of the spread use it.
+
+- **The sheet is trimmed as one piece.** Each sheet carries a TrimBox and a BleedBox around the joined pages, so imposition software and cutters see the spread as one trimmed piece.
+
+- **Printer's marks are drawn for the sheet.** Crop marks sit at the four corners of the joined pages. Dashed fold marks sit at both ends of every join. Both are drawn outside the bleed, at least 3 mm from the trim. The pages on a sheet leave out their own crop marks.
+
+- **Everything else comes along unchanged.** Spot colors, [PDF Layers](/guides/designs/pdf-layers) and fonts are kept as they were rendered, and a password set in the PDF Output Profile still applies.
+
+- **Sheets keep the page order.** A sheet takes the place of its first page in the PDF. Pages that are not on a sheet keep their place.
+
+- **Incomplete groups print as they are.** If a page of a group is not in the PDF (it is set not to print, or a PDF link prints only some pages), the other pages of that group print on their own. So do pages left over at the end, such as page 13 when pages are paired.
+
+- **Copies get their own sheets.** When the PDF prints a page more than once, each copy goes on a sheet of its own.
+
+<Warning>Imposed sheets are production files. If the PDF Output Profile's **Compatibility** is an accessibility standard such as PDF/UA-1 or PDF/A-3a, the document's accessibility tags no longer point at the imposed pages.</Warning>
+
+### When a Rule Can't Be Applied
+If a rule asks for pages to be joined that don't match, the design's PDF link answers with a message instead of a PDF. The message names the pages and their sizes, for example:
+
+```
+Imposition: pages 3, 2, 1 have different heights (216 mm, 210 mm, 216 mm) and cannot be joined.
+```
+
+To fix it, give those pages the same height (the same width when stacked), or change the rule's **Pages** or **Pages per sheet** so they are not joined. Until then, adding `?imposition=none` to the link still gives you the pages as they are.
+
+On a fixed sheet, the joined pages must fit on the sheet at their trim size. If they are larger than the sheet, the PDF can't be generated. Make the sheet bigger, or put fewer pages on it.
+
+## Assigning Imposition Rules to Design Templates
+Once you have created a rule, you can assign it to your Design Templates. Navigate to the [**Design Templates**](https://admin.print.app/designs) section in the admin panel and hover over the template you want to assign it to.
+
+Click the Gear Icon to open the design settings.
+
+The Settings Panel will open on the sidebar. On the top bar, click the **Profiles** tab.
+
+Click the **Imposition Rule** dropdown and select the rule you want this template to use. Choose **None** to print the pages as they are.
+
+Finally, click the **Save** button at the top of the sidebar to save your changes.
+
+Orders made from the design follow its rule: the rule is applied whenever the order's print PDF is generated.
+
+<Tip>You can assign the same rule to every design that is printed the same way, and the same design can have both a PDF Output Profile and an Imposition Rule. The profile decides how each page is rendered; the rule decides how the rendered pages are put on sheets.</Tip>
+
+## Choosing a Rule on a PDF Link
+Add `imposition` to a PDF link to print with a different rule than the design's, without changing the design:
+
+- `?imposition=none` prints the pages as they are, ignoring the design's rule.
+- `?imposition=<rule id>` uses that rule instead, for example a built-in one from the table above.
+
+```
+https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b?imposition=none
+https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b?imposition=_imposition_2
+```
+
+To try one of your own rules, assign it to the design and open the design's PDF.
+
+## Examples
+
+### Book cover: back, spine and front as one spread
+A paperback design has the front cover on page 1, the spine on page 2, the back cover on page 3 and the inside pages after that. All three cover pages have the same height. The printer needs the cover as one spread, read from left to right: back cover, spine, front cover.
+
+Clone the built-in **Book cover: back, spine and front as one spread** rule, or create a rule with one section:
+
+- **Pages**: `1-3`
+- **Pages per sheet**: `3`
+- **Join**: Side by side
+- **Order on the sheet**: `3, 2, 1`
+
+The first sheet of the PDF is the cover spread:
+
+<Frame caption="The cover spread: back cover, spine and front cover joined at the trim. Fold marks go where the spine meets each cover.">
+  <div style={{display: 'flex', justifyContent: 'center', padding: '24px 0'}}>
+    <div style={{display: 'flex', border: '1.5px solid currentColor', fontSize: '13px', lineHeight: 1.4, textAlign: 'center'}}>
+      <div style={{width: '150px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Back cover<br />page 3</div>
+      <div style={{width: '34px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderLeft: '1.5px dashed currentColor', borderRight: '1.5px dashed currentColor', writingMode: 'vertical-rl'}}>Spine · page 2</div>
+      <div style={{width: '150px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Front cover<br />page 1</div>
+    </div>
+  </div>
+</Frame>
+
+The inside pages, from page 4 on, print as they are. Add a second section with **Pages** `4-` if they need imposing too.
+
+A spine is as wide as the book is thick, so its width usually depends on the page count or the paper the customer picks. Let that product option set the spine's width with a [Page Width connector](/configuration/connectors) aimed at page 2. Pages join at the trim whatever their width, so the spread always fits the spine. A connector acts on the first page unless you give it a page number: set its `page` to `2` through the [connectors API](/api-reference/v2/connectors/update-connector), or let your AI assistant [set up the connector](/mcp/connectors).
+
+### Calendar months in pairs
+A wall calendar design has a cover on page 1, then each month as two pages: the month's picture, followed by its grid of dates. That makes pages 2 to 25 for twelve months. The printer wants each month on one sheet, picture above grid.
+
+Create a rule with one section:
+
+- **Pages**: `2-`
+- **Pages per sheet**: `2`
+- **Join**: Stacked
+- **Fold marks**: Off, as the picture and the grid are not folded
+
+Each month becomes one sheet, and the cover prints on its own:
+
+<Frame caption="One month on one sheet: the picture page above the grid page, joined at the trim.">
+  <div style={{display: 'flex', justifyContent: 'center', padding: '24px 0'}}>
+    <div style={{border: '1.5px solid currentColor', fontSize: '13px', lineHeight: 1.4, textAlign: 'center'}}>
+      <div style={{width: '220px', height: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Month picture<br />page 2</div>
+      <div style={{width: '220px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTop: '1px solid rgba(127, 127, 127, 0.6)'}}>Month grid<br />page 3</div>
+    </div>
+  </div>
+</Frame>
+
+For calendars and double-page layouts whose pages sit side by side, the built-in **Spreads: pages in pairs** rule joins pages 1 and 2, 3 and 4, and so on.
+
+### One page centred on an A4 sheet
+A card, label or foil-stamped item is printed or stamped on A4 stock. The design is the size of the finished item; the press needs it on a full A4 sheet.
+
+Clone the built-in **Each page centred on an A4 sheet** rule, or create a rule with one section:
+
+- **Pages**: empty, for every page
+- **Pages per sheet**: `1`
+- **Place on a fixed sheet**: On, **Sheet width** `210` and **Sheet height** `297` (mm)
+- **Position**: Centre
+
+Every page of the design is placed in the middle of its own A4 sheet.
+
+If your press or stamping jig holds the item at a fixed spot instead, set **Position** to **Top left** with **Offset across** `15` and **Offset down** `20`: the item's top-left corner then sits 15 mm from the left edge of the sheet and 20 mm from the top.
+
+<Frame caption="Left: Position Centre. Right: Position Top left, with Offset across 15 mm and Offset down 20 mm.">
+  <div style={{display: 'flex', justifyContent: 'center', gap: '40px', padding: '24px 0', fontSize: '12px'}}>
+    <div style={{position: 'relative', width: '168px', height: '238px', border: '1.5px solid rgba(127, 127, 127, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <span style={{position: 'absolute', bottom: '6px', right: '8px', opacity: 0.6}}>A4</span>
+      <div style={{width: '72px', height: '40px', border: '1.5px solid currentColor', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>page</div>
+    </div>
+    <div style={{position: 'relative', width: '168px', height: '238px', border: '1.5px solid rgba(127, 127, 127, 0.6)'}}>
+      <span style={{position: 'absolute', bottom: '6px', right: '8px', opacity: 0.6}}>A4</span>
+      <div style={{position: 'absolute', left: '12px', top: '16px', width: '72px', height: '40px', border: '1.5px solid currentColor', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>page</div>
+    </div>
+  </div>
+</Frame>
