@@ -98,6 +98,26 @@ Each switch adds a control to the builder. All four are on by default.
 
 See [Design tools](/gangsheet/design-tools) for how each behaves.
 
+## Sticker sheet
+
+Turn a gang sheet into a print-and-cut sticker sheet: every design gets a
+cut line following its shape.
+
+| Setting | What it does | Default |
+| --- | --- | --- |
+| **Cut lines** | *Contour cut* draws a cut line around every design, the border width outside its artwork. Holes are filled, and parts of one design that sit close together join into one sticker (the letters of a word, a logo and its tagline). | Off |
+| **Border width** | How far outside the artwork the cut line runs. | 0.125 in |
+| **Bleed past the cut** | The border colour prints this much beyond the cut line, so a slightly-off cut never shows a bare edge. | 0.04 in |
+| **Border colour** | The border's colour, as a hex value. White prints no ink on white vinyl. | `#ffffff` |
+| **Cut line separation** | The spot colour name your cutting software looks for. `CutContour` suits Roland VersaWorks and most RIPs. | `CutContour` |
+
+Each design's box on the sheet grows by the border and the bleed, so the
+**Gap between pieces** is the space between neighbouring cut lines' borders.
+Set it to what your cutter needs between stickers. The **Outline** tool is
+not offered on a sticker sheet: the border is the outline. Sticker sheets
+are view-only on the canvas, with sizes set in the design list. See
+[Sticker sheets](/gangsheet/output#sticker-sheets) for what the PDF holds.
+
 ## Pricing
 
 Print.App does not price the sheet; your store does. These two fields
