@@ -153,6 +153,16 @@
     ]
   },
   {
+    "group": "Imposition rules",
+    "pages": [
+      "api-reference/v2/imposition-rules/list-imposition-rules",
+      "api-reference/v2/imposition-rules/create-imposition-rule",
+      "api-reference/v2/imposition-rules/get-imposition-rule",
+      "api-reference/v2/imposition-rules/update-imposition-rule",
+      "api-reference/v2/imposition-rules/delete-imposition-rule"
+    ]
+  },
+  {
     "group": "3D scenes",
     "pages": [
       "api-reference/v2/3d-scenes/list-scenes",

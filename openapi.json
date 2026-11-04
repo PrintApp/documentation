@@ -74,6 +74,10 @@
       "description": "The settings print PDFs are made with: colour conversion, PDF standard, cut lines, image resolution, fonts."
     },
     {
+      "name": "Imposition rules",
+      "description": "How print PDFs put a design's pages on sheets: joined into spreads, such as a book cover's back, spine and front or a calendar's pairs, or placed on a fixed sheet. Customers still edit the pages one by one."
+    },
+    {
       "name": "3D scenes",
       "description": "The 3D scenes the editor previews designs on: models with print areas, folds, flipbooks and sheets, yours and the Print.App library's. A design picks one with `sceneId`."
     },
@@ -208,7 +212,7 @@
         ],
         "operationId": "listDesigns",
         "summary": "List designs",
-        "description": "Lists your account's designs. Folders are not listed; see Design folders. With connectorId, resourceProfileId or pdfProfileId, a page can hold fewer designs than `limit` (even none) while `hasMore` is true: keep following `nextCursor`.",
+        "description": "Lists your account's designs. Folders are not listed; see Design folders. With connectorId, resourceProfileId, pdfProfileId or impositionRuleId, a page can hold fewer designs than `limit` (even none) while `hasMore` is true: keep following `nextCursor`.",
         "parameters": [
           {
             "required": false,
@@ -266,6 +270,15 @@
               "type": "string"
             },
             "description": "Only the designs whose print PDF uses this PDF profile."
+          },
+          {
+            "required": false,
+            "name": "impositionRuleId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Only the designs whose print PDF uses this imposition rule."
           }
         ],
         "responses": {
@@ -307,6 +320,7 @@
                       "connectorIds": [],
                       "resourceProfileIds": [],
                       "pdfProfileId": null,
+                      "impositionRuleId": null,
                       "settings": {},
                       "sceneId": null,
                       "created": "2026-09-02T14:05:11Z",
@@ -493,6 +507,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -699,6 +714,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -812,7 +828,7 @@
         ],
         "operationId": "updateDesign",
         "summary": "Update a design",
-        "description": "Changes a design's title or tags, the connectors, resource profiles and PDF profile it uses, the 3D scene it previews on (`sceneId`), or its own settings over the store's (`settings`: send `null` for one to follow the store again). Only the fields you send change.",
+        "description": "Changes a design's title or tags, the connectors, resource profiles, PDF profile and imposition rule it uses, the 3D scene it previews on (`sceneId`), or its own settings over the store's (`settings`: send `null` for one to follow the store again). Only the fields you send change.",
         "parameters": [
           {
             "name": "id",
@@ -870,6 +886,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -1230,6 +1247,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -1948,6 +1966,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -2174,6 +2193,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -2388,6 +2408,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -2583,6 +2604,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -2798,6 +2820,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -12553,6 +12576,7 @@
                   "connectorIds": [],
                   "resourceProfileIds": [],
                   "pdfProfileId": null,
+                  "impositionRuleId": null,
                   "settings": {},
                   "sceneId": null,
                   "created": "2026-09-02T14:05:11Z",
@@ -13580,6 +13604,8 @@
                   "autoSaveDuration": 8,
                   "autoExpireProjects": false,
                   "projectLifetime": 1,
+                  "autoExpireUploads": false,
+                  "uploadLifetime": 120,
                   "skipPreview": false,
                   "expandThumbNav": true,
                   "showTabTitle": true,
@@ -13748,6 +13774,8 @@
                   "autoSaveDuration": 8,
                   "autoExpireProjects": false,
                   "projectLifetime": 1,
+                  "autoExpireUploads": false,
+                  "uploadLifetime": 120,
                   "skipPreview": false,
                   "expandThumbNav": true,
                   "showTabTitle": true,
@@ -17463,6 +17491,923 @@
           }
         }
       }
+    },
+    "/v2/imposition-rules": {
+      "get": {
+        "tags": [
+          "Imposition rules"
+        ],
+        "operationId": "listImpositionRules",
+        "summary": "List imposition rules",
+        "description": "Lists your imposition rules and the built-in ones.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpositionRuleList"
+                },
+                "example": {
+                  "object": "list",
+                  "data": [
+                    {
+                      "object": "imposition_rule",
+                      "id": "_imposition_1",
+                      "title": "Book cover: back, spine and front as one spread",
+                      "description": "Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are.",
+                      "builtIn": true,
+                      "unit": "mm",
+                      "sections": [
+                        {
+                          "pages": "1-3",
+                          "group": 3,
+                          "order": [
+                            3,
+                            2,
+                            1
+                          ],
+                          "direction": "horizontal",
+                          "sheet": null,
+                          "anchor": "center",
+                          "offset": {
+                            "x": 0,
+                            "y": 0
+                          },
+                          "marks": {
+                            "crop": null,
+                            "fold": null
+                          }
+                        }
+                      ],
+                      "created": null,
+                      "modified": null
+                    }
+                  ],
+                  "hasMore": false,
+                  "nextCursor": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Imposition rules"
+        ],
+        "operationId": "createImpositionRule",
+        "summary": "Create an imposition rule",
+        "description": "Creates a rule from its `sections`, or from `basedOn` (a built-in rule or one of yours). Each section takes design pages, cuts them into groups of `group` and puts each group on one sheet: joined at the trim along `direction` in `order`, on a sheet that fits them or on a fixed `sheet`. Sections the PDF would ignore are refused. Give it to designs with `impositionRuleId` on `PATCH /v2/designs/{id}`.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImpositionRuleCreate"
+              },
+              "example": {
+                "title": "Calendar: month pairs on A3",
+                "unit": "mm",
+                "sections": [
+                  {
+                    "pages": "",
+                    "group": 2,
+                    "direction": "vertical",
+                    "sheet": {
+                      "width": 297,
+                      "height": 420
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpositionRule"
+                },
+                "example": {
+                  "object": "imposition_rule",
+                  "id": "_imposition_1",
+                  "title": "Book cover: back, spine and front as one spread",
+                  "description": "Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are.",
+                  "builtIn": true,
+                  "unit": "mm",
+                  "sections": [
+                    {
+                      "pages": "1-3",
+                      "group": 3,
+                      "order": [
+                        3,
+                        2,
+                        1
+                      ],
+                      "direction": "horizontal",
+                      "sheet": null,
+                      "anchor": "center",
+                      "offset": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "marks": {
+                        "crop": null,
+                        "fold": null
+                      }
+                    }
+                  ],
+                  "created": null,
+                  "modified": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/imposition-rules/{id}": {
+      "get": {
+        "tags": [
+          "Imposition rules"
+        ],
+        "operationId": "getImpositionRule",
+        "summary": "Get an imposition rule",
+        "description": "Returns one imposition rule, every section with every field as the PDF reads it. The designs that use it: `GET /v2/designs?impositionRuleId=`.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The rule id (`imposition_…`, or a built-in `_imposition_…`)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpositionRule"
+                },
+                "example": {
+                  "object": "imposition_rule",
+                  "id": "_imposition_1",
+                  "title": "Book cover: back, spine and front as one spread",
+                  "description": "Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are.",
+                  "builtIn": true,
+                  "unit": "mm",
+                  "sections": [
+                    {
+                      "pages": "1-3",
+                      "group": 3,
+                      "order": [
+                        3,
+                        2,
+                        1
+                      ],
+                      "direction": "horizontal",
+                      "sheet": null,
+                      "anchor": "center",
+                      "offset": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "marks": {
+                        "crop": null,
+                        "fold": null
+                      }
+                    }
+                  ],
+                  "created": null,
+                  "modified": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Imposition rules"
+        ],
+        "operationId": "updateImpositionRule",
+        "summary": "Update an imposition rule",
+        "description": "Changes the fields you send; `sections` replaces them all. Every design that uses it makes its next PDFs with it. Built-in rules cannot be changed (409 `builtin_imposition_rule`).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The rule id."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImpositionRuleUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImpositionRule"
+                },
+                "example": {
+                  "object": "imposition_rule",
+                  "id": "_imposition_1",
+                  "title": "Book cover: back, spine and front as one spread",
+                  "description": "Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are.",
+                  "builtIn": true,
+                  "unit": "mm",
+                  "sections": [
+                    {
+                      "pages": "1-3",
+                      "group": 3,
+                      "order": [
+                        3,
+                        2,
+                        1
+                      ],
+                      "direction": "horizontal",
+                      "sheet": null,
+                      "anchor": "center",
+                      "offset": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "marks": {
+                        "crop": null,
+                        "fold": null
+                      }
+                    }
+                  ],
+                  "created": null,
+                  "modified": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Imposition rules"
+        ],
+        "operationId": "deleteImpositionRule",
+        "summary": "Delete an imposition rule",
+        "description": "Takes the rule off every design that uses it (their PDFs print the pages as they are), then deletes it. Built-in rules cannot be deleted (409 `builtin_imposition_rule`).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The rule id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Deleted"
+                },
+                "example": {
+                  "object": "design",
+                  "id": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "deleted": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current state; `code` says how (`folder_not_empty`, `builtin_folder`, `builtin_palette`, `editor_not_supported`, `design_changed`, `idempotency_key_reused`, `idempotency_in_progress`, `print_options_unavailable`, `print_options_not_installed`, `currency_mismatch`).",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "folder_not_empty",
+                  "message": "The folder still holds designs. Remove them from it (or delete them) first.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -19554,6 +20499,15 @@
             "maxLength": 120,
             "description": "The PDF profile its print PDF is made with; `null` for the design's own PDF settings."
           },
+          "impositionRuleId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 120,
+            "description": "The imposition rule its print PDF puts its pages on sheets with (`GET /v2/imposition-rules`); `null` for none, each page printing as it is."
+          },
           "settings": {
             "type": "object",
             "additionalProperties": false,
@@ -19754,6 +20708,7 @@
           "connectorIds",
           "resourceProfileIds",
           "pdfProfileId",
+          "impositionRuleId",
           "settings",
           "sceneId",
           "created",
@@ -19838,6 +20793,13 @@
               "null"
             ],
             "description": "The PDF profile its print PDF is made with; `null`: its own settings."
+          },
+          "impositionRuleId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The imposition rule its print PDF puts its pages on sheets with (spreads, a fixed sheet); `null`: each page prints as it is."
           },
           "settings": {
             "type": "object",
@@ -19995,6 +20957,7 @@
             "connectorIds": [],
             "resourceProfileIds": [],
             "pdfProfileId": null,
+            "impositionRuleId": null,
             "settings": {},
             "sceneId": null,
             "created": "2026-09-02T14:05:11Z",
@@ -20721,6 +21684,605 @@
             "builtIn": false,
             "created": "2026-10-27T10:00:00Z",
             "modified": "2026-10-27T10:05:00Z"
+          }
+        ]
+      },
+      "ImpositionRuleCreate": {
+        "title": "ImpositionRuleCreate",
+        "description": "A new imposition rule: its `sections`, or `basedOn` to copy another rule's unit and sections (what you send replaces what is copied). Give it to designs with `impositionRuleId` on `PATCH /v2/designs/{id}`.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The rule's name."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "What it is for."
+          },
+          "basedOn": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120,
+            "description": "A rule to start from, such as a built-in one."
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mm",
+              "cm",
+              "in",
+              "pt"
+            ],
+            "description": "The unit of every sheet size and offset. Default mm."
+          },
+          "sections": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "group"
+              ],
+              "description": "Takes design pages, cuts them into groups of `group`, and puts each group on one sheet.",
+              "properties": {
+                "pages": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "The design pages it takes: `\"1-3\"`, `\"4-\"`, `\"1,3,5\"`, or `\"\"` for every page. Pages an earlier section took are skipped, and so are pages the PDF does not print. Default `\"\"`."
+                },
+                "group": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100,
+                  "description": "Pages per sheet. A group missing a page prints as it is. `1` needs a `sheet`: one page alone on a sheet that fits it changes nothing."
+                },
+                "order": {
+                  "type": "array",
+                  "maxItems": 100,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "description": "Where each page of a group goes, from the left (from the top when vertical): `[3, 2, 1]` puts the third page first, as a book cover's back, spine and front. `1` to `group`, each once; empty for the order they come in. Default empty."
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "horizontal",
+                    "vertical"
+                  ],
+                  "description": "How a group's pages join, edge to edge at the trim: side by side (`horizontal`: the pages need one height) or stacked (`vertical`: one width). Default `horizontal`."
+                },
+                "sheet": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false,
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "properties": {
+                    "width": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    },
+                    "height": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "A fixed sheet the group is placed on, in `unit`. `null`: a sheet that fits the group and its bleed. Default `null`."
+                },
+                "anchor": {
+                  "type": "string",
+                  "enum": [
+                    "top-left",
+                    "top",
+                    "top-right",
+                    "left",
+                    "center",
+                    "right",
+                    "bottom-left",
+                    "bottom",
+                    "bottom-right"
+                  ],
+                  "description": "Where the group sits on a fixed `sheet`. Default `center`. Only with a `sheet`."
+                },
+                "offset": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "On a fixed `sheet`, how far the group moves from the anchored edges, inward, in `unit` (on a centred axis: right and down). Default 0, 0."
+                },
+                "marks": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "crop": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Crop marks around the group. `null`: the PDF profile's Render Marks."
+                    },
+                    "fold": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Fold marks where its pages join. `null`: as crop marks."
+                    }
+                  },
+                  "description": "The marks the sheet draws. The pages on it lose their own crop marks. Default both `null`."
+                }
+              }
+            },
+            "description": "Applied in order. Pages no section takes print as they are."
+          }
+        },
+        "examples": [
+          {
+            "title": "Calendar: month pairs on A3",
+            "unit": "mm",
+            "sections": [
+              {
+                "pages": "",
+                "group": 2,
+                "direction": "vertical",
+                "sheet": {
+                  "width": 297,
+                  "height": 420
+                }
+              }
+            ]
+          },
+          {
+            "title": "Thesis cover",
+            "basedOn": "_imposition_1"
+          }
+        ]
+      },
+      "ImpositionRuleList": {
+        "title": "ImpositionRuleList",
+        "description": "Imposition rules, your own and the built-in ones.",
+        "type": "object",
+        "required": [
+          "object",
+          "data",
+          "hasMore",
+          "nextCursor"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImpositionRule"
+            }
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether another page may follow."
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass as `cursor` to fetch the next page. `null` on the last page."
+          }
+        }
+      },
+      "ImpositionRuleUpdate": {
+        "title": "ImpositionRuleUpdate",
+        "description": "The fields to change. `sections` replaces them all.",
+        "type": "object",
+        "additionalProperties": false,
+        "minProperties": 1,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The rule's name."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "What it is for (`\"\"` clears it)."
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mm",
+              "cm",
+              "in",
+              "pt"
+            ],
+            "description": "The unit of every sheet size and offset. The numbers stay as they are."
+          },
+          "sections": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "group"
+              ],
+              "description": "Takes design pages, cuts them into groups of `group`, and puts each group on one sheet.",
+              "properties": {
+                "pages": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "The design pages it takes: `\"1-3\"`, `\"4-\"`, `\"1,3,5\"`, or `\"\"` for every page. Pages an earlier section took are skipped, and so are pages the PDF does not print. Default `\"\"`."
+                },
+                "group": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100,
+                  "description": "Pages per sheet. A group missing a page prints as it is. `1` needs a `sheet`: one page alone on a sheet that fits it changes nothing."
+                },
+                "order": {
+                  "type": "array",
+                  "maxItems": 100,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "description": "Where each page of a group goes, from the left (from the top when vertical): `[3, 2, 1]` puts the third page first, as a book cover's back, spine and front. `1` to `group`, each once; empty for the order they come in. Default empty."
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "horizontal",
+                    "vertical"
+                  ],
+                  "description": "How a group's pages join, edge to edge at the trim: side by side (`horizontal`: the pages need one height) or stacked (`vertical`: one width). Default `horizontal`."
+                },
+                "sheet": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "additionalProperties": false,
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "properties": {
+                    "width": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    },
+                    "height": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "A fixed sheet the group is placed on, in `unit`. `null`: a sheet that fits the group and its bleed. Default `null`."
+                },
+                "anchor": {
+                  "type": "string",
+                  "enum": [
+                    "top-left",
+                    "top",
+                    "top-right",
+                    "left",
+                    "center",
+                    "right",
+                    "bottom-left",
+                    "bottom",
+                    "bottom-right"
+                  ],
+                  "description": "Where the group sits on a fixed `sheet`. Default `center`. Only with a `sheet`."
+                },
+                "offset": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "On a fixed `sheet`, how far the group moves from the anchored edges, inward, in `unit` (on a centred axis: right and down). Default 0, 0."
+                },
+                "marks": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "crop": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Crop marks around the group. `null`: the PDF profile's Render Marks."
+                    },
+                    "fold": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Fold marks where its pages join. `null`: as crop marks."
+                    }
+                  },
+                  "description": "The marks the sheet draws. The pages on it lose their own crop marks. Default both `null`."
+                }
+              }
+            },
+            "description": "Applied in order. Pages no section takes print as they are."
+          }
+        }
+      },
+      "ImpositionRule": {
+        "title": "ImpositionRule",
+        "description": "How the print PDF of a design puts its pages on sheets: joined into spreads (a book cover, calendar pairs) or placed on a fixed sheet. Designs use one with `impositionRuleId`; a customer's project follows its design's.",
+        "type": "object",
+        "required": [
+          "object",
+          "id",
+          "title",
+          "description",
+          "builtIn",
+          "unit",
+          "sections",
+          "created",
+          "modified"
+        ],
+        "properties": {
+          "object": {
+            "type": "string",
+            "const": "imposition_rule"
+          },
+          "id": {
+            "type": "string",
+            "description": "The rule id: `imposition_…`, or a built-in `_imposition_…`."
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What it is for."
+          },
+          "builtIn": {
+            "type": "boolean",
+            "description": "One of Print.App's rules: it can be used and copied (`basedOn`), not changed."
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "mm",
+              "cm",
+              "in",
+              "pt"
+            ],
+            "description": "The unit of every sheet size and offset."
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "pages",
+                "group",
+                "order",
+                "direction",
+                "sheet",
+                "anchor",
+                "offset",
+                "marks"
+              ],
+              "description": "Takes design pages, cuts them into groups of `group`, and puts each group on one sheet. Every field is shown as the PDF reads it.",
+              "properties": {
+                "pages": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "The design pages it takes: `\"1-3\"`, `\"4-\"`, `\"1,3,5\"`, or `\"\"` for every page. Pages an earlier section took are skipped, and so are pages the PDF does not print."
+                },
+                "group": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100,
+                  "description": "Pages per sheet. A group missing a page prints as it is. `1` needs a `sheet`: one page alone on a sheet that fits it changes nothing."
+                },
+                "order": {
+                  "type": "array",
+                  "maxItems": 100,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "description": "Where each page of a group goes, from the left (from the top when vertical): `[3, 2, 1]` puts the third page first, as a book cover's back, spine and front. `1` to `group`, each once; empty for the order they come in."
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "horizontal",
+                    "vertical"
+                  ],
+                  "description": "How a group's pages join, edge to edge at the trim: side by side (`horizontal`: the pages need one height) or stacked (`vertical`: one width)."
+                },
+                "sheet": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "width",
+                    "height"
+                  ],
+                  "properties": {
+                    "width": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    },
+                    "height": {
+                      "type": "number",
+                      "exclusiveMinimum": 0,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "A fixed sheet the group is placed on, in `unit`. `null`: a sheet that fits the group and its bleed."
+                },
+                "anchor": {
+                  "type": "string",
+                  "enum": [
+                    "top-left",
+                    "top",
+                    "top-right",
+                    "left",
+                    "center",
+                    "right",
+                    "bottom-left",
+                    "bottom",
+                    "bottom-right"
+                  ],
+                  "description": "Where the group sits on a fixed `sheet`."
+                },
+                "offset": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    }
+                  },
+                  "description": "On a fixed `sheet`, how far the group moves from the anchored edges, inward, in `unit` (on a centred axis: right and down).",
+                  "required": [
+                    "x",
+                    "y"
+                  ]
+                },
+                "marks": {
+                  "type": "object",
+                  "properties": {
+                    "crop": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Crop marks around the group. `null`: the PDF profile's Render Marks."
+                    },
+                    "fold": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ],
+                      "description": "Fold marks where its pages join. `null`: as crop marks."
+                    }
+                  },
+                  "description": "The marks the sheet draws. The pages on it lose their own crop marks.",
+                  "required": [
+                    "crop",
+                    "fold"
+                  ]
+                }
+              }
+            },
+            "description": "Applied in order. Pages no section takes print as they are."
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "object": "imposition_rule",
+            "id": "_imposition_1",
+            "title": "Book cover: back, spine and front as one spread",
+            "description": "Pages 1, 2 and 3 are the front cover, the spine and the back cover. The PDF joins them into one spread with the back cover on the left. Later pages print as they are.",
+            "builtIn": true,
+            "unit": "mm",
+            "sections": [
+              {
+                "pages": "1-3",
+                "group": 3,
+                "order": [
+                  3,
+                  2,
+                  1
+                ],
+                "direction": "horizontal",
+                "sheet": null,
+                "anchor": "center",
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "marks": {
+                  "crop": null,
+                  "fold": null
+                }
+              }
+            ],
+            "created": null,
+            "modified": null
           }
         ]
       },
@@ -25492,6 +27054,8 @@
           "autoSaveDuration": "is read-only here: change it in the dashboard",
           "autoExpireProjects": "is read-only here: change it in the dashboard",
           "projectLifetime": "is read-only here: change it in the dashboard",
+          "autoExpireUploads": "is read-only here: change it in the dashboard",
+          "uploadLifetime": "is read-only here: change it in the dashboard",
           "customJs": "cannot be set through the API: code there runs in every visitor's browser. Set it in the dashboard",
           "customCss": "cannot be set through the API. Set it in the dashboard",
           "projectCreated": "cannot be set through the API: a webhook address receives customers' projects. Set it in the dashboard",
@@ -25557,6 +27121,24 @@
             "minimum": 1,
             "maximum": 120,
             "description": "Days a project is kept, when autoExpireProjects is on.",
+            "readOnly": true
+          },
+          "autoExpireUploads": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Files customers upload are deleted after uploadLifetime days, never before a project that uses them.",
+            "readOnly": true
+          },
+          "uploadLifetime": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 7,
+            "maximum": 366,
+            "description": "Days a customer upload is kept, when autoExpireUploads is on.",
             "readOnly": true
           },
           "skipPreview": {
@@ -25936,6 +27518,8 @@
           "autoSaveDuration",
           "autoExpireProjects",
           "projectLifetime",
+          "autoExpireUploads",
+          "uploadLifetime",
           "skipPreview",
           "expandThumbNav",
           "showTabTitle",
@@ -25989,6 +27573,8 @@
             "autoSaveDuration": 8,
             "autoExpireProjects": false,
             "projectLifetime": 1,
+            "autoExpireUploads": false,
+            "uploadLifetime": 120,
             "skipPreview": false,
             "expandThumbNav": true,
             "showTabTitle": true,
