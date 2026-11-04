@@ -54,6 +54,11 @@ With **Low DPI blocks checkout** on, Preview & Save stays disabled until
 the design is shrunk or replaced. The sheet keeps packing meanwhile so the
 customer always sees the real layout.
 
+**Remove background** cuts the background out at up to 4096 pixels on the
+long side (16 megapixels), so a design with it on is judged by the
+cut-out's pixels: a 6000-pixel upload at 20 in drops to about 205 dpi when
+its background is removed.
+
 ## Auto-nesting
 
 Every change to the list re-packs the sheet on its own after a moment.
@@ -81,7 +86,9 @@ are set in the list.
   more, the sheet grows and the summary says so.
 - **Sheet space** — a bar of the film used, and how much of the length the
   customer is already paying for is still empty. Pieces added there cost
-  nothing more.
+  nothing more. When a copy of one of the designs fits in that space,
+  **Fill with copies** adds as many copies as fit without billing more
+  film (pick the design when there are several).
 - **Price** — the store's live price, when the shop has connected it.
 - **Blockers** — designs that stop checkout, with what to change.
 
