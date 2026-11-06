@@ -27,7 +27,8 @@ Keep my secret key out of any file I commit, and tell me what you changed.
     | Codex | Add `[mcp_servers.printapp]` with `url = "https://api.print.app/mcp"` and `bearer_token_env_var = "PRINTAPP_SECRET_KEY"` to `~/.codex/config.toml`, and `export PRINTAPP_SECRET_KEY=<key>` in the user's shell profile. |
     | Cursor | Add `"printapp": { "url": "https://api.print.app/mcp", "headers": { "Authorization": "Bearer <key>" } }` under `mcpServers` in `~/.cursor/mcp.json`. |
     | VS Code | Add the server with a `promptString` input (`password: true`) to `.vscode/mcp.json`, as in [MCP server → VS Code](/mcp/server#vs-code); VS Code asks the user for the key. |
-    | ChatGPT, Claude | You can't add these yourself. Tell the user to add a custom connector with the URL `https://api.print.app/mcp` (OAuth), then paste their key on the Print.App page that opens. Steps: [MCP server](/mcp/server#chatgpt). |
+    | Claude | You can't add it yourself. Send the user to [Print.App in Claude's connector directory](https://claude.ai/directory/print-app) to click **Connect**, then paste their key on the Print.App page that opens. Steps: [MCP server](/mcp/server#claude). |
+    | ChatGPT | You can't add it yourself. Tell the user to add a custom connector with the URL `https://api.print.app/mcp` (OAuth), then paste their key on the Print.App page that opens. Steps: [MCP server](/mcp/server#chatgpt). |
     | Anything else | A remote MCP server over Streamable HTTP at `https://api.print.app/mcp`, with the header `Authorization: Bearer <key>`. |
 
 3. **Load it.** Reload or restart the MCP servers if your tool needs it (Claude Code: start a new session; Cursor: refresh in MCP settings; VS Code: **MCP: List Servers**, then start `printapp`).
