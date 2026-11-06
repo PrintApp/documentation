@@ -128,3 +128,28 @@ connect the builder to the product page.
 | **Price display source** | Shows the product page's live price inside the builder. `po:price` reads the Print Options widget's total; otherwise a CSS selector of the theme's price element. Empty hides the price in the builder. | — |
 
 [Pricing](/gangsheet/pricing) walks through each path with numbers.
+
+## Finished gang sheets
+
+Some customers, often other print shops, already have a print-ready gang
+sheet and only want to upload it. Those uploads go through
+[Filecheck](https://filecheck.io), our file-check product, not the builder.
+This section is hidden in Transfers-by-size mode.
+
+**Set up in Filecheck** opens the Filecheck dashboard with this panel's
+**Film width**, **Max sheet length** and **Minimum DPI**. Once you sign in
+(or create an account), Filecheck builds a *DTF gang sheet* workflow from
+them and opens product mapping, so you can pick the product customers
+upload finished sheets to:
+
+- One PNG, TIFF or PDF per order.
+- Resolution is measured across the film width, so a sheet of any length
+  is judged at your minimum DPI. With **Low DPI blocks checkout** off, a low
+  resolution is a warning instead of a rejection.
+- Nothing is changed automatically: no upscaling and no background removal
+  on the customer's sheet.
+
+Clicking it again with the same settings reuses that workflow; other
+settings make another. Filecheck does not yet check that the background is
+transparent or that the sheet is within your maximum length. The upload
+instructions ask the customer for both.
