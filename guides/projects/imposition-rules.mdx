@@ -105,7 +105,7 @@ https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b?imposition=no
 https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b?imposition=_imposition_2
 ```
 
-To try one of your own rules, assign it to the design and open the design's PDF.
+To try one of your own rules, assign it to the design and open the design's PDF, or find its id with the [API or your AI assistant](#with-the-api-or-an-ai-assistant).
 
 ## Examples
 
@@ -184,3 +184,69 @@ If your press or stamping jig holds the item at a fixed spot instead, set **Posi
     </div>
   </div>
 </Frame>
+
+## With the API or an AI Assistant
+Everything on this page can also be done from your own server with the [REST API](/api-reference/v2/introduction), or by asking your AI assistant through the [Print.App MCP server](/mcp/server). Both list your own rules with their ids (`imposition_…`), which the dashboard doesn't show.
+
+### REST API
+- `/v2/imposition-rules` lets you [list](/api-reference/v2/imposition-rules/list-imposition-rules) your rules and the built-in ones, [create](/api-reference/v2/imposition-rules/create-imposition-rule), [get](/api-reference/v2/imposition-rules/get-imposition-rule), [update](/api-reference/v2/imposition-rules/update-imposition-rule) and [delete](/api-reference/v2/imposition-rules/delete-imposition-rule) them.
+- [Update a design](/api-reference/v2/designs/update-design) with `impositionRuleId` to give it a rule. Send `null` to take the rule off. Every design shows its `impositionRuleId`.
+- [List designs](/api-reference/v2/designs/list) with `?impositionRuleId=` finds the designs that use a rule.
+
+A section's fields are the dashboard's settings:
+
+| Dashboard | API |
+| --- | --- |
+| **Pages** | `pages`: `"1-3"`, `"4-"`, `"1,3,5"`, or `""` for every page |
+| **Pages per sheet** | `group` |
+| **Join** | `direction`: `horizontal` (Side by side) or `vertical` (Stacked) |
+| **Order on the sheet** | `order`, for example `[3, 2, 1]`, or `[]` to keep the pages in their order |
+| **Place on a fixed sheet**, **Sheet width** and **Sheet height** | `sheet`: `{ "width": 210, "height": 297 }`, or `null` for a sheet that fits the pages |
+| **Position** | `anchor`: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` or `bottom-right` |
+| **Offset across** and **Offset down** | `offset`: `{ "x": 15, "y": 20 }` |
+| **Crop marks** and **Fold marks** | `marks`: `{ "crop": true, "fold": false }`. `null` means As the PDF profile for crop marks, and As the crop marks for fold marks. |
+
+This request creates the book cover rule from the [first example](#book-cover-back-spine-and-front-as-one-spread):
+
+```bash
+curl https://api.print.app/v2/imposition-rules \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Paperback cover",
+    "unit": "mm",
+    "sections": [{ "pages": "1-3", "group": 3, "order": [3, 2, 1], "direction": "horizontal" }]
+  }'
+```
+
+The answer is the new rule. Give its `id` to the design:
+
+```bash
+curl -X PATCH https://api.print.app/v2/designs/design_… \
+  -H "Authorization: Bearer sk_…" \
+  -H "Content-Type: application/json" \
+  -d '{ "impositionRuleId": "imposition_…" }'
+```
+
+The API works like the dashboard, except for these points:
+
+- **Send `group` with every section.** The other fields can be left out and take the dashboard's defaults: every page, side by side, no fixed sheet, centred, no offset, and marks as the PDF profile. A rule answers with every field of every section, as its PDF reads them.
+- **Changing `unit` keeps the numbers.** Unlike the dashboard, the API doesn't convert sheet sizes and offsets to the new unit. Send them again in the new unit.
+- **Sections the PDF would ignore are refused.** The answer is `400`, with the field at fault in `param`, such as `sections[0].order`. The API refuses:
+  - an order that doesn't name each page of the group once;
+  - one page per sheet without a fixed `sheet`;
+  - an `anchor` or `offset` without a `sheet`;
+  - a page list the PDF can't read, such as `5-3`, `0` or `a`.
+- **`sections` on an update replaces all the sections.**
+- **Built-in rules can be read and copied, but not changed or deleted.** Updating or deleting one answers `409 builtin_imposition_rule`. To start from one, create a rule with `basedOn` set to its id, such as `_imposition_1`. Its unit and sections are copied, and any you send replace them.
+- **Deleting a rule takes it off every design that uses it first.** Those designs then print their pages as they are.
+
+### AI Assistant
+Ask in your own words. For example:
+
+- *"Our paperback designs need the cover as one spread: back cover, spine, front cover. Set that up for the thesis designs."*
+- *"Print each month of the 2027 wall calendar on one sheet, with the picture above the grid."*
+- *"Put every label design in the middle of an A4 sheet."*
+- *"Which designs use the A4 sheet rule?"*
+
+The assistant manages rules with `list_profiles`, `get_profile` and `manage_profile`, and gives them to designs with `update_design`. See the [MCP reference](/api-reference/v2/mcp).
