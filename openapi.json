@@ -18533,6 +18533,7 @@
             "enum": [
               "pageIndex",
               "designSelector",
+              "templateFilter",
               "pageClone",
               "pageCount",
               "printedPageCount",
@@ -18543,7 +18544,7 @@
               "underlayColor",
               "event"
             ],
-            "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
+            "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `templateFilter`: Lists only the designs a choice maps to in the editor's Templates tab (`to`: design ids, comma-separated), and the customer picks one of them; a choice with no mapping lists them all. When the open design is not listed for a new choice, the first one listed opens. Every design listed must be assigned to the product and carry this connector too. PrintFx editor only.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
           },
           "source": {
             "type": "object",
@@ -18601,7 +18602,7 @@
                   "type": "string",
                   "minLength": 1,
                   "maxLength": 200,
-                  "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
+                  "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), design ids, comma-separated (templateFilter), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
                 }
               }
             }
@@ -19103,7 +19104,7 @@
                 },
                 "outcome": {
                   "type": "string",
-                  "description": "pages, design, orientation, color, copies, size, text, event, sets_field, no_mapping or nothing."
+                  "description": "pages, design, designs, all_designs, orientation, color, copies, size, text, event, sets_field, no_mapping or nothing."
                 },
                 "result": {
                   "type": "string",
@@ -19148,6 +19149,13 @@
                 "designId": {
                   "type": "string",
                   "description": "designSelector: the design opened."
+                },
+                "designIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "templateFilter: the designs the Templates tab lists, in order."
                 },
                 "orientation": {
                   "type": [
@@ -19249,6 +19257,7 @@
                 "enum": [
                   "pageIndex",
                   "designSelector",
+                  "templateFilter",
                   "pageClone",
                   "pageCount",
                   "printedPageCount",
@@ -19259,7 +19268,7 @@
                   "underlayColor",
                   "event"
                 ],
-                "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
+                "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `templateFilter`: Lists only the designs a choice maps to in the editor's Templates tab (`to`: design ids, comma-separated), and the customer picks one of them; a choice with no mapping lists them all. When the open design is not listed for a new choice, the first one listed opens. Every design listed must be assigned to the product and carry this connector too. PrintFx editor only.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
               },
               "source": {
                 "type": "object",
@@ -19317,7 +19326,7 @@
                       "type": "string",
                       "minLength": 1,
                       "maxLength": 200,
-                      "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
+                      "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), design ids, comma-separated (templateFilter), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
                     }
                   }
                 }
@@ -19443,6 +19452,7 @@
             "enum": [
               "pageIndex",
               "designSelector",
+              "templateFilter",
               "pageClone",
               "pageCount",
               "printedPageCount",
@@ -19453,7 +19463,7 @@
               "underlayColor",
               "event"
             ],
-            "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
+            "description": "What the connector does:\n- `pageIndex`: Shows only the pages a choice maps to (`to`: page numbers such as `1` or `1,2`). The other pages are set aside: not shown, printed or saved.\n- `designSelector`: Opens another design for each choice (`to`: a design id). Every design it can open must be assigned to the product and carry this connector too.\n- `templateFilter`: Lists only the designs a choice maps to in the editor's Templates tab (`to`: design ids, comma-separated), and the customer picks one of them; a choice with no mapping lists them all. When the open design is not listed for a new choice, the first one listed opens. Every design listed must be assigned to the product and carry this connector too. PrintFx editor only.\n- `pageClone`: Repeats one page (`page`, default the first) as many times as the number chosen, when the editor opens.\n- `pageCount`: Sends the number of pages to the field as the customer adds or removes pages (editor to product page).\n- `printedPageCount`: Sends the number of pages (sides) that carry a print to the field, so the price can follow (editor to product page). The field takes a number.\n- `pageWidth`: Sets the page width from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageHeight`: Sets the page height from a number field, in the design's unit (a Print Options size field carries its own). With twoWay, a resize in the editor is sent back.\n- `pageOrientation`: Turns the pages (or `page` alone) landscape or portrait, from the choice's wording or its mapping (`to`: landscape or portrait).\n- `textValue`: Puts what the customer types into the text item titled `text`. With twoWay, edits in the editor are sent back.\n- `underlayColor`: Sets the product colour of an underlay design (a T-shirt, a mug): `to` is a hex colour, or leave the choice unmapped when it is the colour's name in the design.\n- `event`: Fires an editor event (`event.name`, with `event.data`) when the field changes. For integrations that listen to editor events."
           },
           "source": {
             "type": "object",
@@ -19511,7 +19521,7 @@
                   "type": "string",
                   "minLength": 1,
                   "maxLength": 200,
-                  "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
+                  "description": "What it means to the editor: page numbers such as `1` or `1,2` (pageIndex), a design id (designSelector), design ids, comma-separated (templateFilter), a hex colour (underlayColor), or landscape / portrait (pageOrientation)."
                 }
               }
             }
