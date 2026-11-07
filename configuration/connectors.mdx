@@ -54,7 +54,19 @@ To set it up:
 3. **Add a mapping per choice.** On the left, type the choice as the customer sees it (`70 x 100 cm`) or its id. On the right, click **Pick a design** and choose the design for that choice from your library.
 4. **Attach the connector to every one of those designs** (see [How to use a Connector](#how-to-use-a-connector) below), so the editor can switch onwards from whichever design is open.
 
-While a Design Selector is active, the editor does not offer the product's other designs to the customer; the product page decides which design they get.
+While a Design Selector is active, the editor does not offer the product's other designs to the customer; the product page decides which design they get. If each choice has several designs for the customer to pick from, use a **Template Filter** instead.
+</Accordion>
+
+<Accordion title="Template Filter">
+The Template Filter connector narrows the editor's **Templates** tab to the designs that fit what the customer chose on your product page, and the customer picks one of them. For instance, a novelty cheque sold in Small, Medium and Large can have a dozen bank designs in each size: the customer picks **Small**, and the Templates tab lists only the small designs. If they change the size while the editor is open, the list follows, and when the open design doesn't fit the new size, the first design listed for it opens. If the customer has already made changes, the editor asks before it switches.<br/>
+
+To set it up:
+1. **Assign every design to the product.** In **Products**, assign all the designs the connector lists, for every choice. The Templates tab only lists designs assigned to the product.
+2. **Create the connector.** Choose **Filter the template list**, and for a [Print Options](/print-options/introduction) product choose **Print Options field** and the field that holds the choice (for sizes, **Size — customer picks a preset**).
+3. **Add a mapping per choice.** On the left, type the choice as the customer sees it (`Small 1000x450mm`) or its id. On the right, click **Pick designs** and choose that choice's designs from your library. **Select all in this folder** picks a whole folder at once, so keeping each size's designs in a folder of its own makes this quick. The first design you pick is the one that opens when the open design doesn't fit.
+4. **Attach the connector to every one of those designs** (see [How to use a Connector](#how-to-use-a-connector) below), so the list keeps following the product page whichever design is open.
+
+A choice with no mapping lists every design on the product. The Template Filter works in the PrintFx editor. In a project the customer reopens to edit, the list still narrows, but the editor never switches designs on its own.
 </Accordion>
 
 <Accordion title="Underlay Color">
