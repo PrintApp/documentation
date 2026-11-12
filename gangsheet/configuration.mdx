@@ -71,9 +71,20 @@ length picker and the sheet always fits the designs.
 | --- | --- | --- |
 | **Minimum DPI** | Artwork below this resolution at its printed size is flagged in the list, on the sheet and in the summary, with the largest size that would pass. | 300 |
 | **Low DPI blocks checkout** | On: Preview & Save stays disabled until every design meets the floor. Off: the warning shows but the customer can still order. | On |
+| **Sharpen low-resolution uploads** | A design under the minimum DPI is accepted with a *sharpened for print* note instead of being flagged, and the print file carries a copy enlarged with AI to the minimum. It reaches down to a quarter of the minimum (75 dpi when the minimum is 300); a design below that is flagged as before. | Off |
 
 Text pieces and SVG graphics from the gallery are vectors and never carry
 a DPI verdict.
+
+<Note>
+    Sharpening is free: it is not billed as an AI image effect. It runs when
+    you download the order's print file, keeps transparency and removed
+    backgrounds, and works on each upload once however many copies are on
+    the sheet. Each order has a limit that covers dozens of low-resolution
+    uploads; past it, a design prints from its original pixels, as it
+    would with the switch off. Projects keep the settings they started with,
+    so turning it on applies to new orders.
+</Note>
 
 ## Uploads
 
