@@ -91,6 +91,7 @@
     "group": "Projects",
     "pages": [
       "api-reference/v2/projects/list",
+      "api-reference/v2/projects/create-project",
       "api-reference/v2/projects/get",
       "api-reference/v2/projects/update-project",
       "api-reference/v2/projects/delete-project",

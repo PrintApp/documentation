@@ -144,7 +144,7 @@ Redirect URIs are `https` addresses, as ChatGPT's and Claude's are, or a local a
 | 3D scenes | `list_scenes` |
 | Library | `search_library_designs`, `import_library_design`, `search_library_graphics`, `import_library_graphics` |
 | Settings | `get_settings`, `update_settings` |
-| Projects | `list_projects`, `get_project`, `manage_project` |
+| Projects | `list_projects`, `create_project`, `get_project`, `manage_project` |
 | Project URLs | `create_editor_link`, `get_editor_link`, `expire_editor_link` |
 | Print Options | `list_option_sets`, `get_option_set`, `quote_option_set`, `manage_option_set`, `print_options_reference` |
 
@@ -188,6 +188,19 @@ It never needs your secret key in the chat: the key goes into your assistant's s
 - The cart or order thumbnail a store saved when the customer ordered keeps the old image; the project's own previews and PDF show the edit.
 
 Try it with *"On the project for order 1042, change the phone number to 555 0100, show me, and ask before you save."*
+
+## How an agent makes a project for a customer
+
+An agent can make a customer's project itself, for a design made to order and revised with them, without a design template or the editor:
+
+1. `create_project` makes it with blank pages at the trim size (`width`, `height`, `unit`, `pages`, `pageTitles`, `bleed`, `safeMargin`), or with a copy of one of your designs' pages (`designId`). It is saved for later, like a project the customer saved.
+2. `edit_design` with its `projectId` adds and changes text, images and shapes, one revision at a time, and `preview_design` shows each one.
+3. `create_editor_link` with its `projectId` gives the customer a project URL to open it in the editor and change it themselves.
+4. With the customer's id in your store (`userId`) and the `product`, the project shows in that customer's saved designs in your store, where they resume it on the product page and add it to the cart. On WooCommerce, that's the WordPress user id and `{ id, name }` with the product's id and slug, and the saved designs are on the customer's **My Account** page.
+
+`userData` keeps your own details on it (`name`, `email`, `phone`, `info`), and `get_project` gives its PDF and image links once it's approved. Editing a project's pages needs the new editor; on the classic editor, open it with a project URL instead.
+
+Try it with *"Make a 2-sided 85 x 55 mm business card project with 3 mm bleed for Sam Baker, customer 42, for my Business Cards product, put the name and phone number on the front, and show me."*
 
 ## How an agent builds a design
 

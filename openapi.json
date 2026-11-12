@@ -9058,6 +9058,268 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "createProject",
+        "summary": "Create a project",
+        "description": "Creates a customer project without the editor: blank pages at a trim size (with optional bleed and safe margin), or a copy of one of your designs' pages, as when a customer opens it. It is saved for later (`status` `saved`), like a project the customer saved, and works like one: edit its pages with `POST /v2/projects/{id}/ops`, open it in the editor with a project URL (`POST /v2/links` with its `projectId`), and print it from its `exports`.\n\nGive `userId` (the customer's id in your store) and `product` to have the store list it in that customer's saved designs, where they can resume it on the product page and add it to the cart. Give `designId` or `width` and `height`, not both: the size fields only apply to blank pages.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectCreate"
+              },
+              "example": {
+                "title": "Crumb & Co business card",
+                "unit": "mm",
+                "width": 85,
+                "height": 55,
+                "pages": 2,
+                "pageTitles": [
+                  "Front",
+                  "Back"
+                ],
+                "bleed": 3,
+                "safeMargin": 3,
+                "userId": "42",
+                "product": {
+                  "id": 88,
+                  "name": "business-cards"
+                },
+                "userData": {
+                  "name": "Sam Baker",
+                  "email": "sam@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              },
+              "idempotent-replayed": {
+                "$ref": "#/components/headers/IdempotentReplayed"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                },
+                "example": {
+                  "object": "project",
+                  "id": "project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                  "title": "Business Card",
+                  "status": "submitted",
+                  "product": {
+                    "id": "sku-123",
+                    "ref": "cart-line-7f3a"
+                  },
+                  "userId": "customer-1001",
+                  "userData": {
+                    "id": "customer-1001",
+                    "name": "Jane Doe",
+                    "email": "jane@example.com"
+                  },
+                  "designId": "design_01J8Z9K2M3N4P5Q6R7S8T9V0W1",
+                  "created": "2026-10-17T09:12:03Z",
+                  "modified": "2026-10-17T09:20:41Z",
+                  "pages": [
+                    {
+                      "index": 0,
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_a1.png&size=1000"
+                    },
+                    {
+                      "index": 1,
+                      "previewUrl": "https://d1p81tn8mwpox2.cloudfront.net/?k=s3%3A%2F%2Fapp-print-cdn%2Fcontent_b2.png&size=1000"
+                    }
+                  ],
+                  "exports": {
+                    "pdf": "https://pdf.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "png": "https://png.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "jpeg": "https://jpeg.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b",
+                    "tiff": "https://tiff.print.app/project_2b6f1c9e-8d0a-4c3e-9f57-0c1d2e3f4a5b"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A parameter or body field is malformed: `param` names it and `details` lists every problem found.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "invalid_request",
+                  "message": "width is required.",
+                  "param": "width",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, unknown, revoked or expired secret key.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unauthorized",
+                  "message": "Missing or invalid secret key. Send it as \"Authorization: Bearer sk_…\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The account is suspended for an unpaid invoice.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "account_suspended",
+                  "message": "This account is suspended. Settle the outstanding invoice in the Print.App dashboard.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your account. Another account's resources answer 404 too.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "not_found",
+                  "message": "Not found.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "A body or a downloaded file is over its size limit.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "payload_too_large",
+                  "message": "The file at url is larger than 50 MB.",
+                  "param": "url",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "The body is not JSON.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "unsupported_media_type",
+                  "message": "Send the request body as JSON, with \"Content-Type: application/json\".",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited by the API gateway. Back off and retry. This response comes from the gateway, so its body is `{ \"message\": \"Too Many Requests\" }`, not the standard error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayError"
+                },
+                "example": {
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something failed on our side. Retry; quote the requestId to support if it persists.",
+            "headers": {
+              "x-request-id": {
+                "$ref": "#/components/headers/RequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": true,
+                  "code": "internal_error",
+                  "message": "Something went wrong on our side. Retry the request; if it keeps failing, contact support with the requestId.",
+                  "requestId": "FZn-uhymjoEEJow="
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v2/projects/{id}": {
@@ -25902,6 +26164,144 @@
                 ]
               }
             ]
+          }
+        ]
+      },
+      "ProjectCreate": {
+        "title": "ProjectCreate",
+        "description": "A new project: blank pages at a trim size, or a copy of a design's pages. Give `designId`, or `width` and `height`, not both.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "designId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "A design to start from: the project gets a copy of its pages and their content, as when a customer opens it. Leave out for blank pages."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The project's name. Default: the design's title, or *New project*."
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "in",
+              "mm",
+              "cm",
+              "pt",
+              "px",
+              "ft"
+            ],
+            "default": "in",
+            "description": "Blank pages: the unit for `width`, `height`, `bleed` and `safeMargin`, and the unit the project is measured in afterwards."
+          },
+          "width": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Blank pages: trim width."
+          },
+          "height": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Blank pages: trim height."
+          },
+          "pages": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 1,
+            "description": "Blank pages: how many."
+          },
+          "pageTitles": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "description": "Blank pages: a title per page, for example `[\"Front\", \"Back\"]`. Default *Page 1*, *Page 2*, …"
+          },
+          "bleed": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0,
+            "description": "Blank pages: bleed on every edge, outside the trim."
+          },
+          "safeMargin": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0,
+            "description": "Blank pages: safe margin on every edge, inside the trim."
+          },
+          "userId": {
+            "type": [
+              "string",
+              "integer"
+            ],
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "The customer's id in your store, the `userId` your product page passes to `PrintAppClient` (on WooCommerce, the WordPress user id). With `product`, the project is listed in that customer's saved designs in the store, where they can resume it and add it to the cart."
+          },
+          "product": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "maxProperties": 10,
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "integer"
+                ],
+                "description": "The product's id in your store."
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "What the store shows for it in the customer's saved designs (on WooCommerce, the product's slug)."
+              }
+            },
+            "description": "The store product the project is for, in the shape your product page passes to `PrintAppClient`: `{ id, name }` on WooCommerce."
+          },
+          "userData": {
+            "type": "object",
+            "description": "Your own customer or order details, as store plugins save them: `id`, `name`, `email`, `phone`, `info`. Up to 50 KB."
+          }
+        },
+        "examples": [
+          {
+            "title": "Crumb & Co business card",
+            "unit": "mm",
+            "width": 85,
+            "height": 55,
+            "pages": 2,
+            "pageTitles": [
+              "Front",
+              "Back"
+            ],
+            "bleed": 3,
+            "safeMargin": 3,
+            "userId": "42",
+            "product": {
+              "id": 88,
+              "name": "business-cards"
+            },
+            "userData": {
+              "name": "Sam Baker",
+              "email": "sam@example.com"
+            }
+          },
+          {
+            "designId": "design_01JC2V6Q3M2X9ZKQ7Y5T8R4WAB",
+            "userId": "42",
+            "product": {
+              "id": 88,
+              "name": "business-cards"
+            }
           }
         ]
       },
