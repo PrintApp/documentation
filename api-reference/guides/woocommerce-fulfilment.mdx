@@ -156,6 +156,17 @@ Order actions, in the order's **Order actions** box:
 | **Send Print.App designs to Lulu again** | Lulu rejected or canceled the order's print job (plugin 2.4.1 and later) | Sends the order as a new print job. The old job stays in your Lulu account, marked rejected or canceled |
 | **Refresh Lulu print job status** | The order has a print job | Reads the job's latest status from Lulu, with tracking links once it ships |
 
+#### Shipping
+
+Lulu ships each order with one of its shipping levels, from **Standard mail** (the cheapest and slowest) to **Express**. You can choose the level in either of two ways.
+
+- **One level for every order.** Set **Lulu shipping level** under **PrintApp → Fulfilment providers → Lulu**; it's **MAIL** by default. Set your WooCommerce shipping rates, for example a flat rate, to cover what Lulu charges for that level.
+- **Let customers choose, at Lulu's prices** (plugin 2.4.4 and later). Under **WooCommerce → Settings → Shipping**, add the **Lulu** shipping method to a shipping zone. At checkout, customers see Lulu's options for their address with Lulu's prices and estimated delivery dates, and the option they pick is the level Lulu ships the order with. In the method's settings, choose which levels to offer and add a markup if you like.
+
+The Lulu shipping method offers rates only when every item in the cart is a Lulu product with its page count set, and only in a store priced in USD, EUR, GBP, CAD or AUD. Keep another method in the same zone for anything else. If Lulu can't be reached, the method offers no rates, and the reason is logged under **WooCommerce → Status → Logs** (source `printapp-lulu`).
+
+The order's shipping address is always sent to Lulu with the print job.
+
 #### Paying for print jobs
 
 Lulu bills **your** Lulu account, not your customer. A new print job stays **Unpaid** until you pay for it in your Lulu account, unless you keep a payment card on file with Lulu. An order note such as *"print job #354632 is UNPAID. Lulu accepted the files"* means the files passed Lulu's checks and the job is waiting for payment.
