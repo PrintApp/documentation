@@ -110,6 +110,39 @@ for example, a design tool reading your four size options instead of asking
 you to define them twice. Leave it as *None* unless you use such an
 integration; see the [Page API](/print-options/developers/page-api).
 
+## Answered by a Shopify variant
+
+Sometimes your Shopify variants already ask the question that sets the price.
+For example, a *Card type* variant (photo card, postcard, folding card) also
+switches the product image and the Print.App template. Instead of asking the
+customer twice, let the variant answer a Print Options field:
+
+1. Add a **Single choice** field with one option per variant value, and give
+   each option its own price, e.g. a [formula](/print-options/guides/formula-pricing)
+   per card type.
+2. Name each option **exactly like the variant value** (*Folding card* for
+   the variant value *Folding card*). Upper/lower case and extra spaces don't
+   matter.
+3. On the field's **Basics** tab, enter the Shopify option name under
+   **Answered by product variant**, e.g. `Card type`.
+
+On the product page, the field takes the option that matches the selected
+variant and is hidden, so the customer chooses once, in your theme's variant
+picker. The price follows every variant switch. The cart line carries the
+variant, the quantity, the price and the design together. The summary still
+lists the card type and its price.
+
+<Note>
+    If no option matches the selected variant's value, the field stays visible
+    so the customer can still choose. That makes a naming mismatch easy to
+    spot. In the builder preview there is no variant, so the field always shows
+    and you can try each price.
+</Note>
+
+<Tip>
+    Shopify only. On WooCommerce the setting is not offered yet.
+</Tip>
+
 ## SKUs
 
 Each choice can carry a SKU fragment. When the customer configures a job, the
