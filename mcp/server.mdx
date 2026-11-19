@@ -29,12 +29,14 @@ https://api.print.app/mcp
 
 ## Before you start
 
-Create a secret key in your admin under [Secret keys](https://admin.print.app/api-keys), labelled for the tool you connect. Revoking it later disconnects that tool.
+ChatGPT and Claude connect when you sign in with your Print.App account: the email and password you use in the [admin](https://admin.print.app). [Forgot your password?](https://admin.print.app/password) Behind the scenes Print.App makes a secret key for that app, labelled with its name; revoking it in the admin under [Secret keys](https://admin.print.app/api-keys) disconnects the app.
+
+The other tools below (Claude Code, Codex, Cursor, VS Code) send a secret key instead: create one under [Secret keys](https://admin.print.app/api-keys), labelled for the tool you connect.
 
 ## ChatGPT
 
 1. **Add the server:** turn on developer mode and add a custom MCP server ([OpenAI's guide](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) shows where, for your plan). Name it Print.App, use the URL `https://api.print.app/mcp` and choose **OAuth** authentication.
-2. **Connect:** ChatGPT opens a Print.App page. Paste your secret key and click **Allow access**.
+2. **Connect:** ChatGPT opens a Print.App page. Sign in with your Print.App email and password, choose the store if you have several, and click **Allow access**. (Prefer a key? Open **Use a secret key instead** on that page.)
 3. **Test:** ask *"Which Print.App store am I connected to?"*
 
 <Note>
@@ -44,7 +46,7 @@ ChatGPT keeps the list of tools it saw when you added the server. When Print.App
 ## Claude
 
 1. **Find Print.App:** open [Print.App in Claude's connector directory](https://claude.ai/directory/print-app) (web or desktop), or search the directory for Print.App.
-2. **Connect:** click **Connect**. Paste your secret key on the Print.App page and click **Allow access**.
+2. **Connect:** click **Connect**. On the Print.App page, sign in with your Print.App email and password (or a secret key), choose the store if you have several, and click **Allow access**.
 3. **Test:** ask *"Which Print.App store am I connected to?"*
 
 <Note>
