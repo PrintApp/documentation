@@ -1,16 +1,17 @@
 ---
 title: Quantities & size runs
-description: "Set up the quantity a job is priced on: presets and units, a hint that shows the next price break, a count per option for mixed-size orders, and quantity fields that change with the paper."
+description: "Set up the quantity a job is priced on: presets and units, a hint that shows the next price break, a count per option for mixed-size orders, an order table of colours and sizes, and quantity fields that change with the paper."
 ---
 
 The quantity is the number most of your pricing turns on: per-unit prices,
 quantity breaks and formulas all read it, and it travels to the cart with
-the job. Print Options gives you three ways to ask for it.
+the job. Print Options gives you four ways to ask for it.
 
 | You want | Use |
 | --- | --- |
 | One number: 250 flyers, 10 banners | A **Quantity** field |
 | A count for each option: M × 5, L × 3, 3XL × 2 | A **Quantity per option** field |
+| A count for each colour and size: Black M × 5, White L × 3 | A **Quantity per option** field with rows: an [order table](#order-tables) |
 | Different quantities depending on an earlier choice | Several **Quantity** fields that [take turns](#quantity-fields-that-take-turns) |
 
 ## The quantity field
@@ -146,6 +147,80 @@ line.
     Option ids on a quantity per option field may only use letters, digits,
     `-` and `_`. Ids made by the builder always do; the builder flags any
     other.
+</Note>
+
+## Order tables
+
+When the same garment comes in several colours, give the quantity per option
+field **rows** as well. The customer gets a table: colours down the side,
+sizes across the top, and a box for every colour and size. Every box counts
+toward one total, so a volume discount counts every colour together: five
+white and five black shirts are an order of ten, not two orders of five.
+
+<Note>
+    Order tables are available on Shopify, and on WooCommerce from plugin
+    version 0.4.22.
+</Note>
+
+### Set it up
+
+1.  **Start from a quantity per option field** with your sizes as its
+    options, set up as in [Set it up](#set-it-up) above.
+2.  **Add the rows.** On the **Options** tab, under **Rows**, click
+    **+ Add row**. The first row is *Black*, and the field becomes a table:
+    its options are now the **Columns**. Add a row for each colour, and give
+    each one its name and swatch colour. You can also give a row an image
+    instead of a colour.
+3.  **Name the rows' heading.** **Row heading** is shown above the colour
+    names, such as *Colour* or *Coloris*.
+4.  **Check the limits.** On the **Basics** tab, **Min per box**, **Max per
+    box** and **Step** apply to each box; **Minimum total** and **Maximum
+    total** apply to the whole table.
+5.  **Price it** as a size run: a base price per unit and a volume discount
+    on the field's **Pricing** tab. A surcharge can sit on a column or a row:
+    - **Per item of this option** on a size (3XL +€3) is charged for every
+      3XL, whatever its colour.
+    - **Per item of this option** on a row (Black +€1) is charged for every
+      black shirt, whatever its size.
+6.  **Publish**, and remove your platform's own colour and size variants
+    from the product.
+
+A table can have up to 400 boxes, such as 20 colours by 20 sizes. To turn
+the table back into a plain size run, remove all its rows.
+
+### Example
+
+Base price €10 per unit, Black +€1 per item, 3XL +€3 per item, and a volume
+discount of −10% from 10 shirts. An order of White M × 4 and L × 2, and
+Black M × 5 and 3XL × 1, is twelve shirts:
+
+| | Amount |
+| --- | --- |
+| Base: 12 shirts × €10 | €120.00 |
+| Black: 6 × €1 | €6.00 |
+| 3XL: 1 × €3 | €3.00 |
+| Volume discount, −10% | −€12.90 |
+| **Total** | **€116.10** |
+
+Neither colour reaches ten shirts on its own; the table does.
+
+### What the customer sees
+
+A table with a number box for each colour and size, and a running total
+underneath. Empty boxes show a faint 0. On a phone the table scrolls
+sideways and the colour names stay in place. The cart line and the order
+list one line per colour ordered:
+
+```text
+White: M × 4, L × 2
+Black: M × 5, 3XL × 1
+```
+
+Colours and sizes with no count are left out.
+
+<Note>
+    Row ids follow the same rule as option ids: letters, digits, `-` and
+    `_`, and a row can't share an id with a size.
 </Note>
 
 ## Quantity fields that take turns

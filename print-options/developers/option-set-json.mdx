@@ -187,7 +187,7 @@ flyer with quantity breaks, plus a $5 setup fee and a $20 minimum:
 | `select-one` | `pills`, `cards`, `grid`, `swatches`, `dropdown`, `list` | `options` |
 | `select-many` | `list`, `pills`, `cards`, `grid`, `swatches` | `options`, `minSelect`, `maxSelect` |
 | `quantity` | `stepper`, `pills`, `dropdown`, `input` | `min`, `max`, `step`, `defaultValue`, `presets`, `unit`, `nextBreakHint` |
-| `quantities` | `grid`, `list` | `options`, per option `min`, `max`, `step`; `minTotal`, `maxTotal`, `unit`, `nextBreakHint`. See [Quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs). |
+| `quantities` | `grid`, `list` | `options`, per option `min`, `max`, `step`; `minTotal`, `maxTotal`, `unit`, `nextBreakHint`; `rows` and `rowsLabel` for an order table, whose counts are keyed `"rowId.optionId"`. See [Quantity per option](/print-options/guides/quantities#quantity-per-option-size-runs) and [Order tables](/print-options/guides/quantities#order-tables). |
 | `number` | `input`, `stepper`, `slider` | `min`, `max`, `step`, `defaultValue` |
 | `text` | `input`, `textarea` | `placeholder`, `maxLength` |
 | `dimensions` | `inputs` | `units` (`mm`, `cm`, `in`), `defaultUnit`, `minW`, `maxW`, `minH`, `maxH`, `defaultValue` (`{ "w": …, "h": … }`) |
