@@ -14,3 +14,6 @@ Test designs folder).
 
 Nothing is saved: the harness drops every save, because the demo store has a
 live Zapier hook.
+
+`bakery-label.mjs` does the same for the bakery label tutorial (*Bakery box label
+(tutorial)*, same folder): `PORT=3011 OUT=<docs>/images/tutorials/bakery-label/ node bakery-label.mjs all`.
