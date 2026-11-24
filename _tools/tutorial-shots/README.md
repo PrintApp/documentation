@@ -26,3 +26,7 @@ and its colours in the *Flavours* palette).
 (tutorial)*; its colours are the demo account's *Party colours* palette). The
 contrast warning in `07-contrast-warning.png` needs printfx#12 (customers may
 run `fields.contrast`).
+
+`office-card.mjs` shoots the office business card tutorial (*Office business card
+(tutorial)*). It reads the demo account's *Offices* Data Source, uploaded from
+the CSV printed in the tutorial's first step.
