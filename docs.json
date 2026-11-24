@@ -183,6 +183,12 @@
                   "guides/designs/design-settings",
                   "guides/designs/design-pages",
                   "guides/designs/data-sources",
+                  {
+                    "group": "Tutorials",
+                    "pages": [
+                      "guides/designs/tutorials/food-label"
+                    ]
+                  },
                   "guides/designs/3d-scenes",
                   {
                     "group": "Canvas Objects",
