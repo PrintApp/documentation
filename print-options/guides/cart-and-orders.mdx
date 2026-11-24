@@ -56,14 +56,21 @@ By default a configured job is **one line with quantity 1**: the line's price
 is the whole job, and the copies are shown in its title and options. That
 keeps every job, however many copies, in one tidy line.
 
-If you want your store's quantity column, stock and shipping weight to use the
-real number of copies, open **Product** settings in the builder and, under
-**Cart quantity**, change **Line quantity**:
+If you want the order, stock and shipping weight to use the real number of
+copies, open **Product** settings in the builder and, under **Cart quantity**,
+change **Line quantity**:
 
-| Line quantity | The cart line |
-| --- | --- |
-| **One line per job (quantity 1)** | Quantity 1, at the job's total. The default. |
-| **Real quantity** | Quantity = the copies, at the price per copy. |
+| Line quantity | On Shopify | On WooCommerce |
+| --- | --- | --- |
+| **One line per job (quantity 1)** | Quantity 1, at the job's total. The default. | Quantity 1, at the job's total. The default. |
+| **Real quantity** | The checkout, order, stock and shipping count the copies. **The cart page still shows 1.** | The cart, order, stock and shipping count the copies, at the price per copy. |
+
+<Note>
+    **Shopify's cart page shows a configured job as quantity 1**, also
+    with Real quantity. The copies are carried inside the line, and themes show
+    only the line itself, so a quantity changed in the cart still means that
+    many identical jobs. The customer sees the copies in the line's options.
+</Note>
 
 The customer always pays exactly the job's verified total, whichever mode you
 choose. What happens when the total doesn't divide evenly into a price per copy
@@ -74,9 +81,10 @@ depends on your platform:
   50 × $0.04 and 200 × $0.05, still $12.00 for 250 copies. Shopify's quantity,
   stock and shipping rates all count the 250. Set the product's weight in
   Shopify to the weight of **one copy**. Real quantity needs the customer to
-  pay in your store's default currency, at least one cent per copy, and at most
-  2,000 copies per line (Shopify's own limit for a bundle component); otherwise
-  the job stays one line at the same total.
+  pay in your store's default currency, at least one cent per copy (so a job
+  without a price never qualifies), and at most 2,000 copies per line
+  (Shopify's own limit for a bundle component); otherwise the job stays one
+  line at the same total.
 - **WooCommerce:** a cart line has a single price, so real quantity only
   applies when the total divides evenly, to your store's price decimals. The
   $12.00 job of 250 flyers stays one line at the same total.
