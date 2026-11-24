@@ -17,3 +17,7 @@ live Zapier hook.
 
 `bakery-label.mjs` does the same for the bakery label tutorial (*Bakery box label
 (tutorial)*, same folder): `PORT=3011 OUT=<docs>/images/tutorials/bakery-label/ node bakery-label.mjs all`.
+
+`flavour-range.mjs` shoots the flavour range tutorial (*Sorbet label range
+(tutorial)*; its pictures are in the demo account's *Flavours* graphics folder
+and its colours in the *Flavours* palette).
