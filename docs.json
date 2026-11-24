@@ -146,14 +146,6 @@
               "gangsheet/customer-flow",
               "gangsheet/design-tools",
               "gangsheet/output",
-              {
-                "group": "Tutorials",
-                "pages": [
-                  "gangsheet/tutorials/shopify-gang-sheet",
-                  "gangsheet/tutorials/woocommerce-transfers-by-size",
-                  "gangsheet/tutorials/theme-pricing"
-                ]
-              },
               "gangsheet/developers",
               "gangsheet/faqs"
             ]
@@ -183,12 +175,6 @@
                   "guides/designs/design-settings",
                   "guides/designs/design-pages",
                   "guides/designs/data-sources",
-                  {
-                    "group": "Tutorials",
-                    "pages": [
-                      "guides/designs/tutorials/food-label"
-                    ]
-                  },
                   "guides/designs/3d-scenes",
                   {
                     "group": "Canvas Objects",
@@ -255,6 +241,32 @@
               "guides/solutions/banner-large-prints",
               "guides/solutions/promotional-items",
               "guides/solutions/cut-and-contour-lines"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tutorials",
+        "groups": [
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/index"
+            ]
+          },
+          {
+            "group": "Labels and data",
+            "pages": [
+              "tutorials/food-label",
+              "tutorials/bakery-label"
+            ]
+          },
+          {
+            "group": "Gang sheets",
+            "pages": [
+              "gangsheet/tutorials/shopify-gang-sheet",
+              "gangsheet/tutorials/woocommerce-transfers-by-size",
+              "gangsheet/tutorials/theme-pricing"
             ]
           }
         ]
@@ -537,6 +549,10 @@
     {
       "source": "/guides/designs/objects/clipping-mask",
       "destination": "/guides/designs/objects/clipping-masks"
+    },
+    {
+      "source": "/guides/designs/tutorials/food-label",
+      "destination": "/tutorials/food-label"
     }
   ]
 }
