@@ -1,0 +1,160 @@
+---
+title: Data Sources and fields
+description: "Fill a design from data: what the customer enters, tables you upload, values worked out with formulas, and rules for what shows."
+---
+
+Data Sources let a design fill itself in. A customer picks their office, and the office's address, phone number and VAT number appear on the business card. A customer ticks "Contains nuts", and the allergen warning appears on the label.
+
+You set this up in the PrintFx editor, when you open a design from your dashboard. Customers only see the result: a form with the questions you chose, and a design that fills in as they answer.
+
+There are three parts:
+
+| Part | What it is | Where you set it up |
+|---|---|---|
+| **Tables** | Spreadsheets (CSV) you upload, such as a list of offices | Your dashboard: **Designs → More actions → Data Sources** |
+| **Fields** | Named values on a design: what the customer enters, picks, or what is looked up or worked out | The editor: **Design** tab → **Data Sources** |
+| **Rules** | When an item shows | The editor: select the item, then **Object → Data → Shows** |
+
+## Upload a table
+
+1. In your dashboard, go to **Designs → More actions → Data Sources**.
+2. Click **Upload CSV** and pick the file.
+3. The dashboard says how many rows it uploaded, or what's wrong with the file.
+
+The first row of the file holds the column names. Each row after it is one record:
+
+```text
+Office,Address,Phone
+Copenhagen,"Vesterbrogade 1, 2nd floor",+45 33 12 34 56
+Amsterdam,Damrak 1,+31 20 123 4567
+```
+
+- **The first column is the key**: the column lookups search unless you choose another. Keep its values unique.
+- **Designs name the table by its file name**, without `.csv`: `Offices.csv` is `Offices`.
+- **To change a table, upload the new file with the same name.** It replaces the old one, and every design that uses it reads the new rows.
+- **Limits:** 5,000 rows, 50 columns, and 350 KB. For a bigger list, split it into several files, or remove columns no design uses.
+- Save Excel files as **CSV (UTF-8)** first, so accents and symbols come through.
+
+The same tables also make [Design Variants](/guides/designs/variations/variation-datasource): one version of a design per row.
+
+## The Data Sources section
+
+Open a design and go to the **Design** tab. The **Data Sources** section sums up what the design uses, for example "4 fields · 1 table · 1 rule". Click it to see the list:
+
+- **1 · Tables**: the tables the design can read. Click one to see its first rows and the fields that read it. If you uploaded a table while the editor was open, click **Refresh**.
+- **2 · Fields**: each field and where its value comes from, in the order they're filled. Click one to open it, or click **Add a field**.
+- **3 · Rules**: the items that only show sometimes, and when.
+
+A field shown in amber needs a look. For example, it might be used in two ways that don't fit together.
+
+## Fields
+
+A field is one named value, such as `Office` or `Office address`. Fields are made for you when you make a text something the customer fills in (see [Smart Objects](/guides/designs/objects/smart)), or you can add one under **Fields → Add a field**.
+
+Open a field and choose **Where its value comes from**:
+
+<AccordionGroup>
+  <Accordion title="Customer enters it">
+    The customer types it in the form, or ticks a box. Under **Input**, choose the kind of value: Text, Email, Phone, Link, Number, Money, Percentage, Date, or Yes / No (a tick box). The editor then checks what the customer types and writes it in the format you set, for example a date as 21 May 2027 or a phone number with its country code.
+
+    **Starts with** is the value the design shows before the customer changes it, and **Required** makes the customer fill it in.
+  </Accordion>
+  <Accordion title="Customer picks">
+    The customer picks one of a list. Under **Choices**, take them from **A table column** (choose the table and column) or from **A list I type** (one choice per line).
+
+    **Starts on** chooses the option the design opens with, so it never shows blank. Pick **Customer chooses** to start with nothing chosen.
+  </Accordion>
+  <Accordion title="From a table">
+    The value is looked up in one of your tables, and the customer doesn't see it in the form. Under **Look it up**, choose:
+
+    - **Table**: which table, for example Offices;
+    - **Find the row where**: the column to search, and **Equals field**: the field whose value it must match, for example the Office the customer picked;
+    - **Column**: the column whose value to use, for example Address;
+    - **No match**: what to show when no row matches. Pick **Leave it blank**, or type a fallback.
+
+    **Try it** runs the lookup on a real row, so you can check it before saving. Matching ignores upper and lower case and spaces at either end.
+  </Accordion>
+  <Accordion title="Worked out">
+    The value is worked out from other fields with a [formula](#formulas), for example a best-before date 18 months after the packing date. The customer doesn't see it in the form. Use **Insert field** to add a field to the formula where the cursor is. Under the formula, the panel shows the result for sample values, or what's wrong with it.
+  </Accordion>
+</AccordionGroup>
+
+Two kinds of field hold something other than text:
+
+- **A picture field**: the customer gives a picture, and every frame that uses the field shows it.
+- **A colour field**: the customer picks a colour, and every item that uses the field is painted with it. List the colours to offer, separated by `;`, as `#hex` codes or names from your palettes.
+
+**Used by**, at the bottom of a field's panel, lists every text, picture, colour and rule that reads the field. Click one to select it on the design.
+
+## Connect an item to data
+
+Select an item on the design, then go to the **Object** tab. Its **Data** section has three lines. Click one to change it.
+
+**Content** is what the item shows:
+
+- For a text: **Fixed**, or **Customer fills it in**. To fill only part of a text, type the field's name in curly brackets inside the text, for example `Tel. {Phone}`.
+- For a picture frame:
+  - **Fixed picture**;
+  - **Customer replaces it**;
+  - **Picked by a field**: a field's value chooses the picture. Choose the **Field** and where the pictures come **From**, either the frame's own graphics or one of your graphics folders. The frame shows the picture named like the value, so *Salted caramel* picks `salted-caramel.png`.
+
+**Colour** is where the item's colour comes from: **Fixed** (the colour you gave it), or **A colour field**, whose value paints it.
+
+**Shows** decides when the item is on the design:
+- **Always**;
+- **Only when…**: choose a **Field**, a **Condition** (*is*, *isn't*, *is empty*, *isn't empty*; for a tick box, *is ticked* or *isn't ticked*) and the **Value** to compare with.
+
+A hidden item is left out of the preview and the print file.
+
+## Long values
+
+A value from a table or a formula can be longer than the space you left for it, for example a long address. Select the text and turn on **Typography → Shrink to Fit**:
+
+- the text box keeps its size;
+- the font shrinks until each line fits, down to **Min font size** (half the starting size unless you change it);
+- it fits again every time the value changes.
+
+If a value is too long even at the minimum size, the panel says "Too long to fit, even at the minimum size".
+
+Each paragraph stays on one line, so put a line break wherever the text may break.
+
+## Formulas
+
+**Worked out** fields, **Advanced** lookups and **Only when…** rules are formulas. They are written like spreadsheet formulas:
+
+| Write | For |
+|---|---|
+| `[Office]` | the value of a field (its name in square brackets) |
+| `"Head office"` | words (in straight double quotes) |
+| `12`, `2.5` | numbers |
+| `&` | joining text: `[First name] & " " & [Last name]` |
+| `+ - * /` | sums |
+| `= <> < > <= >=` | comparing; `<>` is "isn't" |
+| `and`, `or`, `not` | combining conditions |
+| `is empty`, `is not empty` | whether a field has a value |
+
+Some useful functions:
+
+| Formula | Gives |
+|---|---|
+| `lookup("Offices", [Office], "Address")` | the Address on the row whose first column matches the Office field |
+| `lookup_or("Offices", [Office], "Fax", "")` | the same, with a fallback when no row matches or the cell is empty |
+| `if([Plan] = "Pro", "Pro member", "")` | one value or another, by a condition |
+| `upper([Name])`, `lower()`, `proper()`, `trim()` | changed case, trimmed spaces |
+| `date_add([Packed on], 18, "months")` | a date 18 months later (also `"days"`, `"weeks"`, `"years"`) |
+| `format_date([Best before], "D MMM YYYY")` | a date written out, for example 21 May 2027 |
+| `format_currency([Price], "EUR")` | an amount with its currency |
+| `match([Flavour], "Flavours")` | the picture (or colour) named like the Flavour field, from the Flavours graphics folder (or palette) |
+
+The full list: `abs`, `ceil`, `coalesce`, `concat`, `contains`, `date`, `date_add`, `day`, `days_between`, `ean13_check`, `ends_with`, `floor`, `format_currency`, `format_date`, `format_number`, `format_percent`, `format_phone`, `gs1_check`, `gs1_link`, `if`, `iferror`, `ifs`, `isempty`, `iserror`, `left`, `len`, `lookup`, `lookup_or`, `lower`, `match`, `max`, `mecard`, `mid`, `min`, `month`, `pad_left`, `pad_right`, `parse_date`, `parse_number`, `proper`, `repeat`, `replace`, `right`, `round`, `split_part`, `starts_with`, `sum`, `switch`, `text`, `trim`, `upc_check`, `upper`, `url_with_utm`, `value`, `vcard`, `weekday`, `wifi`, `year`.
+
+## Example: an office on a business card
+
+1. **Upload `Offices.csv`**, with the columns `Office`, `Address` and `Phone`.
+2. **Add a field `Office`**: **Customer picks**, with **Choices** from **A table column**: table *Offices*, column *Office*.
+3. **Add a field `Office address`**: **From a table**. Table *Offices*, find the row where *Office* equals field *Office*, column *Address*, no match: *Leave it blank*. **Try it** shows an address.
+4. **Add a field `Office phone`** the same way, with the column *Phone*.
+5. **Put the fields on the card:** in a text, type `{Office address}`, and in another `Tel. {Office phone}`. Select the address text and turn on **Shrink to Fit**.
+6. **Save, and try it as a customer.** The form asks only for the office, and the address and phone fill in.
+
+When the address list changes, upload `Offices.csv` again: the card reads the new addresses, with no change to the design.

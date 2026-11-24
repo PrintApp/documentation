@@ -182,6 +182,7 @@
                   "guides/designs/create-a-design",
                   "guides/designs/design-settings",
                   "guides/designs/design-pages",
+                  "guides/designs/data-sources",
                   "guides/designs/3d-scenes",
                   {
                     "group": "Canvas Objects",
