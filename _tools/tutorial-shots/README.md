@@ -21,3 +21,8 @@ live Zapier hook.
 `flavour-range.mjs` shoots the flavour range tutorial (*Sorbet label range
 (tutorial)*; its pictures are in the demo account's *Flavours* graphics folder
 and its colours in the *Flavours* palette).
+
+`party-invitation.mjs` shoots the party invitation tutorial (*Party invitation
+(tutorial)*; its colours are the demo account's *Party colours* palette). The
+contrast warning in `07-contrast-warning.png` needs printfx#12 (customers may
+run `fields.contrast`).
