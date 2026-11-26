@@ -35,12 +35,14 @@ The other tools below (Claude Code, Codex, Cursor, VS Code) send a secret key in
 
 ## ChatGPT
 
-1. **Add the server:** turn on developer mode and add a custom MCP server ([OpenAI's guide](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) shows where, for your plan). Name it Print.App, use the URL `https://api.print.app/mcp` and choose **OAuth** authentication.
-2. **Connect:** ChatGPT opens a Print.App page. Sign in with your Print.App email and password, choose the store if you have several, and click **Allow access**. (Prefer a key? Open **Use a secret key instead** on that page.)
+1. **Find Print.App:** open [Print.App in ChatGPT's plugin directory](https://chatgpt.com/plugins/plugin_asdk_app_6aecad25dcd88191b99afc4bbabf4a47), or search for Print.App on ChatGPT's **Plugins** page.
+2. **Connect:** click **Install plugin**. ChatGPT opens a Print.App page. Sign in with your Print.App email and password, choose the store if you have several, and click **Allow access**. (Prefer a key? Open **Use a secret key instead** on that page.)
 3. **Test:** ask *"Which Print.App store am I connected to?"*
 
+If you added Print.App in developer mode before the plugin was listed, you can remove that connection once the plugin is installed.
+
 <Note>
-ChatGPT keeps the list of tools it saw when you added the server. When Print.App adds new tools, open the connection at [chatgpt.com/plugins](https://chatgpt.com/plugins) (or Settings, then Apps), click **Refresh**, and start a new chat. On a Business or Enterprise workspace, an admin may need to refresh it.
+On a Business or Enterprise workspace, an admin may need to allow the plugin first. Where it isn't available to you, add Print.App yourself: turn on developer mode and add a custom MCP server ([OpenAI's guide](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) shows where, for your plan), named Print.App, with the URL `https://api.print.app/mcp` and **OAuth** authentication. A server added this way keeps the tools it saw when you added it: when Print.App adds tools, open it at [chatgpt.com/plugins](https://chatgpt.com/plugins), click **Refresh**, and start a new chat.
 </Note>
 
 ## Claude
